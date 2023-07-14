@@ -4,20 +4,25 @@ from flask import Flask, redirect, render_template, request, url_for
 from flask import jsonify
 from logic.call_gpt import call_gpt
 from logic.suggestions import generate_content
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/", methods=("GET", "POST"))
 def index():
     if request.method == "POST":
-        number_of_days = request.form["number_of_days"]
-        country = request.form.get("country", False)
-        is_prompt = request.form.get("is_prompt", False)
+        content = request.json
+        number_of_days = content.get("number_of_days")
+        country = content.get("country")
+        is_prompt = content.get("is_prompt")
         prompt = generate_content(number_of_days, country)
-
-        if is_prompt:
+        if True:
             return {
+                "number_of_days": number_of_days,
+                "country": country,
+                "is_prompt": is_prompt,
                 "prompt": prompt,
                 "response": {
                     "content": [
@@ -72,6 +77,11 @@ def index():
                 "prompt": prompt,
             }
     return {"status": 201, "country": country, "number_of_days": number_of_days}
+
+
+@app.route("/health", methods=("GET", "POST"))
+def health():
+    return {"status": 201}
 
 
 @app.route("/")

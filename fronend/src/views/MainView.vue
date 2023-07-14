@@ -1,44 +1,37 @@
-<script setup>
+<script>
+import axios from 'axios'
 import ItineraryAtom from '../components/ItineraryAtom.vue'
 
-const data = {
-  content: [
-    {
-      category: 'Adventure',
-      day_number: '1st day',
-      major_city: 'Paro',
-      name: "Tiger's Nest",
-      time: '9am'
-    },
-    {
-      category: 'Historic',
-      day_number: '1st day',
-      major_city: 'Agra',
-      name: 'Taj Mahal',
-      time: '3pm'
-    },
-    {
-      category: 'Adventure',
-      day_number: '2nd day',
-      major_city: 'Goa',
-      name: 'Dudhsagar Falls',
-      time: '9am'
-    },
-    {
-      category: 'Historic',
-      day_number: '2nd day',
-      major_city: 'Jodhpur',
-      name: 'Mehrangarh Fort',
-      time: '3pm'
-    },
-    {
-      category: 'Cultural',
-      day_number: '2nd day',
-      major_city: 'Kochi',
-      name: 'Kathakali Performance',
-      time: '6pm'
+export default {
+  name: 'MainView',
+  data() {
+    return {
+      items: []
     }
-  ]
+  },
+  components: {
+    ItineraryAtom
+  },
+  methods: {
+    getItems() {
+      axios
+        .post('http://localhost:5000/', {
+          is_prompt: false,
+          country: 'India',
+          number_of_days: '2'
+        })
+        .then((response) => {
+          console.log(response?.data?.response?.content)
+          this.items = response?.data?.response?.content
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  },
+  mounted() {
+    this.getItems()
+  }
 }
 </script>
 
@@ -46,7 +39,7 @@ const data = {
   <div class="compound">
     <ul>
       <ItineraryAtom
-        v-for="(item, index) in data.content"
+        v-for="(item, index) in this.items"
         :key="index"
         :city="item.major_city"
         :category="item.category"
@@ -55,5 +48,3 @@ const data = {
     </ul>
   </div>
 </template>
-
-<style scoped></style>
