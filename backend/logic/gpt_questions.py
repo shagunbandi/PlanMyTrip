@@ -5,10 +5,11 @@ def generate_content(number_of_days, country):
                 number_of_days, country
             ),
             '[{"day_number": "nth day count"',
-            '"time": "hour of the day"',
+            '"time": "number of hours required for the activity"',
             '"name": "name of the place"',
-            '"major_city": "a major city near the location'
+            '"city": "a major city near the location"'
             '"category": "destination type"'
+            "'"
             "}]",
         ]
     )

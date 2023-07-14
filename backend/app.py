@@ -1,16 +1,15 @@
-import json
-
-from flask import Flask, redirect, render_template, request, url_for
-from flask import jsonify
-from logic.call_gpt import call_gpt
-from logic.suggestions import generate_content
+from flask import Flask, request
+from apis.chat_gpt import get_chat_gpt_reply
+from apis.google_distance_matrix import google_distance_matrix
+from apis.google_text_search import google_text_search
+from logic.gpt_questions import generate_content
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
 
 
-@app.route("/", methods=("GET", "POST"))
+@app.route("/", methods=["POST"])
 def index():
     if request.method == "POST":
         content = request.json
@@ -67,7 +66,7 @@ def index():
                 "status": 200,
             }
         else:
-            response_time, content = call_gpt(prompt=prompt)
+            response_time, content = get_chat_gpt_reply(prompt=prompt)
             return {
                 "status": 200,
                 "response": {
@@ -77,6 +76,32 @@ def index():
                 "prompt": prompt,
             }
     return {"status": 201, "country": country, "number_of_days": number_of_days}
+
+
+@app.route("/maps/distance", methods=["POST"])
+def distance():
+    content = request.json
+    origin = content.get("origin")
+    destination = content.get("destination")
+    mode = content.get("mode", "driving")
+
+    response = google_distance_matrix(origin=origin, destination=destination, mode=mode)
+    return {
+        "status": 200,
+        "response": response,
+    }
+
+
+@app.route("/maps/textsearch", methods=["POST"])
+def text_search():
+    content = request.json
+    query = content.get("query")
+
+    response = google_text_search(query=query)
+    return {
+        "status": 200,
+        "response": response,
+    }
 
 
 @app.route("/health", methods=("GET", "POST"))

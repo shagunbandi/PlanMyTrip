@@ -7,7 +7,7 @@ import json
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
-def call_gpt(prompt):
+def get_chat_gpt_reply(prompt):
     # record the time before the request is sent
     start_time = time.time()
 
