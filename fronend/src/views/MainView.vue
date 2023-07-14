@@ -41,9 +41,11 @@ export default {
       <ItineraryAtom
         v-for="(item, index) in this.items"
         :key="index"
-        :city="item.major_city"
+        :city="item.gpt_city"
         :category="item.category"
-        :name="item.name"
+        :name="item.details.name"
+        :rating="item.details.rating"
+        :user_ratings_total="item.details.user_ratings_total"
       />
     </ul>
   </div>

@@ -11,6 +11,14 @@ defineProps({
   category: {
     type: String,
     required: true
+  },
+  rating: {
+    type: Float32Array,
+    required: false
+  },
+  user_ratings_total: {
+    type: Number,
+    required: false
   }
 })
 </script>
@@ -18,8 +26,9 @@ defineProps({
 <template>
   <li>
     <span class="name">{{ name }}</span
-    >, {{ city }}
-    <span class="category">{{ category }}</span>
+    >, {{ city }} <span class="category">{{ category }}</span
+    ><br />
+    {{ rating }} / {{ user_ratings_total }}
   </li>
 </template>
 
