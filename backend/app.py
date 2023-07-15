@@ -17,11 +17,10 @@ def index():
     # country = content.get("country")
     # is_mock = content.get("is_mock")
     # prompt = generate_content(number_of_days, country)
-    # response_time, content = get_chat_gpt_reply(prompt=prompt, is_mock=True)
+    # content = get_chat_gpt_reply(prompt=prompt, is_mock=is_mock)
     # return {
     #     "status": 200,
     #     "response": {
-    #         "time_taken": f"{response_time:.2f}s",
     #         "content": content,
     #     },
     #     "prompt": prompt,
@@ -44,23 +43,6 @@ def distance_with_place_ids():
         "status": 200,
         "response": response,
     }
-
-
-@app.route("/maps/textsearch", methods=["POST"])
-def text_search():
-    content = request.json
-    query = content.get("query")
-
-    response = google_text_search(query=query)
-    return {
-        "status": 200,
-        "response": response,
-    }
-
-
-@app.route("/health", methods=("GET", "POST"))
-def health():
-    return {"status": 201}
 
 
 @app.route("/")
