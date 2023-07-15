@@ -20,7 +20,7 @@ export default {
       :key="index"
       v-for="(m, index) in markers"
       :position="m"
-      :label="{ text: index }"
+      :label="{ text: (index+1).toString() }"
       :clickable="true"
     />
   </GMapMap>
