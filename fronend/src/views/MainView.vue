@@ -17,7 +17,6 @@ export default {
   },
   methods: {
     sortedPoints(points) {
-      console.log(points)
       return find(
         points,
         (point) => point.details.location.lat,
@@ -49,7 +48,10 @@ export default {
 
 <template>
   <div class="compound">
-    <DrawGoogleMap />
+    <DrawGoogleMap
+      v-if="this.items.length > 0"
+      :markers="this.items.map((item) => item.details.location)"
+    />
     <ul>
       <ItineraryAtom
         v-for="(item, index) in this.items"

@@ -3,26 +3,23 @@
 export default {
   name: 'DrawGoogleMap',
   data() {
-    return {
-      markers: [
-        {
-          position: {
-            lat: 51.093048,
-            lng: 6.84212
-          }
-        }
-      ]
-    }
+    return {}
+  },
+  props: {
+    markers: Array
+  },
+  mounted() {
+    console.log(this.markers)
   }
 }
 </script>
 
 <template>
-  <GMapMap :center="markers[0].position" :zoom="7" style="width: 100%; height: 400px">
+  <GMapMap :center="markers[0]" :zoom="7" style="width: 100%; height: 400px">
     <GMapMarker
       :key="index"
       v-for="(m, index) in markers"
-      :position="m.position"
+      :position="m"
       :clickable="true"
       :draggable="true"
     />
