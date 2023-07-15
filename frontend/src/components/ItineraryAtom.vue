@@ -1,5 +1,5 @@
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
   data() {
@@ -18,7 +18,9 @@ export default {
     user_ratings_total: Number,
     location_name: String,
     place_id: String,
-    time: String
+    time: String,
+    duration_in_mins: Number,
+    distance_in_meters: Number
   },
 
   methods: {
@@ -31,7 +33,7 @@ export default {
       //     })
       //     .then((response) => {
       //       this.distance = response?.data?.response?.distance_in_meters
-      //       this.duration = response?.data?.response?.time_in_minutes
+      //       this.duration = response?.data?.response?.duration_in_mins
       //     })
       //     .catch((error) => {
       //       console.log(error)
@@ -55,8 +57,8 @@ export default {
     {{ time }}
     <br />
     {{ rating }} / {{ user_ratings_total }} <br />
-    Time to reach: {{ this.duration }} mins<br />
-    Distance to cover: {{ this.distance }}m<br />
+    Time to reach: {{ duration_in_mins }} mins<br />
+    Distance to cover: {{ distance_in_meters }}m<br />
   </li>
 </template>
 

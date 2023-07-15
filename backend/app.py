@@ -2,7 +2,7 @@ from flask import Flask, request
 from flask_cors import CORS
 
 from apis import google_distance_matrix, get_chat_gpt_reply
-from logic.gpt_prompts import generate_content
+from logic import generate_content
 from static.reply.response_with_maps import india_10_days
 
 app = Flask(__name__)

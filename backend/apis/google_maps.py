@@ -25,7 +25,9 @@ def google_text_search(query):
     }
 
 
-def google_distance_matrix(origin_place_id: str, destination_place_id: str, mode):
+def google_distance_matrix(
+    origin_place_id: str, destination_place_id: str, mode="driving"
+):
     # https://developers.google.com/maps/documentation/distance-matrix/distance-matrix
     url = "https://maps.googleapis.com/maps/api/distancematrix/json"
     params = {
@@ -43,5 +45,7 @@ def google_distance_matrix(origin_place_id: str, destination_place_id: str, mode
         "distance_in_meters": response_json["rows"][0]["elements"][0]["distance"][
             "value"
         ],
-        "time_in_minutes": response_json["rows"][0]["elements"][0]["duration"]["value"],
+        "duration_in_mins": response_json["rows"][0]["elements"][0]["duration"][
+            "value"
+        ],
     }

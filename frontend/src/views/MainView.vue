@@ -2,7 +2,7 @@
 import axios from 'axios'
 import ItineraryAtom from '../components/ItineraryAtom.vue'
 import DrawGoogleMap from '../components/DrawGoogleMap.vue'
-import find from '../utitlities/findPathCircular'
+// import find from '../utitlities/findPathCircular'
 
 export default {
   name: 'MainView',
@@ -17,12 +17,13 @@ export default {
   },
   methods: {
     sortedPoints(points) {
-      return find(
-        points,
-        (point) => point.details.location.lat,
-        (point) => point.details.location.lng,
-        0
-      )
+      return points
+      // return find(
+      //   points,
+      //   (point) => point.details.location.lat,
+      //   (point) => point.details.location.lng,
+      //   0
+      // )
     },
     getItems() {
       axios
@@ -66,6 +67,8 @@ export default {
         :user_ratings_total="item.details.user_ratings_total"
         :time="item.time"
         :place_id="item.details.place_id"
+        :duration_in_mins="item.duration_in_mins"
+        :distance_in_meters="item.distance_in_meters"
       />
     </ul>
   </div>

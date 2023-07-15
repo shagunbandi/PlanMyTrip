@@ -4,8 +4,7 @@ import json
 from static.reply.response_with_maps import india_10_days as response_with_maps
 from static.reply.suggestions import india_5_days
 from apis.google_maps import google_text_search
-
-from logic.shortest_path import travelling_salesmen_problem
+from logic import shortest_path, gpt_prompts, distance_to_reach
 
 
 def get_chat_gpt_reply(prompt, is_mock=True):
@@ -36,7 +35,7 @@ def get_chat_gpt_reply(prompt, is_mock=True):
     #     for c in content_json
     # ]
 
-    detailed_content = response_with_maps["response"]["content"]
-    # sorted_content = travelling_salesmen_problem(detailed_content, 3, False)
-
-    return detailed_content
+    points = response_with_maps["response"]["content"]
+    # points = shortest_path.travelling_salesmen_problem(points, 6, False)
+    points = distance_to_reach.update_distance_to_reach(points)
+    return points

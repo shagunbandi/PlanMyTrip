@@ -8,20 +8,20 @@ export default {
   props: {
     markers: Array
   },
-  mounted() {
-    console.log(this.markers)
-  }
+  mounted() {}
 }
 </script>
 
 <template>
   <GMapMap :center="markers[0]" :zoom="7" style="width: 100%; height: 400px">
+    <GMapPolyline :path="markers" :editable="true" ref="polyline" />
     <GMapMarker
+      :zoomOnClick="true"
       :key="index"
       v-for="(m, index) in markers"
       :position="m"
+      :label="{ text: index }"
       :clickable="true"
-      :draggable="true"
     />
   </GMapMap>
 </template>

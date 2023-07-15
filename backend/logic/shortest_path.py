@@ -1,5 +1,4 @@
 from python_tsp.exact import solve_tsp_dynamic_programming
-from python_tsp.heuristics import solve_tsp_simulated_annealing
 import numpy as np
 import math
 
