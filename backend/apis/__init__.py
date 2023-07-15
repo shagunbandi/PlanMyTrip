@@ -71,11 +71,12 @@ def google_text_search(query):
     }
 
 
-def google_distance_matrix(origin, destination, mode):
+def google_distance_matrix(origin_place_id: str, destination_place_id: str, mode):
+    # https://developers.google.com/maps/documentation/distance-matrix/distance-matrix
     url = "https://maps.googleapis.com/maps/api/distancematrix/json"
     params = {
-        "origins": origin,
-        "destinations": destination,
+        "origins": "place_id:" + origin_place_id,
+        "destinations": "place_id:" + destination_place_id,
         "mode": mode,
         "key": API_KEY,
     }

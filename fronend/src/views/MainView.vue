@@ -21,7 +21,6 @@ export default {
           number_of_days: '2'
         })
         .then((response) => {
-          console.log(response?.data?.response?.content)
           this.items = response?.data?.response?.content
         })
         .catch((error) => {
@@ -41,11 +40,15 @@ export default {
       <ItineraryAtom
         v-for="(item, index) in this.items"
         :key="index"
+        :previous_item="index === 0 ? None : this.items[index - 1]"
         :city="item.gpt_city"
         :category="item.category"
-        :name="item.details.name"
+        :name="item.gpt_name"
+        :location_name="item.details.name"
         :rating="item.details.rating"
         :user_ratings_total="item.details.user_ratings_total"
+        :time="item.time"
+        :place_id="item.details.place_id"
       />
     </ul>
   </div>

@@ -29,7 +29,7 @@ def index():
 
 
 @app.route("/maps/distance", methods=["POST"])
-def distance():
+def distance_with_place_ids():
     content = request.json
     origin = content.get("origin")
     destination = content.get("destination")
