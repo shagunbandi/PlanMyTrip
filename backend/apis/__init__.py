@@ -6,7 +6,7 @@ import openai  # for OpenAI API calls
 import time  # for measuring time duration of API calls
 import os
 import json
-from static.reply.suggestions import suggestion_3 as suggestion
+from static.reply.suggestions import suggestion_4 as suggestion
 
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -18,7 +18,7 @@ API_KEY = os.getenv("MAP_API_KEY")
 def get_chat_gpt_reply(prompt, is_mock=True):
     # record the time before the request is sent
     start_time = time.time()
-    content_json = {}
+    content_json = []
     if not is_mock:
         response = openai.Completion.create(
             engine="text-davinci-003",
@@ -62,12 +62,12 @@ def google_text_search(query):
     first_result = response_json["results"][0]
     return {
         "location": first_result["geometry"]["location"],
-        "icon": first_result["icon"],
-        "name": first_result["name"],
-        "photos": first_result["photos"],
-        "place_id": first_result["place_id"],
-        "rating": first_result["rating"],
-        "user_ratings_total": first_result["user_ratings_total"],
+        "icon": first_result.get("icon", None),
+        "name": first_result.get("name", None),
+        "photos": first_result.get("photos", None),
+        "place_id": first_result.get("place_id", None),
+        "rating": first_result.get("rating", None),
+        "user_ratings_total": first_result.get("user_ratings_total", None),
     }
 
 

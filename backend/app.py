@@ -3,7 +3,7 @@ from flask_cors import CORS
 
 from apis import google_distance_matrix, google_text_search, get_chat_gpt_reply
 from logic.gpt_questions import generate_content
-from static.reply.response_with_maps import response_1
+from static.reply.response_with_maps import india_10_days as response
 
 app = Flask(__name__)
 CORS(app)
@@ -11,13 +11,13 @@ CORS(app)
 
 @app.route("/", methods=["POST"])
 def index():
-    return response_1
+    return response
     # content = request.json
     # number_of_days = content.get("number_of_days")
     # country = content.get("country")
     # is_mock = content.get("is_mock")
     # prompt = generate_content(number_of_days, country)
-    # response_time, content = get_chat_gpt_reply(prompt=prompt, is_mock=is_mock)
+    # response_time, content = get_chat_gpt_reply(prompt=prompt, is_mock=True)
     # return {
     #     "status": 200,
     #     "response": {

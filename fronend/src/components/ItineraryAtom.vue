@@ -23,20 +23,19 @@ export default {
 
   methods: {
     getDistance() {
-      console.log(this.previous_item, this.place_id)
-      if (this.previous_item)
-        axios
-          .post('http://localhost:5000/maps/distance', {
-            origin_place_id: this.place_id,
-            destination_place_id: this.previous_item.details.place_id
-          })
-          .then((response) => {
-            this.distance = response?.data?.response?.distance_in_meters
-            this.duration = response?.data?.response?.time_in_minutes
-          })
-          .catch((error) => {
-            console.log(error)
-          })
+      // if (this.previous_item)
+      //   axios
+      //     .post('http://localhost:5000/maps/distance', {
+      //       origin_place_id: this.place_id,
+      //       destination_place_id: this.previous_item.details.place_id
+      //     })
+      //     .then((response) => {
+      //       this.distance = response?.data?.response?.distance_in_meters
+      //       this.duration = response?.data?.response?.time_in_minutes
+      //     })
+      //     .catch((error) => {
+      //       console.log(error)
+      //     })
     }
   },
 
@@ -58,8 +57,6 @@ export default {
     {{ rating }} / {{ user_ratings_total }} <br />
     Time to reach: {{ this.duration }} mins<br />
     Distance to cover: {{ this.distance }}m<br />
-    <!-- {{ previous_item }}
-    {{ place_id }} -->
   </li>
 </template>
 

@@ -1,6 +1,7 @@
 <script>
 import axios from 'axios'
 import ItineraryAtom from '../components/ItineraryAtom.vue'
+import find from '../utitlities/findPathCircular'
 
 export default {
   name: 'MainView',
@@ -13,15 +14,25 @@ export default {
     ItineraryAtom
   },
   methods: {
+    sortedPoints(points) {
+      console.log(points)
+      return find(
+        points,
+        (point) => point.details.location.lat,
+        (point) => point.details.location.lng,
+        0
+      )
+    },
     getItems() {
       axios
         .post('http://localhost:5000/', {
-          is_prompt: false,
+          is_mock: true,
           country: 'India',
           number_of_days: '2'
         })
         .then((response) => {
-          this.items = response?.data?.response?.content
+          const items = this.sortedPoints(response?.data?.response?.content)
+          this.items = items
         })
         .catch((error) => {
           console.log(error)
@@ -45,6 +56,7 @@ export default {
         :category="item.category"
         :name="item.gpt_name"
         :location_name="item.details.name"
+        :location="item.details.location"
         :rating="item.details.rating"
         :user_ratings_total="item.details.user_ratings_total"
         :time="item.time"
