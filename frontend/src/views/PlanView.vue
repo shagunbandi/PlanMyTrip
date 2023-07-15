@@ -5,7 +5,7 @@ import DrawGoogleMap from '../components/DrawGoogleMap.vue'
 // import find from '../utitlities/findPathCircular'
 
 export default {
-  name: 'MainView',
+  name: 'PlanView',
   data() {
     return {
       items: []
