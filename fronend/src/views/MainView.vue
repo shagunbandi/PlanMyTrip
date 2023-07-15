@@ -1,6 +1,7 @@
 <script>
 import axios from 'axios'
 import ItineraryAtom from '../components/ItineraryAtom.vue'
+import DrawGoogleMap from '../components/DrawGoogleMap.vue'
 import find from '../utitlities/findPathCircular'
 
 export default {
@@ -11,7 +12,8 @@ export default {
     }
   },
   components: {
-    ItineraryAtom
+    ItineraryAtom,
+    DrawGoogleMap
   },
   methods: {
     sortedPoints(points) {
@@ -47,6 +49,7 @@ export default {
 
 <template>
   <div class="compound">
+    <DrawGoogleMap />
     <ul>
       <ItineraryAtom
         v-for="(item, index) in this.items"

@@ -37,6 +37,6 @@ def get_chat_gpt_reply(prompt, is_mock=True):
     # ]
 
     detailed_content = response_with_maps["response"]["content"]
-    sorted_content = travelling_salesmen_problem(detailed_content, 3, False)
+    # sorted_content = travelling_salesmen_problem(detailed_content, 3, False)
 
-    return sorted_content
+    return detailed_content
