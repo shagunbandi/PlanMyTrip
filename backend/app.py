@@ -31,11 +31,15 @@ def index():
 @app.route("/maps/distance", methods=["POST"])
 def distance_with_place_ids():
     content = request.json
-    origin = content.get("origin")
-    destination = content.get("destination")
+    origin_place_id = content.get("origin_place_id")
+    destination_place_id = content.get("destination_place_id")
     mode = content.get("mode", "driving")
 
-    response = google_distance_matrix(origin=origin, destination=destination, mode=mode)
+    response = google_distance_matrix(
+        origin_place_id=origin_place_id,
+        destination_place_id=destination_place_id,
+        mode=mode,
+    )
     return {
         "status": 200,
         "response": response,
