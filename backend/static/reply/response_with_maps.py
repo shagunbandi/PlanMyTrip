@@ -6,31 +6,6 @@ india_10_days = {
                 "category": "historic site",
                 "day_number": "1st day",
                 "details": {
-                    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/museum-71.png",
-                    "location": {"lat": 27.1751448, "lng": 78.0421422},
-                    "name": "Taj Mahal",
-                    "photos": [
-                        {
-                            "height": 1944,
-                            "html_attributions": [
-                                '<a href="https://maps.google.com/maps/contrib/104593614172683905944">Sven Hartmann Andreasen</a>'
-                            ],
-                            "photo_reference": "Aaw_FcIlHttNEy-GU1RbMDAn7bnlnd_iODtYRtjvP5JqQvYm9xelmzp5vpbYKFoRkw8h0zfIYHo1rJNtvjxRTsekmazWn3fswiXRJ_cCu3T5PTCioxAikOqq_2-5ZZ8bAH6gLGC0U4vqjaDxg-zJYo6TaOBA2lcOSRYsvk38Lg8NlpBGr8Jc",
-                            "width": 2592,
-                        }
-                    ],
-                    "place_id": "ChIJbf8C1yFxdDkR3n12P4DkKt0",
-                    "rating": 4.6,
-                    "user_ratings_total": 206069,
-                },
-                "gpt_city": "Agra",
-                "gpt_name": "Taj Mahal",
-                "time": "09:00",
-            },
-            {
-                "category": "historic site",
-                "day_number": "1st day",
-                "details": {
                     "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/worship_islam-71.png",
                     "location": {"lat": 28.6506792, "lng": 77.23344209999999},
                     "name": "Jama Masjid",
@@ -101,6 +76,31 @@ india_10_days = {
                 "gpt_city": "Jaipur",
                 "gpt_name": "Hawa Mahal",
                 "time": "15:00",
+            },
+            {
+                "category": "historic site",
+                "day_number": "1st day",
+                "details": {
+                    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/museum-71.png",
+                    "location": {"lat": 27.1751448, "lng": 78.0421422},
+                    "name": "Taj Mahal",
+                    "photos": [
+                        {
+                            "height": 1944,
+                            "html_attributions": [
+                                '<a href="https://maps.google.com/maps/contrib/104593614172683905944">Sven Hartmann Andreasen</a>'
+                            ],
+                            "photo_reference": "Aaw_FcIlHttNEy-GU1RbMDAn7bnlnd_iODtYRtjvP5JqQvYm9xelmzp5vpbYKFoRkw8h0zfIYHo1rJNtvjxRTsekmazWn3fswiXRJ_cCu3T5PTCioxAikOqq_2-5ZZ8bAH6gLGC0U4vqjaDxg-zJYo6TaOBA2lcOSRYsvk38Lg8NlpBGr8Jc",
+                            "width": 2592,
+                        }
+                    ],
+                    "place_id": "ChIJbf8C1yFxdDkR3n12P4DkKt0",
+                    "rating": 4.6,
+                    "user_ratings_total": 206069,
+                },
+                "gpt_city": "Agra",
+                "gpt_name": "Taj Mahal",
+                "time": "09:00",
             },
             {
                 "category": "cultural activity",

@@ -1,7 +1,5 @@
 import requests
 import os
-from static.reply.suggestions import suggestion_4 as suggestion
-
 
 API_KEY = os.getenv("MAP_API_KEY")
 

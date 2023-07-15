@@ -1,4 +1,4 @@
-suggestion_4 = [
+india_5_days = [
     {
         "day_number": "1st day",
         "time": "09:00",

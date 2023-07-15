@@ -1,9 +1,9 @@
 from flask import Flask, request
 from flask_cors import CORS
 
-from apis import google_distance_matrix, google_text_search, get_chat_gpt_reply
-from logic.gpt_questions import generate_content
-from static.reply.response_with_maps import india_10_days as response
+from apis import google_distance_matrix, get_chat_gpt_reply
+from logic.gpt_prompts import generate_content
+from static.reply.response_with_maps import india_10_days
 
 app = Flask(__name__)
 CORS(app)
@@ -11,20 +11,23 @@ CORS(app)
 
 @app.route("/", methods=["POST"])
 def index():
-    return response
-    # content = request.json
-    # number_of_days = content.get("number_of_days")
-    # country = content.get("country")
-    # is_mock = content.get("is_mock")
-    # prompt = generate_content(number_of_days, country)
-    # content = get_chat_gpt_reply(prompt=prompt, is_mock=is_mock)
-    # return {
-    #     "status": 200,
-    #     "response": {
-    #         "content": content,
-    #     },
-    #     "prompt": prompt,
-    # }
+    # return india_10_days
+    content = request.json
+    number_of_days = content.get("number_of_days")
+    country = content.get("country")
+    is_mock = content.get("is_mock")
+    try:
+        prompt = generate_content(number_of_days, country)
+        content = get_chat_gpt_reply(prompt=prompt, is_mock=is_mock)
+    except Exception as e:
+        return {"status": 500, "error": e.args[0]}
+    return {
+        "status": 200,
+        "response": {
+            "content": content,
+        },
+        "prompt": prompt,
+    }
 
 
 @app.route("/maps/distance", methods=["POST"])
