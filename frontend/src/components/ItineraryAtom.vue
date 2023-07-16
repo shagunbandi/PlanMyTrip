@@ -29,7 +29,7 @@ export default {
       //   axios
       //     .post('http://localhost:5000/maps/distance', {
       //       origin_place_id: this.place_id,
-      //       destination_place_id: this.previous_item.details.place_id
+      //       destination_place_id: this.previous_item.place_id
       //     })
       //     .then((response) => {
       //       this.distance = response?.data?.response?.distance_in_meters

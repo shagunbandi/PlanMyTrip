@@ -1,7 +1,7 @@
 <script>
 import axios from 'axios'
 import ItineraryAtom from '../components/ItineraryAtom.vue'
-// import DrawGoogleMap from '../components/DrawGoogleMap.vue'
+import DrawGoogleMap from '../components/DrawGoogleMap.vue'
 // import find from '../utitlities/findPathCircular'
 
 export default {
@@ -15,28 +15,28 @@ export default {
   },
   components: {
     ItineraryAtom,
-    // DrawGoogleMap
+    DrawGoogleMap
   },
   methods: {
     sortedPoints(points) {
       return points
       // return find(
       //   points,
-      //   (point) => point.details.location.lat,
-      //   (point) => point.details.location.lng,
+      //   (point) => point.location.lat,
+      //   (point) => point.location.lng,
       //   0
       // )
     },
     getItems() {
       axios
         .post('http://localhost:5000/', {
-          is_mock: true,
-          country: 'India',
-          number_of_days: '2'
+          is_mock: false,
+          country: 'Amsterdam',
+          number_of_days: '3'
         })
         .then((response) => {
-          const items = this.sortedPoints(response?.data?.response?.content)
-          this.items = items
+          
+          this.items = this.sortedPoints(response?.data?.response?.content)
           this.totalDistance = this.items.reduce((acc, curr) => acc + curr.distance_in_meters, 0)
           this.totalDuration = this.items.reduce((acc, curr ) => acc + curr.duration_in_mins, 0)
         })
@@ -58,27 +58,27 @@ export default {
         v-for="(item, index) in this.items"
         :key="index"
         :previous_item="index === 0 ? None : this.items[index - 1]"
-        :city="item.gpt_city"
+        :city="item.city"
         :category="item.category"
-        :name="item.gpt_name"
-        :location_name="item.details.name"
-        :location="item.details.location"
-        :rating="item.details.rating"
-        :user_ratings_total="item.details.user_ratings_total"
+        :name="item.name"
+        :location_name="item.name"
+        :location="item.location"
+        :rating="item.rating"
+        :user_ratings_total="item.user_ratings_total"
         :time="item.time"
-        :place_id="item.details.place_id"
+        :place_id="item.place_id"
         :duration_in_mins="item.duration_in_mins"
         :distance_in_meters="item.distance_in_meters"
       />
     </ul>
     <div class="container-right">
-      <span class="google-map-container-dummy"></span>
+      <!-- <span class="google-map-container-dummy"></span> -->
 
-    <!-- <DrawGoogleMap
+    <DrawGoogleMap
       class="google-map-container"
       v-if="this.items.length > 0"
-      :markers="this.items.map((item) => item.details.location)"
-    /> -->
+      :markers="this.items.map((item) => item.location)"
+    />
       <div class="info-boxes">
         <div>
           <h3>Total Distance </h3>
@@ -115,8 +115,6 @@ export default {
   display: flex;
 }
 
-
-
 .container-right {
   flex: 1;
   width: 100%;
@@ -129,12 +127,16 @@ export default {
   width: 100%;
 }
 
-.google-map-container, .itinerary-compound {
+ 
+.google-map-container {
   width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
 }
 
 .itinerary-compound {
   list-style-type: none;
+  padding: 0;
   flex: 1
 }
 

@@ -1,9 +1,9 @@
 from flask import Flask, request
 from flask_cors import CORS
 
-from apis import google_distance_matrix, get_chat_gpt_reply
-from logic import generate_content
-from static.reply.response_with_maps import india_10_days
+from apis import google_maps, chat_gpt
+from logic import gpt_prompts
+from static.reply.response_with_maps import amsterdam_3_days
 
 app = Flask(__name__)
 CORS(app)
@@ -11,14 +11,16 @@ CORS(app)
 
 @app.route("/", methods=["POST"])
 def index():
-    # return india_10_days
     content = request.json
     number_of_days = content.get("number_of_days")
     country = content.get("country")
     is_mock = content.get("is_mock")
+    if is_mock:
+        return amsterdam_3_days
+
     try:
-        prompt = generate_content(number_of_days, country)
-        content = get_chat_gpt_reply(prompt=prompt, is_mock=is_mock)
+        prompt = gpt_prompts.generate_content(number_of_days, country)
+        content = chat_gpt.get_chat_gpt_reply(prompt=prompt)
     except Exception as e:
         return {"status": 500, "error": e.args[0]}
     return {
@@ -37,7 +39,7 @@ def distance_with_place_ids():
     destination_place_id = content.get("destination_place_id")
     mode = content.get("mode", "driving")
 
-    response = google_distance_matrix(
+    response = google_maps.google_distance_matrix(
         origin_place_id=origin_place_id,
         destination_place_id=destination_place_id,
         mode=mode,

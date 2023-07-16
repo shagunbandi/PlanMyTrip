@@ -1,41 +1,32 @@
 # imports
 import openai  # for OpenAI API calls
 import json
-from static.reply.response_with_maps import india_10_days as response_with_maps
+from apis import google_maps
+from logic import shortest_path, distance_to_reach
 from static.reply.suggestions import india_5_days
-from apis.google_maps import google_text_search
-from logic import shortest_path, gpt_prompts, distance_to_reach
 
 
-def get_chat_gpt_reply(prompt, is_mock=True):
-    # content_json = []
-    # if not is_mock:
-    #     response = openai.Completion.create(
-    #         engine="text-davinci-003",
-    #         prompt=prompt,
-    #         temperature=0.5,
-    #         n=1,
-    #         stop=None,
-    #         max_tokens=1024,
-    #     )
-    #     content = response.choices[0].text.strip()
-    #     content_json = json.loads(content)
-    # else:
-    #     content_json = india_5_days
+def get_chat_gpt_reply(prompt):
+    # response = openai.Completion.create(
+    #     engine="text-davinci-003",
+    #     prompt=prompt,
+    #     temperature=0.5,
+    #     n=1,
+    #     stop=None,
+    #     max_tokens=512,
+    # )
+    # content = response.choices[0].text.strip()
+    # content_json = json.loads(content)
 
-    # detailed_content = [
-    #     {
-    #         "day_number": c["day_number"],
-    #         "time": c["time"],
-    #         "gpt_name": c["name"],
-    #         "gpt_city": c["city"],
-    #         "category": c["category"],
-    #         "details": google_text_search(f"{c['name']} in {c['city']}"),
-    #     }
-    #     for c in content_json
-    # ]
+    content_json = india_5_days
 
-    points = response_with_maps["response"]["content"]
-    # points = shortest_path.travelling_salesmen_problem(points, 6, False)
+    points = []
+    for c in content_json:
+        details = google_maps.google_text_search(f"{c['name']} in {c['city']}")
+        point = c.copy()
+        point.update(details)
+        points.append(point)
+
+    points = shortest_path.travelling_salesmen_problem(points, 0, True)
     points = distance_to_reach.update_distance_to_reach(points)
     return points

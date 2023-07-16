@@ -4,19 +4,16 @@ import math
 
 
 def travelling_salesmen_problem(points, startIdx=0, circular=True):
-    get_x = lambda point: point["details"]["location"]["lat"]
-    get_y = lambda point: point["details"]["location"]["lng"]
+    get_x = lambda point: point["location"]["lat"]
+    get_y = lambda point: point["location"]["lng"]
 
     size = len(points)
 
-    # TODO might not work in case of smaller sets
     _swap(points, 0, startIdx)
-    distance_matrix = [[0] * size] * size
+    distance_matrix = [[0 for _ in range(size)] for _ in range(size)]
 
     for i in range(size):
-        if i == 0 and not circular:
-            continue
-        for j in range(size):
+        for j in range(0 if circular else 1, size):
             distance_matrix[i][j] = _find_distance(points[i], points[j], get_x, get_y)
 
     permutation, distance = solve_tsp_dynamic_programming(np.array(distance_matrix))
