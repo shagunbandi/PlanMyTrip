@@ -5,8 +5,10 @@ from chatgpt.utilities import prompt_chat_gpt
 from maps.utilities import google_text_search, update_distance_to_reach
 from maps.utilities import travelling_salesmen_problem
 from chatgpt.sample.plan_overview import malaga_5_days
+from django.views.decorators.csrf import csrf_exempt
 
 
+@csrf_exempt
 @api_view(["POST"])
 def PlanOverview(request):
     content = request.data
