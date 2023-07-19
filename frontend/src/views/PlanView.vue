@@ -31,8 +31,8 @@ export default {
       axios
         .post('http://localhost:5000/', {
           is_mock: false,
-          country: 'Amsterdam',
-          number_of_days: '3'
+          country: 'India',
+          number_of_days: '15'
         })
         .then((response) => {
           
