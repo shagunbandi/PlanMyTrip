@@ -1,7 +1,8 @@
 import requests
 import os
+from maps.serializers import DistanceBetweenPlacesResponseSerializer
 
-API_KEY = os.getenv("MAP_API_KEY")
+API_KEY = os.environ.get("MAP_API_KEY")
 
 
 def google_text_search(query):
@@ -38,14 +39,25 @@ def google_distance_matrix(
     }
 
     response = requests.request("GET", url, params=params)
-    response_json = response.json()
-    return {
-        "origin_address": response_json["origin_addresses"][0],
-        "destination_address": response_json["destination_addresses"][0],
-        "distance_in_meters": response_json["rows"][0]["elements"][0]["distance"][
-            "value"
-        ],
-        "duration_in_mins": response_json["rows"][0]["elements"][0]["duration"][
-            "value"
-        ],
+    response = response.json()
+    response = {
+        "origin_address": response["origin_addresses"][0],
+        "destination_address": response["destination_addresses"][0],
+        "distance_in_meters": response["rows"][0]["elements"][0]["distance"]["value"],
+        "duration_in_mins": response["rows"][0]["elements"][0]["duration"]["value"],
     }
+    DistanceBetweenPlacesResponseSerializer(data=response).is_valid()
+    return response
+
+
+def update_distance_to_reach(points):
+    points[0]["distance_in_meters"] = 0
+    points[0]["duration_in_mins"] = 0
+
+    for i in range(1, len(points)):
+        origin_place_id = points[i]["place_id"]
+        destination_place_id = points[i - 1]["place_id"]
+        distance_data = google_distance_matrix(origin_place_id, destination_place_id)
+        points[i]["distance_in_meters"] = distance_data["distance_in_meters"]
+        points[i]["duration_in_mins"] = distance_data["duration_in_mins"]
+    return points
