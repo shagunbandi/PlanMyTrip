@@ -29,7 +29,7 @@ export default {
     },
     getItems() {
       axios
-        .post('http://localhost:5000/', {
+        .post('http://localhost:8000/', {
           is_mock: false,
           country: 'India',
           number_of_days: '15'
