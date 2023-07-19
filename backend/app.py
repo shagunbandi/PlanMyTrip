@@ -15,7 +15,7 @@ def index():
     number_of_days = content.get("number_of_days")
     country = content.get("country")
     is_mock = content.get("is_mock")
-    if is_mock:
+    if True:
         return amsterdam_3_days
 
     try:
