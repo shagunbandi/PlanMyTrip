@@ -41,10 +41,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "corsheaders",
-    "rest_framework",
     "maps.apps.MapsConfig",
     "chatgpt.apps.ChatgptConfig",
+    "planner.apps.PlannerConfig",
+    "corsheaders",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [

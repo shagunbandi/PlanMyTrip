@@ -1,6 +1,5 @@
 import requests
 import os
-from maps.serializers import DistanceBetweenPlacesResponseSerializer
 
 API_KEY = os.environ.get("MAP_API_KEY")
 
@@ -43,10 +42,14 @@ def google_distance_matrix(
     response = {
         "origin_address": response["origin_addresses"][0],
         "destination_address": response["destination_addresses"][0],
-        "distance_in_meters": response["rows"][0]["elements"][0]["distance"]["value"],
-        "duration_in_mins": response["rows"][0]["elements"][0]["duration"]["value"],
+        "distance_in_meters": response["rows"][0]["elements"][0].get(
+            "distance", {"value": None}
+        )["value"],
+        "duration_in_mins": response["rows"][0]["elements"][0].get(
+            "duration", {"value": None}
+        )["value"],
     }
-    DistanceBetweenPlacesResponseSerializer(data=response).is_valid()
+
     return response
 
 
