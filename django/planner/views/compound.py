@@ -1,5 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
+from rest_framework import status
 from rest_framework.response import Response
 from chatgpt.prompts import generate_itinerary
 from chatgpt.utilities import prompt_chat_gpt
@@ -20,8 +21,10 @@ def fetch_compound(request):
     id = request.GET.get("id", None)
     compound = ItineraryCompound.objects.filter(id=id).first()
     if not compound:
-        return Response(status=404)
-    return Response(ItineraryCompoundSerializer(instance=compound).data, 200)
+        return Response("Compound not found", status.HTTP_400_BAD_REQUEST)
+    return Response(
+        ItineraryCompoundSerializer(instance=compound).data, status.HTTP_200_OK
+    )
 
 
 @csrf_exempt
