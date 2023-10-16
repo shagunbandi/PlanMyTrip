@@ -13,9 +13,12 @@ class ExperienceTypes(ChoiceEnum):
 class Experience(models.Model):
     name = models.CharField(max_length=60)
     description = models.CharField(max_length=180)
-    type = EnumChoiceField(ExperienceTypes, default=ExperienceTypes.EXPERIENCE)
+    type = EnumChoiceField(ExperienceTypes, default=ExperienceTypes.OTHER)
     google_place_id = models.CharField(max_length=120, null=True)
-    # ticket = models.
+    ticket_link = models.CharField(blank=True, null=True)
+    reservation_link = models.CharField(blank=True, null=True)
+    activity_start_time = models.DateTimeField(blank=True, null=True)
+    activity_end_time = models.DateTimeField(blank=True, null=True)
 
     # User Info
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
@@ -24,23 +27,5 @@ class Experience(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False, blank=True)
     updated = models.DateTimeField(auto_now=True, blank=True)
 
-    # @property
-    # def google_maps_data(self):
-    #     google_place = {}
-    #     # google_place['place_id'] =
-
     def __str__(self):
         return self.name
-
-
-# # Not a DB table
-# class GoogleMapsPlaces:
-#     def __init__(
-#         self, places_id, city, rating_value, rating_count, latitude, longitude
-#     ):
-#         self.places_id = places_id
-#         self.city = city
-#         self.rating_value = rating_value
-#         self.rating_count = rating_count
-#         self.latitude = latitude
-#         self.longitude = longitude
