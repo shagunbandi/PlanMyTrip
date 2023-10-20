@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class Itinerary(models.Model):
     name = models.CharField(max_length=60)
     description = models.CharField(max_length=180)
+    timeline = models.JSONField(default=list)
 
     # User Info
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)

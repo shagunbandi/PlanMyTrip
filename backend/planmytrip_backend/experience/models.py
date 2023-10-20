@@ -15,8 +15,8 @@ class Experience(models.Model):
     description = models.CharField(max_length=180)
     type = EnumChoiceField(ExperienceTypes, default=ExperienceTypes.OTHER)
     google_place_id = models.CharField(max_length=120, null=True)
-    ticket_link = models.CharField(blank=True, null=True)
-    reservation_link = models.CharField(blank=True, null=True)
+    ticket_link = models.CharField(max_length=180, blank=True, null=True)
+    reservation_link = models.CharField(max_length=180, blank=True, null=True)
     activity_start_time = models.DateTimeField(blank=True, null=True)
     activity_end_time = models.DateTimeField(blank=True, null=True)
 

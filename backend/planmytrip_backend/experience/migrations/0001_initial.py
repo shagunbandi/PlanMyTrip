@@ -3,6 +3,8 @@
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
+import enumchoicefield.fields
+import experience.models
 
 
 class Migration(migrations.Migration):
@@ -14,7 +16,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="Itinerary",
+            name="Experience",
             fields=[
                 (
                     "id",
@@ -27,7 +29,25 @@ class Migration(migrations.Migration):
                 ),
                 ("name", models.CharField(max_length=60)),
                 ("description", models.CharField(max_length=180)),
-                ("timeline", models.JSONField(default=list)),
+                (
+                    "type",
+                    enumchoicefield.fields.EnumChoiceField(
+                        default=experience.models.ExperienceTypes(4),
+                        enum_class=experience.models.ExperienceTypes,
+                        max_length=10,
+                    ),
+                ),
+                ("google_place_id", models.CharField(max_length=120, null=True)),
+                (
+                    "ticket_link",
+                    models.CharField(blank=True, max_length=180, null=True),
+                ),
+                (
+                    "reservation_link",
+                    models.CharField(blank=True, max_length=180, null=True),
+                ),
+                ("activity_start_time", models.DateTimeField(blank=True, null=True)),
+                ("activity_end_time", models.DateTimeField(blank=True, null=True)),
                 ("timestamp", models.DateTimeField(auto_now_add=True)),
                 ("updated", models.DateTimeField(auto_now=True)),
                 (

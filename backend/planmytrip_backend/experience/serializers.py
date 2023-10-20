@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Experience, GoogleMapsPlaces
+from .models import Experience
 
 
 class ExperienceSerializer(serializers.ModelSerializer):

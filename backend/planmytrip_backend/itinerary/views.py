@@ -27,6 +27,7 @@ class ItineraryListApiView(APIView):
         data = {
             "name": request.data.get("name"),
             "description": request.data.get("description"),
+            "timeline": request.data.get("timeline"),
             "user": request.user.id,
         }
         serializer = ItinerarySerializer(data=data)
@@ -72,6 +73,7 @@ class ItineraryDetailApiView(APIView):
         data = {
             "name": request.data.get("name"),
             "description": request.data.get("description"),
+            "timeline": request.data.get("timeline"),
             "user": request.user.id,
         }
         serializer = ItinerarySerializer(
