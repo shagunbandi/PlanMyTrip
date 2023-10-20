@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from enumchoicefield import ChoiceEnum, EnumChoiceField
+from common.TimestampsMixins import TimestampsMixin
 
 
 class ExperienceTypes(ChoiceEnum):
@@ -9,8 +10,11 @@ class ExperienceTypes(ChoiceEnum):
     MONUMENT = "monument"
     OTHER = "other"
 
+    def __str__(self):
+        return self.value
 
-class Experience(models.Model):
+
+class Experience(TimestampsMixin):
     name = models.CharField(max_length=60)
     description = models.CharField(max_length=180)
     type = EnumChoiceField(ExperienceTypes, default=ExperienceTypes.OTHER)
@@ -22,10 +26,6 @@ class Experience(models.Model):
 
     # User Info
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-
-    # Metadata
-    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False, blank=True)
-    updated = models.DateTimeField(auto_now=True, blank=True)
 
     def __str__(self):
         return self.name
