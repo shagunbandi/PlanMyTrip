@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from enumchoicefield import ChoiceEnum, EnumChoiceField
 from common.TimestampsMixins import TimestampsMixin
 
+from itinerary.models import Itinerary
+
 
 class ExperienceTypes(ChoiceEnum):
     EATERY = "eatery"
@@ -23,6 +25,11 @@ class Experience(TimestampsMixin):
     reservation_link = models.CharField(max_length=180, blank=True, null=True)
     activity_start_time = models.DateTimeField(blank=True, null=True)
     activity_end_time = models.DateTimeField(blank=True, null=True)
+
+    # Itinerary
+    itinerary = models.ForeignKey(
+        Itinerary, on_delete=models.CASCADE, related_name="experiences"
+    )
 
     # User Info
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)

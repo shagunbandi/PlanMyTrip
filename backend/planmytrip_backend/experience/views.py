@@ -33,6 +33,7 @@ class ExperienceListApiView(APIView):
             "reservation_link": request.data.get("reservation_link"),
             "activity_start_time": request.data.get("activity_start_time"),
             "activity_end_time": request.data.get("activity_end_time"),
+            "itinerary": request.data.get("itinerary"),
             "user": request.user.id,
         }
         serializer = ExperienceSerializer(data=data)
@@ -84,6 +85,7 @@ class ExperienceDetailApiView(APIView):
             "reservation_link": request.data.get("reservation_link"),
             "activity_start_time": request.data.get("activity_start_time"),
             "activity_end_time": request.data.get("activity_end_time"),
+            "itinerary": request.data.get("itinerary"),
             "user": request.user.id,
         }
         serializer = ExperienceSerializer(

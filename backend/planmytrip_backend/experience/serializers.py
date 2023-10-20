@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Experience, ExperienceTypes
 from rest_framework import serializers
 from rest_enumfield import EnumField
+from itinerary.serializers import ItinerarySerializer
 
 
 class ExperienceSerializer(serializers.ModelSerializer):
