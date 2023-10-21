@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from .models import Experience, ExperienceTypes
+
+from itinerary.models import Itinerary
 from rest_framework import serializers
 from rest_enumfield import EnumField
 
@@ -21,8 +23,17 @@ class ExperienceSerializer(serializers.ModelSerializer):
     )
     activity_start_time = serializers.DateTimeField(allow_null=True, required=False)
     activity_end_time = serializers.DateTimeField(allow_null=True, required=False)
-    # TODO itinerary serialiser
-    # itinerary = serializers.IntegerField()
+    order = serializers.IntegerField(allow_null=False, required=True)
+    itinerary = serializers.IntegerField(
+        allow_null=False, required=True, write_only=True
+    )
+
+    def validate_itinerary(self, value):
+        try:
+            itinerary_instance = Itinerary.objects.get(id=value)
+        except itinerary_instance.DoesNotExist:
+            raise ValueError("Itinerary with given value does not exist")
+        return itinerary_instance
 
     class Meta:
         model = Experience

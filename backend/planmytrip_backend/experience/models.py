@@ -27,6 +27,7 @@ class Experience(TimestampsMixin):
     activity_end_time = models.DateTimeField(blank=True, null=True)
 
     # Itinerary
+    order = models.IntegerField(null=False)
     itinerary = models.ForeignKey(
         Itinerary, on_delete=models.CASCADE, related_name="experiences"
     )
@@ -36,3 +37,6 @@ class Experience(TimestampsMixin):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        unique_together = ("order", "itinerary")

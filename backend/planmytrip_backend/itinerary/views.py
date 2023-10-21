@@ -3,9 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
 from .models import Itinerary
-from .serializers import ItinerarySerializer, ItineraryWithExperiencesSerializer
-
-# , ItineraryWithExperiencesSerializer
+from .serializers import ItinerarySerializer, ItineraryNameSerializer
 
 
 class ItineraryListApiView(APIView):
@@ -17,8 +15,10 @@ class ItineraryListApiView(APIView):
         """
         List all the itineraries for given requested user
         """
-        itineraries = Itinerary.objects.filter(user=request.user.id)
-        serializer = ItinerarySerializer(itineraries, many=True)
+        itineraries = Itinerary.objects.filter(user=request.user.id).values(
+            "id", "name"
+        )
+        serializer = ItineraryNameSerializer(itineraries, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # 2. Create
@@ -29,7 +29,6 @@ class ItineraryListApiView(APIView):
         data = {
             "name": request.data.get("name"),
             "description": request.data.get("description"),
-            "timeline": request.data.get("timeline"),
             "user": request.user.id,
         }
         serializer = ItinerarySerializer(data=data)
@@ -58,7 +57,7 @@ class ItineraryDetailApiView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        serializer = ItineraryWithExperiencesSerializer(itinerary_instance)
+        serializer = ItinerarySerializer(itinerary_instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # 4. Update
@@ -75,7 +74,6 @@ class ItineraryDetailApiView(APIView):
         data = {
             "name": request.data.get("name"),
             "description": request.data.get("description"),
-            "timeline": request.data.get("timeline"),
             "user": request.user.id,
         }
         serializer = ItinerarySerializer(
