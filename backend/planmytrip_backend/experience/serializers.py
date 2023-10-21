@@ -2,7 +2,6 @@ from rest_framework import serializers
 from .models import Experience, ExperienceTypes
 from rest_framework import serializers
 from rest_enumfield import EnumField
-from itinerary.serializers import ItinerarySerializer
 
 
 class ExperienceSerializer(serializers.ModelSerializer):
@@ -22,6 +21,8 @@ class ExperienceSerializer(serializers.ModelSerializer):
     )
     activity_start_time = serializers.DateTimeField(allow_null=True, required=False)
     activity_end_time = serializers.DateTimeField(allow_null=True, required=False)
+    # TODO itinerary serialiser
+    # itinerary = serializers.IntegerField()
 
     class Meta:
         model = Experience

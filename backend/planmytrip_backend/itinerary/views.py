@@ -3,7 +3,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
 from .models import Itinerary
-from .serializers import ItinerarySerializer
+from .serializers import ItinerarySerializer, ItineraryWithExperiencesSerializer
+
+# , ItineraryWithExperiencesSerializer
 
 
 class ItineraryListApiView(APIView):
@@ -56,7 +58,7 @@ class ItineraryDetailApiView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        serializer = ItinerarySerializer(itinerary_instance)
+        serializer = ItineraryWithExperiencesSerializer(itinerary_instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # 4. Update

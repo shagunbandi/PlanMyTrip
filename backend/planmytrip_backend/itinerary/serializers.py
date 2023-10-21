@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Itinerary
 from experience.models import Experience
+from experience.serializers import ExperienceSerializer
 from rest_framework import serializers
 
 
@@ -25,3 +26,23 @@ class ItinerarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Itinerary
         fields = "__all__"
+
+
+class ItineraryWithExperiencesSerializer(ItinerarySerializer):
+    # detailed_timeline = ExperienceSerializer(many=True)
+
+    class Meta:
+        model = Itinerary
+        fields = ["name", "description", "timeline"]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+
+        experiences = Experience.objects.filter(
+            id__in=instance.timeline, user=instance.user
+        )
+
+        # Replace the list of IDs with the serialized author data
+        data["timeline"] = ExperienceSerializer(experiences, many=True).data
+
+        return data
