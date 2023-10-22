@@ -15,15 +15,15 @@ class ExperienceSerializer(serializers.ModelSerializer):
         max_length=120, trim_whitespace=True, allow_null=True, required=False
     )
     type = EnumField(choices=ExperienceTypes, to_choice=lambda x: x.value)
-    ticket_link = serializers.CharField(
-        max_length=180, trim_whitespace=True, allow_null=True, required=False
-    )
-    reservation_link = serializers.CharField(
-        max_length=180, trim_whitespace=True, allow_null=True, required=False
-    )
-    activity_start_time = serializers.DateTimeField(allow_null=True, required=False)
-    activity_end_time = serializers.DateTimeField(allow_null=True, required=False)
-    order = serializers.IntegerField(allow_null=False, required=True)
+    # ticket_link = serializers.CharField(
+    #     max_length=180, trim_whitespace=True, allow_null=True, required=False
+    # )
+    # reservation_link = serializers.CharField(
+    #     max_length=180, trim_whitespace=True, allow_null=True, required=False
+    # )
+    # activity_start_time = serializers.DateTimeField(allow_null=True, required=False)
+    # activity_end_time = serializers.DateTimeField(allow_null=True, required=False)
+    # order = serializers.IntegerField(allow_null=False, required=True)
     itinerary = serializers.IntegerField(
         allow_null=False, required=True, write_only=True
     )

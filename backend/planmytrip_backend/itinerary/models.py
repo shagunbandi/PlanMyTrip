@@ -1,14 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import User
-from common.TimestampsMixins import TimestampsMixin
+from common.mixins import TimestampsMixin, AuthBasicInfoMixin
 
 
-class Itinerary(TimestampsMixin):
-    name = models.CharField(max_length=60)
-    description = models.CharField(max_length=180)
-
-    # User Info
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+class Itinerary(TimestampsMixin, AuthBasicInfoMixin):
+    scratchpad = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.name

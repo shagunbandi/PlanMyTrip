@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from enumchoicefield import ChoiceEnum, EnumChoiceField
-from common.TimestampsMixins import TimestampsMixin
+from common.mixins.TimestampsMixin import TimestampsMixin
+from common.mixins.ReservationMixin import ReservationMixin
 
 from itinerary.models import Itinerary
 
@@ -16,15 +17,10 @@ class ExperienceTypes(ChoiceEnum):
         return self.value
 
 
-class Experience(TimestampsMixin):
+class Experience(TimestampsMixin, ReservationMixin):
     name = models.CharField(max_length=60)
     description = models.CharField(max_length=180)
     type = EnumChoiceField(ExperienceTypes, default=ExperienceTypes.OTHER)
-    google_place_id = models.CharField(max_length=120, null=True)
-    ticket_link = models.CharField(max_length=180, blank=True, null=True)
-    reservation_link = models.CharField(max_length=180, blank=True, null=True)
-    activity_start_time = models.DateTimeField(blank=True, null=True)
-    activity_end_time = models.DateTimeField(blank=True, null=True)
 
     # Itinerary
     order = models.IntegerField(null=False)

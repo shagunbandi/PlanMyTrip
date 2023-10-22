@@ -1,7 +1,11 @@
-from django.urls import path
-from .views import ItineraryListApiView, ItineraryDetailApiView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import ItineraryViewSet
+
+router = DefaultRouter()
+router.register(r"", ItineraryViewSet)
 
 urlpatterns = [
-    path("api/", ItineraryListApiView.as_view()),
-    path("api/<int:itinerary_id>/", ItineraryDetailApiView.as_view()),
+    # Your other URL patterns
+    path("api", include(router.urls)),  # Include the router's URL patterns
 ]
