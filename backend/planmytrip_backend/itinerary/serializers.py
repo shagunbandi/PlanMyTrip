@@ -9,4 +9,7 @@ class ItinerarySerializer(AuthBasicInfoMixinSerializer, CreateMixinSerializer):
 
     class Meta:
         model = Itinerary
-        fields = ["id", "scratchpad", "name", "notes", "user"]
+        fields = "__all__"
+
+    def create(self, validated_data):
+        return super().create(validated_data, Itinerary)

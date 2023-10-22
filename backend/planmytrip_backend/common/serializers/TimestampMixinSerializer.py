@@ -6,4 +6,4 @@ class TimestampsMixinSerializer(serializers.Serializer):
     updated = serializers.DateTimeField(read_only=True)
 
     class Meta:
-        fields = ("timestamp", "updated")
+        fields = "__all__"

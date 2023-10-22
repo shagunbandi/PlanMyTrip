@@ -24,11 +24,4 @@ class ReservationMixinSerializer(serializers.Serializer):
     )
 
     class Meta:
-        fields = (
-            "reservation_place_id",
-            "reservation_link",
-            "reservation_date",
-            "reservation_time",
-            "reservation_status",
-            "reservation_file",
-        )
+        fields = "__all__"

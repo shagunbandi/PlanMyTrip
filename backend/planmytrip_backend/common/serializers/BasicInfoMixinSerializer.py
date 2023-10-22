@@ -7,7 +7,7 @@ class BasicInfoMixinSerializer(serializers.Serializer):
     notes = serializers.CharField(allow_blank=True, allow_null=True)
 
     class Meta:
-        fields = ("name", "notes")
+        fields = "__all__"
 
 
 class AuthBasicInfoMixinSerializer(BasicInfoMixinSerializer):
@@ -16,4 +16,4 @@ class AuthBasicInfoMixinSerializer(BasicInfoMixinSerializer):
     )
 
     class Meta:
-        fields = ("name", "notes", "user")
+        fields = "__all__"
