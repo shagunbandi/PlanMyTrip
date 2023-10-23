@@ -77,3 +77,5 @@ node_modules
 /dist
 
 #  FROM django APP
+backend/planmytrip_backend/db.sqlite3
+
