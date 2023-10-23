@@ -29,14 +29,14 @@ export default {
     },
     getItems() {
       axios
-        .post('http://localhost:5000/', {
-          is_mock: false,
+        .post('http://localhost:8000/planner/', {
+          is_mock: true,
           country: 'India',
           number_of_days: '15'
         })
         .then((response) => {
           
-          this.items = this.sortedPoints(response?.data?.response?.content)
+          this.items = this.sortedPoints(response?.data)
           this.totalDistance = this.items.reduce((acc, curr) => acc + curr.distance_in_meters, 0)
           this.totalDuration = this.items.reduce((acc, curr ) => acc + curr.duration_in_mins, 0)
         })

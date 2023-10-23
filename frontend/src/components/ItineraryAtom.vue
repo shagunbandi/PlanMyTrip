@@ -27,7 +27,7 @@ export default {
     getDistance() {
       // if (this.previous_item)
       //   axios
-      //     .post('http://localhost:5000/maps/distance', {
+      //     .post('http://localhost:8000/maps/distance', {
       //       origin_place_id: this.place_id,
       //       destination_place_id: this.previous_item.place_id
       //     })
