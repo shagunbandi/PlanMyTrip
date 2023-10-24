@@ -7,12 +7,16 @@ from common.serializers import (
     CreateMixinSerializer,
     OrderMixinSerializer,
     ValidateParentMixinSerializer,
+    ReservationMixinSerializer,
 )
 from rest_enumfield import EnumField
 
 
 class AttractionSerializer(
-    AuthBasicInfoMixinSerializer, OrderMixinSerializer, TimestampsMixinSerializer
+    AuthBasicInfoMixinSerializer,
+    OrderMixinSerializer,
+    TimestampsMixinSerializer,
+    ReservationMixinSerializer,
 ):
     id = IntegerField(read_only=True)
     category = EnumField(choices=Category, to_choice=lambda x: x.value)

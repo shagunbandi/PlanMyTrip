@@ -1,10 +1,10 @@
 from django.db import models
-from common.mixins import TimestampsMixin, AuthBasicInfoMixin
+from common.mixins import TimestampsMixin, AuthBasicInfoMixin, ReservationMixin
 from day.models import Day
 from ordered_model.models import OrderedModel
 
 
-class Restaurant(TimestampsMixin, AuthBasicInfoMixin, OrderedModel):
+class Restaurant(TimestampsMixin, AuthBasicInfoMixin, ReservationMixin, OrderedModel):
     day = models.ForeignKey(
         Day, on_delete=models.CASCADE, related_name="restaurants", null=False
     )

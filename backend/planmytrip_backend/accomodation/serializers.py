@@ -7,11 +7,15 @@ from common.serializers import (
     CreateMixinSerializer,
     OrderMixinSerializer,
     ValidateParentMixinSerializer,
+    ReservationMixinSerializer,
 )
 
 
 class AccomodationSerializer(
-    AuthBasicInfoMixinSerializer, OrderMixinSerializer, TimestampsMixinSerializer
+    AuthBasicInfoMixinSerializer,
+    OrderMixinSerializer,
+    TimestampsMixinSerializer,
+    ReservationMixinSerializer,
 ):
     id = IntegerField(read_only=True)
     order = IntegerField(read_only=True)
@@ -27,6 +31,7 @@ def create_accomodation_serializer(day_id=None, user=None):
         ValidateParentMixinSerializer,
         OrderMixinSerializer,
         CreateMixinSerializer,
+        ReservationMixinSerializer,
     ):
         class Meta:
             model = Accomodation
