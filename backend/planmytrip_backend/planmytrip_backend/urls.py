@@ -26,6 +26,7 @@ from experience import urls as experience_urls
 from day import urls as day_urls
 from dish import urls as dish_urls
 from accomodation import urls as accomodation_urls
+from restaurant import urls as restaurants_urls
 
 
 urlpatterns = [
@@ -39,4 +40,5 @@ urlpatterns = [
     path("day/", include(day_urls)),
     path("dish/", include(dish_urls)),
     path("accomodation/", include(accomodation_urls)),
+    path("restaurants/", include(restaurants_urls)),
 ]
