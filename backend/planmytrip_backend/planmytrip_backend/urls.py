@@ -22,11 +22,11 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 from itinerary import urls as itinerary_urls
-from experience import urls as experience_urls
 from day import urls as day_urls
 from dish import urls as dish_urls
 from accomodation import urls as accomodation_urls
-from restaurant import urls as restaurants_urls
+from restaurant import urls as restaurant_urls
+from attraction import urls as attraction_urls
 
 
 urlpatterns = [
@@ -36,9 +36,9 @@ urlpatterns = [
     path("api/token/verify/", TokenVerifyView.as_view()),
     # App
     path("itinerary/", include(itinerary_urls)),
-    path("experience/", include(experience_urls)),
     path("day/", include(day_urls)),
     path("dish/", include(dish_urls)),
     path("accomodation/", include(accomodation_urls)),
-    path("restaurants/", include(restaurants_urls)),
+    path("restaurants/", include(restaurant_urls)),
+    path("attraction/", include(attraction_urls)),
 ]

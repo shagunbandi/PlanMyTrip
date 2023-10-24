@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ExperienceConfig(AppConfig):
+class AttractionConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "experience"
+    name = "attraction"
