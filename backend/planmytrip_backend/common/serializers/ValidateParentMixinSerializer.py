@@ -11,6 +11,6 @@ class ValidateParentMixinSerializer(serializers.Serializer):
             parent_instance = day_qs.first()
 
         if not parent_instance:
-            raise ValidationError(f"{parent_instance.__name__} is not valid")
-        data[parent_key_name] = parent_instance
+            raise ValidationError(f"{model.__name__} is not valid")
+        data[parent_key_name] = parent_instance.id
         return data
