@@ -5,13 +5,13 @@ from common.serializers import (
     TimestampsMixinSerializer,
     AuthBasicInfoMixinSerializer,
     CreateMixinSerializer,
-    SequenceMixinSerializer,
+    OrderMixinSerializer,
     ValidateParentMixinSerializer,
 )
 
 
 class RestaurantSerializer(
-    AuthBasicInfoMixinSerializer, SequenceMixinSerializer, TimestampsMixinSerializer
+    AuthBasicInfoMixinSerializer, OrderMixinSerializer, TimestampsMixinSerializer
 ):
     id = IntegerField(read_only=True)
 
@@ -24,7 +24,7 @@ def create_restaurant_serializer(day_id=None, user=None):
     class CreateRestaurantSerializer(
         AuthBasicInfoMixinSerializer,
         CreateMixinSerializer,
-        SequenceMixinSerializer,
+        OrderMixinSerializer,
         ValidateParentMixinSerializer,
     ):
         class Meta:

@@ -5,7 +5,7 @@ from common.serializers import (
     TimestampsMixinSerializer,
     AuthBasicInfoMixinSerializer,
     CreateMixinSerializer,
-    SequenceMixinSerializer,
+    OrderMixinSerializer,
     ValidateParentMixinSerializer,
 )
 from dish.serializers import DishSerializer
@@ -15,7 +15,7 @@ from restaurant.serializers import RestaurantSerializer
 
 class DaySerializer(
     AuthBasicInfoMixinSerializer,
-    SequenceMixinSerializer,
+    OrderMixinSerializer,
     TimestampsMixinSerializer,
 ):
     dishes = DishSerializer(many=True, read_only=True)
@@ -32,7 +32,7 @@ def create_day_serializer(itinerary_id=None, user=None):
     class CreateDaySerializer(
         AuthBasicInfoMixinSerializer,
         CreateMixinSerializer,
-        SequenceMixinSerializer,
+        OrderMixinSerializer,
         ValidateParentMixinSerializer,
     ):
         class Meta:
