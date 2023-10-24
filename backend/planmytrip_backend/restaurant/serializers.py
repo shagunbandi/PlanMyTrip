@@ -14,6 +14,7 @@ class RestaurantSerializer(
     AuthBasicInfoMixinSerializer, OrderMixinSerializer, TimestampsMixinSerializer
 ):
     id = IntegerField(read_only=True)
+    order = IntegerField(read_only=True)
 
     class Meta:
         model = Restaurant

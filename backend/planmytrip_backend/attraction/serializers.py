@@ -16,6 +16,7 @@ class AttractionSerializer(
 ):
     id = IntegerField(read_only=True)
     category = EnumField(choices=Category, to_choice=lambda x: x.value)
+    order = IntegerField(read_only=True)
 
     class Meta:
         model = Attraction
