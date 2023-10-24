@@ -5,15 +5,20 @@ from common.serializers import (
     TimestampsMixinSerializer,
     AuthBasicInfoMixinSerializer,
     CreateMixinSerializer,
-    SequenceMixinSerializer,
+    OrderMixinSerializer,
     ValidateParentMixinSerializer,
+    ReservationMixinSerializer,
 )
 
 
 class AccomodationSerializer(
-    AuthBasicInfoMixinSerializer, SequenceMixinSerializer, TimestampsMixinSerializer
+    AuthBasicInfoMixinSerializer,
+    OrderMixinSerializer,
+    TimestampsMixinSerializer,
+    ReservationMixinSerializer,
 ):
     id = IntegerField(read_only=True)
+    order = IntegerField(read_only=True)
 
     class Meta:
         model = Accomodation
@@ -23,9 +28,10 @@ class AccomodationSerializer(
 def create_accomodation_serializer(day_id=None, user=None):
     class CreateAccomodationSerializer(
         AuthBasicInfoMixinSerializer,
-        CreateMixinSerializer,
-        SequenceMixinSerializer,
         ValidateParentMixinSerializer,
+        OrderMixinSerializer,
+        CreateMixinSerializer,
+        ReservationMixinSerializer,
     ):
         class Meta:
             model = Accomodation

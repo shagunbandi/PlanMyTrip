@@ -5,15 +5,16 @@ from common.serializers import (
     TimestampsMixinSerializer,
     AuthBasicInfoMixinSerializer,
     CreateMixinSerializer,
-    SequenceMixinSerializer,
+    OrderMixinSerializer,
     ValidateParentMixinSerializer,
 )
 
 
 class DishSerializer(
-    AuthBasicInfoMixinSerializer, SequenceMixinSerializer, TimestampsMixinSerializer
+    AuthBasicInfoMixinSerializer, OrderMixinSerializer, TimestampsMixinSerializer
 ):
     id = IntegerField(read_only=True)
+    order = IntegerField(read_only=True)
 
     class Meta:
         model = Dish
@@ -23,9 +24,9 @@ class DishSerializer(
 def create_dish_serializer(day_id=None, user=None):
     class CreateDishSerializer(
         AuthBasicInfoMixinSerializer,
-        CreateMixinSerializer,
-        SequenceMixinSerializer,
         ValidateParentMixinSerializer,
+        OrderMixinSerializer,
+        CreateMixinSerializer,
     ):
         class Meta:
             model = Dish

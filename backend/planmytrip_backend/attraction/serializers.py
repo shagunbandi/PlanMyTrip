@@ -5,17 +5,22 @@ from common.serializers import (
     TimestampsMixinSerializer,
     AuthBasicInfoMixinSerializer,
     CreateMixinSerializer,
-    SequenceMixinSerializer,
+    OrderMixinSerializer,
     ValidateParentMixinSerializer,
+    ReservationMixinSerializer,
 )
 from rest_enumfield import EnumField
 
 
 class AttractionSerializer(
-    AuthBasicInfoMixinSerializer, SequenceMixinSerializer, TimestampsMixinSerializer
+    AuthBasicInfoMixinSerializer,
+    OrderMixinSerializer,
+    TimestampsMixinSerializer,
+    ReservationMixinSerializer,
 ):
     id = IntegerField(read_only=True)
     category = EnumField(choices=Category, to_choice=lambda x: x.value)
+    order = IntegerField(read_only=True)
 
     class Meta:
         model = Attraction
@@ -25,9 +30,9 @@ class AttractionSerializer(
 def create_attraction_serializer(day_id=None, user=None):
     class CreateAttractionSerializer(
         AuthBasicInfoMixinSerializer,
-        CreateMixinSerializer,
-        SequenceMixinSerializer,
         ValidateParentMixinSerializer,
+        OrderMixinSerializer,
+        CreateMixinSerializer,
     ):
         category = EnumField(choices=Category, to_choice=lambda x: x.value)
 

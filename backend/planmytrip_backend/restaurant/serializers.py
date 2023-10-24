@@ -5,15 +5,20 @@ from common.serializers import (
     TimestampsMixinSerializer,
     AuthBasicInfoMixinSerializer,
     CreateMixinSerializer,
-    SequenceMixinSerializer,
+    OrderMixinSerializer,
     ValidateParentMixinSerializer,
+    ReservationMixinSerializer,
 )
 
 
 class RestaurantSerializer(
-    AuthBasicInfoMixinSerializer, SequenceMixinSerializer, TimestampsMixinSerializer
+    AuthBasicInfoMixinSerializer,
+    OrderMixinSerializer,
+    TimestampsMixinSerializer,
+    ReservationMixinSerializer,
 ):
     id = IntegerField(read_only=True)
+    order = IntegerField(read_only=True)
 
     class Meta:
         model = Restaurant
@@ -23,9 +28,10 @@ class RestaurantSerializer(
 def create_restaurant_serializer(day_id=None, user=None):
     class CreateRestaurantSerializer(
         AuthBasicInfoMixinSerializer,
-        CreateMixinSerializer,
-        SequenceMixinSerializer,
         ValidateParentMixinSerializer,
+        OrderMixinSerializer,
+        CreateMixinSerializer,
+        ReservationMixinSerializer,
     ):
         class Meta:
             model = Restaurant

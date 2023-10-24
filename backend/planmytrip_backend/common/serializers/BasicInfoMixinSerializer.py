@@ -6,14 +6,8 @@ class BasicInfoMixinSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=60)
     notes = serializers.CharField(allow_blank=True, allow_null=True)
 
-    class Meta:
-        fields = "__all__"
-
 
 class AuthBasicInfoMixinSerializer(BasicInfoMixinSerializer):
     user = serializers.PrimaryKeyRelatedField(
         queryset=User.objects.all(), required=False, write_only=True
     )
-
-    class Meta:
-        fields = "__all__"
