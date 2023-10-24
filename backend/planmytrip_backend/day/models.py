@@ -9,6 +9,8 @@ class Day(TimestampsMixin, AuthBasicInfoMixin, OrderedModel):
         Itinerary, on_delete=models.CASCADE, related_name="days", null=False
     )
 
+    order_with_respect_to = "itinerary"
+
     def __str__(self):
         return self.name
 
