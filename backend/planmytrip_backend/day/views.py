@@ -6,7 +6,6 @@ from .serializers import DaySerializer, create_day_serializer
 
 class DayViewSet(viewsets.ModelViewSet):
     queryset = Day.objects.all()
-    serializer_class = DaySerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
