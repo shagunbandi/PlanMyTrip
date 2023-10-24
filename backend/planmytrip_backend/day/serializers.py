@@ -9,6 +9,7 @@ from common.serializers import (
     ValidateParentMixinSerializer,
 )
 from dish.serializers import DishSerializer
+from accomodation.serializers import AccomodationSerializer
 
 
 class DaySerializer(
@@ -17,6 +18,7 @@ class DaySerializer(
     TimestampsMixinSerializer,
 ):
     dishes = DishSerializer(many=True, read_only=True)
+    accomodations = AccomodationSerializer(many=True, read_only=True)
     id = IntegerField(read_only=True)
 
     class Meta:
