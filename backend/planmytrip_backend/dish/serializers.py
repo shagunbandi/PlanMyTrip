@@ -23,9 +23,9 @@ class DishSerializer(
 def create_dish_serializer(day_id=None, user=None):
     class CreateDishSerializer(
         AuthBasicInfoMixinSerializer,
-        CreateMixinSerializer,
-        OrderMixinSerializer,
         ValidateParentMixinSerializer,
+        OrderMixinSerializer,
+        CreateMixinSerializer,
     ):
         class Meta:
             model = Dish

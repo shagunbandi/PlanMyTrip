@@ -23,9 +23,9 @@ class RestaurantSerializer(
 def create_restaurant_serializer(day_id=None, user=None):
     class CreateRestaurantSerializer(
         AuthBasicInfoMixinSerializer,
-        CreateMixinSerializer,
-        OrderMixinSerializer,
         ValidateParentMixinSerializer,
+        OrderMixinSerializer,
+        CreateMixinSerializer,
     ):
         class Meta:
             model = Restaurant

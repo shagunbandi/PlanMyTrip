@@ -22,6 +22,3 @@ class ReservationMixinSerializer(serializers.Serializer):
     reservation_file = serializers.FileField(
         allow_null=True, allow_empty_file=True, use_url=False
     )
-
-    class Meta:
-        fields = "__all__"

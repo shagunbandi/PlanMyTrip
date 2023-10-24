@@ -23,9 +23,9 @@ class AccomodationSerializer(
 def create_accomodation_serializer(day_id=None, user=None):
     class CreateAccomodationSerializer(
         AuthBasicInfoMixinSerializer,
-        CreateMixinSerializer,
-        OrderMixinSerializer,
         ValidateParentMixinSerializer,
+        OrderMixinSerializer,
+        CreateMixinSerializer,
     ):
         class Meta:
             model = Accomodation

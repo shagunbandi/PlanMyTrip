@@ -25,9 +25,9 @@ class AttractionSerializer(
 def create_attraction_serializer(day_id=None, user=None):
     class CreateAttractionSerializer(
         AuthBasicInfoMixinSerializer,
-        CreateMixinSerializer,
-        OrderMixinSerializer,
         ValidateParentMixinSerializer,
+        OrderMixinSerializer,
+        CreateMixinSerializer,
     ):
         category = EnumField(choices=Category, to_choice=lambda x: x.value)
 

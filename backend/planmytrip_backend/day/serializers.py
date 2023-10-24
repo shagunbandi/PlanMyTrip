@@ -5,9 +5,9 @@ from common.serializers import (
     TimestampsMixinSerializer,
     AuthBasicInfoMixinSerializer,
     CreateMixinSerializer,
-    OrderMixinSerializer,
     ValidateParentMixinSerializer,
 )
+from ordered_model.models import OrderedModel
 from dish.serializers import DishSerializer
 from accomodation.serializers import AccomodationSerializer
 from restaurant.serializers import RestaurantSerializer
@@ -15,15 +15,15 @@ from restaurant.serializers import RestaurantSerializer
 
 class DaySerializer(
     AuthBasicInfoMixinSerializer,
-    OrderMixinSerializer,
     TimestampsMixinSerializer,
 ):
     dishes = DishSerializer(many=True, read_only=True)
     accomodations = AccomodationSerializer(many=True, read_only=True)
     restaurants = RestaurantSerializer(many=True, read_only=True)
     id = IntegerField(read_only=True)
+    order = IntegerField(read_only=True)
 
-    class Meta:
+    class Meta(OrderedModel.Meta):
         model = Day
         fields = "__all__"
 
@@ -31,9 +31,8 @@ class DaySerializer(
 def create_day_serializer(itinerary_id=None, user=None):
     class CreateDaySerializer(
         AuthBasicInfoMixinSerializer,
-        CreateMixinSerializer,
-        OrderMixinSerializer,
         ValidateParentMixinSerializer,
+        CreateMixinSerializer,
     ):
         class Meta:
             model = Day
