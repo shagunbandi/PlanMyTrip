@@ -6,3 +6,4 @@ from .SequenceMixinSerializer import SequenceMixinSerializer
 from .TimestampMixinSerializer import TimestampsMixinSerializer
 from .ReservationMixinSerializer import ReservationMixinSerializer
 from .CreateMixinSerializer import CreateMixinSerializer
+from .ValidateParentMixinSerializer import ValidateParentMixinSerializer
