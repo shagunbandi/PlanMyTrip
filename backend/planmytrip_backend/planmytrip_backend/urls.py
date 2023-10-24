@@ -39,6 +39,6 @@ urlpatterns = [
     path("day/", include(day_urls)),
     path("dish/", include(dish_urls)),
     path("accomodation/", include(accomodation_urls)),
-    path("restaurants/", include(restaurant_urls)),
+    path("restaurant/", include(restaurant_urls)),
     path("attraction/", include(attraction_urls)),
 ]
