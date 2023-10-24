@@ -35,4 +35,5 @@ urlpatterns = [
     path("itinerary/", include(itinerary_urls)),
     path("experience/", include(experience_urls)),
     path("day/", include(day_urls)),
+    path("dish/", include(day_urls)),
 ]

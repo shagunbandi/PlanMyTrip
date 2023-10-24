@@ -7,17 +7,20 @@ from common.serializers import (
     CreateMixinSerializer,
     SequenceMixinSerializer,
 )
+from dish.serializers import DishSerializer
 
 
 class DaySerializer(
     AuthBasicInfoMixinSerializer, SequenceMixinSerializer, TimestampsMixinSerializer
 ):
+    dishes = DishSerializer(many=True, read_only=True)
+
     class Meta:
         model = Day
         fields = "__all__"
 
 
-def create_day_serializer(itinerary_id=None):
+def create_day_serializer(itinerary_id=None, user=None):
     class CreateDaySerializer(
         AuthBasicInfoMixinSerializer, CreateMixinSerializer, SequenceMixinSerializer
     ):
@@ -28,14 +31,14 @@ def create_day_serializer(itinerary_id=None):
         def __init__(self, *args, **kwargs):
             self.itinerary_instance = None
             if itinerary_id:
-                parent_qs = Itinerary.objects.filter(id=itinerary_id)
-                if parent_qs.exists() and parent_qs.count() == 1:
-                    self.itinerary_instance = parent_qs.first()
+                itinerary_qs = Itinerary.objects.filter(id=itinerary_id, user=user)
+                if itinerary_qs.exists() and itinerary_qs.count() == 1:
+                    self.itinerary_instance = itinerary_qs.first()
             return super(CreateDaySerializer, self).__init__(*args, **kwargs)
 
         def validate(self, data):
             if not itinerary_id or not self.itinerary_instance:
-                raise ValidationError("this content type does not exist")
+                raise ValidationError("Itinerary Id is not valid")
             data["itinerary"] = self.itinerary_instance
             return data
 

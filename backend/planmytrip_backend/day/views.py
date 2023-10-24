@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from .models import Day
-from .serializers import DaySerializer, create_day_serializer
+from .serializers import create_day_serializer
 
 
 class DayViewSet(viewsets.ModelViewSet):
@@ -16,4 +16,4 @@ class DayViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         itinerary_id = self.request.GET.get("itinerary_id", None)
-        return create_day_serializer(itinerary_id=itinerary_id)
+        return create_day_serializer(itinerary_id=itinerary_id, user=self.request.user)
