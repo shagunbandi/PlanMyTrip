@@ -24,6 +24,7 @@ from rest_framework_simplejwt.views import (
 from itinerary import urls as itinerary_urls
 from experience import urls as experience_urls
 from day import urls as day_urls
+from dish import urls as dish_urls
 
 
 urlpatterns = [
@@ -35,4 +36,5 @@ urlpatterns = [
     path("itinerary/", include(itinerary_urls)),
     path("experience/", include(experience_urls)),
     path("day/", include(day_urls)),
+    path("dish/", include(dish_urls)),
 ]

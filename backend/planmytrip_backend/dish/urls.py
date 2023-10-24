@@ -1,9 +1,9 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import DayViewSet
+from .views import DishViewSet
 
 router = DefaultRouter()
-router.register(r"", DayViewSet)
+router.register(r"", DishViewSet)
 
 urlpatterns = [
     # Your other URL patterns

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "itinerary",
     "experience",
     "day",
+    "dish",
 ]
 
 MIDDLEWARE = [

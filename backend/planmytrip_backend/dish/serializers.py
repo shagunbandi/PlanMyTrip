@@ -1,6 +1,6 @@
 from rest_framework.serializers import IntegerField
-from .models import Day
-from itinerary.models import Itinerary
+from .models import Dish
+from day.models import Day
 from common.serializers import (
     TimestampsMixinSerializer,
     AuthBasicInfoMixinSerializer,
@@ -8,39 +8,33 @@ from common.serializers import (
     SequenceMixinSerializer,
     ValidateParentMixinSerializer,
 )
-from dish.serializers import DishSerializer
 
 
-class DaySerializer(
-    AuthBasicInfoMixinSerializer,
-    SequenceMixinSerializer,
-    TimestampsMixinSerializer,
+class DishSerializer(
+    AuthBasicInfoMixinSerializer, SequenceMixinSerializer, TimestampsMixinSerializer
 ):
-    dishes = DishSerializer(many=True, read_only=True)
     id = IntegerField(read_only=True)
 
     class Meta:
-        model = Day
+        model = Dish
         fields = "__all__"
 
 
-def create_day_serializer(itinerary_id=None, user=None):
-    class CreateDaySerializer(
+def create_dish_serializer(day_id=None, user=None):
+    class CreateDishSerializer(
         AuthBasicInfoMixinSerializer,
         CreateMixinSerializer,
         SequenceMixinSerializer,
         ValidateParentMixinSerializer,
     ):
         class Meta:
-            model = Day
-            exclude = ["itinerary"]
+            model = Dish
+            exclude = ["day"]
 
         def validate(self, data):
-            return super().validate_parent(
-                Itinerary, "itinerary_id", itinerary_id, user, data
-            )
+            return super().validate_parent(Day, "day_id", day_id, user, data)
 
         def create(self, validated_data):
             return super().create(validated_data)
 
-    return CreateDaySerializer
+    return CreateDishSerializer
