@@ -1,5 +1,5 @@
 from rest_framework.serializers import IntegerField
-from .models import Dish
+from .models import Accomodation
 from day.models import Day
 from common.serializers import (
     TimestampsMixinSerializer,
@@ -10,25 +10,25 @@ from common.serializers import (
 )
 
 
-class DishSerializer(
+class AccomodationSerializer(
     AuthBasicInfoMixinSerializer, SequenceMixinSerializer, TimestampsMixinSerializer
 ):
     id = IntegerField(read_only=True)
 
     class Meta:
-        model = Dish
+        model = Accomodation
         fields = "__all__"
 
 
-def create_dish_serializer(day_id=None, user=None):
-    class CreateDishSerializer(
+def create_accomodation_serializer(day_id=None, user=None):
+    class CreateAccomodationSerializer(
         AuthBasicInfoMixinSerializer,
         CreateMixinSerializer,
         SequenceMixinSerializer,
         ValidateParentMixinSerializer,
     ):
         class Meta:
-            model = Dish
+            model = Accomodation
             exclude = ["day"]
 
         def validate(self, data):
@@ -37,4 +37,4 @@ def create_dish_serializer(day_id=None, user=None):
         def create(self, validated_data):
             return super().create(validated_data)
 
-    return CreateDishSerializer
+    return CreateAccomodationSerializer
