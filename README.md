@@ -4,6 +4,6 @@ Create an itinerary the easy way
 
 # Teck Stack
 
-Django Backend
-VueJs Frontend
-sqlite Database
+1. Django Backend
+2. VueJs Frontend
+3. sqlite Database
