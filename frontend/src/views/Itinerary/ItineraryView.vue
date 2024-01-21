@@ -49,8 +49,8 @@
                 />
               </p>
               <button class="transparent-btn cross" @click="removeDay(day.id)">X</button>
-              <button class="transparent-btn move-up" @click="moveUp(day.id)">↑</button>
-              <button class="transparent-btn move-down" @click="moveDown(day.id)">↓</button>
+              <button class="transparent-btn move-up" @click="moveDay(day.id, 'up')">↑</button>
+              <button class="transparent-btn move-down" @click="moveDay(day.id, 'down')">↓</button>
             </Container>
             <!-- Display other details such as dishes, accommodations, restaurants, etc. as needed -->
           </span>
@@ -114,18 +114,22 @@ export default {
     },
     async removeDay(dayId) {
       try {
-        // Make your Axios call to remove the day using the dayId
-        const response = await api.delete(`day/api/${dayId}/?itinerary_id=1`)
-
-        // Handle the response as needed
-        console.log('Day removed successfully:', response.data)
-        // this.itinerary.days = this.itinerary.days.filter(day => day.id !== dayId);
+        await api.delete(`day/api/${dayId}/?itinerary_id=${this.itineraryId}`)
+        console.log('Day removed successfully:')
         this.fetchItinerary()
       } catch (error) {
-        // Handle errors
         console.error('Error removing day:', error)
       }
-    }
+    },
+    async moveDay(dayId, moveDirection) {
+      try {
+        await api.post(`day/${this.itineraryId}/${dayId}/move/${moveDirection}/`)
+        console.log('Day moved successfully:')
+        this.fetchItinerary()
+      } catch (error) {
+        console.error('Error moving day:', error)
+      }
+    },
   }
 }
 </script>
