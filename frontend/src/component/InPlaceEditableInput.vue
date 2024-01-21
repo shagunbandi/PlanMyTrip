@@ -5,7 +5,12 @@
         ><span @click="startEditing">{{ editedTitle }}</span></span
       >
       <span v-else-if="inputType === 'textarea'">
-        <textarea @click="startEditing" v-model="editedTitle" :rows="calculateRows()" readonly></textarea>
+        <textarea
+          @click="startEditing"
+          v-model="editedTitle"
+          :rows="calculateRows()"
+          readonly
+        ></textarea>
       </span>
     </span>
     <span v-else>
@@ -65,7 +70,7 @@ export default {
     },
     calculateRows() {
       // Calculate the number of lines in the content
-      const numberOfLines = this.editedTitle.split('\n').length
+      const numberOfLines = this.editedTitle?.split('\n').length || 0
 
       // Set a minimum number of rows to prevent the text area from being too small
       const minRows = this.editing ? numberOfLines + 4 : 1

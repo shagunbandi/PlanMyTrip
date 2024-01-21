@@ -6,7 +6,7 @@
           <InPlaceEditableInput
             :value="itinerary.name"
             inputType="input"
-            editEndPoint="/itinerary/api/1/"
+            :editEndPoint="`/itinerary/api/${itineraryId}/`"
             itemKey="name"
           />
         </h1>
@@ -14,14 +14,14 @@
           v-if="itinerary.notes"
           title="Notes"
           :value="itinerary.notes"
-          editEndPoint="/itinerary/api/1/"
+          :editEndPoint="`/itinerary/api/${itineraryId}/`"
           itemKey="notes"
         />
         <TitledTextInput
           v-if="itinerary.scratchpad"
           title="Scratchpad"
           :value="itinerary.scratchpad"
-          editEndPoint="/itinerary/api/1/"
+          :editEndPoint="`/itinerary/api/${itineraryId}/`"
           itemKey="scratchpad"
         />
         <Container>
@@ -32,13 +32,26 @@
               <h3>
                 Day {{ day.order + 1
                 }}<span v-if="day.name"
-                  >: <InPlaceEditableInput :value="day.name" inputType="input"
+                  >:
+                  <InPlaceEditableInput
+                    :value="day.name"
+                    inputType="input"
+                    :editEndPoint="`/day/api/${day.id}/?itinerary_id=${itineraryId}`"
+                    itemKey="name"
                 /></span>
               </h3>
-              <p>{{ day.notes }}</p>
+              <p>
+                <InPlaceEditableInput
+                  :value="day.notes"
+                  inputType="textarea"
+                  :editEndPoint="`/day/api/${day.id}/?itinerary_id=${itineraryId}`"
+                  itemKey="notes"
+                />
+              </p>
             </Container>
             <!-- Display other details such as dishes, accommodations, restaurants, etc. as needed -->
           </span>
+          <button class="green-button" @click="addDay">Add Day</button>
         </Container>
       </Container>
     </div>
@@ -63,7 +76,8 @@ export default {
   },
   data() {
     return {
-      itinerary: null
+      itinerary: null,
+      itineraryId: 1
     }
   },
   mounted() {
@@ -73,7 +87,7 @@ export default {
   methods: {
     fetchItinerary() {
       api
-        .get('/itinerary/api/1')
+        .get(`/itinerary/api/${this.itineraryId}`)
         .then((response) => {
           this.itinerary = response.data
           console.log(this.itinerary)
@@ -81,6 +95,19 @@ export default {
         .catch((error) => {
           console.error('Error fetching itinerary:', error)
         })
+    },
+    async addDay() {
+      const newDayData = {
+        name: 'New Day',
+        notes: ''
+      }
+      try {
+        const response = await api.post(`/day/api/?itinerary_id=${this.itineraryId}`, newDayData)
+        this.itinerary.days = [...this.itinerary.days, response.data]
+      } catch (error) {
+        // Handle errors
+        console.error('Error adding day:', error)
+      }
     }
   }
 }
