@@ -48,6 +48,7 @@
                   itemKey="notes"
                 />
               </p>
+              <button class="cross" @click="removeDay(day.id)">X</button>
             </Container>
             <!-- Display other details such as dishes, accommodations, restaurants, etc. as needed -->
           </span>
@@ -108,6 +109,20 @@ export default {
         // Handle errors
         console.error('Error adding day:', error)
       }
+    },
+    async removeDay(dayId) {
+      try {
+        // Make your Axios call to remove the day using the dayId
+        const response = await api.delete(`day/api/${dayId}/?itinerary_id=1`)
+
+        // Handle the response as needed
+        console.log('Day removed successfully:', response.data)
+        // this.itinerary.days = this.itinerary.days.filter(day => day.id !== dayId);
+        this.fetchItinerary()
+      } catch (error) {
+        // Handle errors
+        console.error('Error removing day:', error)
+      }
     }
   }
 }
@@ -116,5 +131,16 @@ export default {
 <style scoped>
 .title {
   text-align: center;
+}
+.cross {
+  color: red;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: 0;
+}
+.cross:hover {
+  cursor: pointer;
 }
 </style>

@@ -14,6 +14,7 @@ export default {
 
 <style scoped>
 .container {
+  position: relative;
   background-color: rgba(0, 0, 0, 0.2); /* Translucent white background */
   border-radius: 10px; /* Rounded edges */
   padding: 10px;
