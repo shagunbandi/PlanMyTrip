@@ -7,7 +7,12 @@
         {{ title }}
       </p>
       <p class="content">
-        <InPlaceEditableInputVue :value="value" inputType="textarea" />
+        <InPlaceEditableInputVue
+          :value="value"
+          inputType="textarea"
+          :editEndPoint="editEndPoint"
+          :itemKey="itemKey"
+        />
       </p>
     </div>
   </Container>
@@ -20,13 +25,13 @@ import InPlaceEditableInputVue from './InPlaceEditableInput.vue'
 export default {
   components: {
     Container,
-
     InPlaceEditableInputVue
   },
-
   props: {
     title: String,
-    value: String
+    value: String,
+    editEndPoint: String,
+    itemKey: String
   },
   data() {
     return {

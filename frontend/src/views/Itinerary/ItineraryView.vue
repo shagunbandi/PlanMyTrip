@@ -2,12 +2,27 @@
   <div>
     <div v-if="itinerary">
       <Container>
-        <h1 class="title">{{ itinerary.name }}</h1>
-        <TitledTextInput v-if="itinerary.notes" title="Notes" :value="itinerary.notes" />
+        <h1 class="title">
+          <InPlaceEditableInput
+            :value="itinerary.name"
+            inputType="input"
+            editEndPoint="/itinerary/api/1/"
+            itemKey="name"
+          />
+        </h1>
+        <TitledTextInput
+          v-if="itinerary.notes"
+          title="Notes"
+          :value="itinerary.notes"
+          editEndPoint="/itinerary/api/1/"
+          itemKey="notes"
+        />
         <TitledTextInput
           v-if="itinerary.scratchpad"
           title="Scratchpad"
           :value="itinerary.scratchpad"
+          editEndPoint="/itinerary/api/1/"
+          itemKey="scratchpad"
         />
         <Container>
           <h4>Day-wise plan</h4>
