@@ -48,7 +48,9 @@
                   itemKey="notes"
                 />
               </p>
-              <button class="cross" @click="removeDay(day.id)">X</button>
+              <button class="transparent-btn cross" @click="removeDay(day.id)">X</button>
+              <button class="transparent-btn move-up" @click="moveUp(day.id)">↑</button>
+              <button class="transparent-btn move-down" @click="moveDown(day.id)">↓</button>
             </Container>
             <!-- Display other details such as dishes, accommodations, restaurants, etc. as needed -->
           </span>
@@ -132,15 +134,35 @@ export default {
 .title {
   text-align: center;
 }
+.transparent-btn {
+  background-color: transparent;
+  border: 0;
+}
+.transparent-btn:hover {
+  cursor: pointer;
+}
+
 .cross {
   color: red;
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: transparent;
-  border: 0;
+  z-index: 1;
 }
-.cross:hover {
-  cursor: pointer;
+
+.move-up {
+  color: white;
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  z-index: 1;
+}
+
+.move-down {
+  color: white;
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  z-index: 1;
 }
 </style>
