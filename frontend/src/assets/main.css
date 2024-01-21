@@ -1,35 +1,20 @@
-@import './base.css';
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
+body {
+  font-family: sans-serif;
+  /* background: url('../assets/aurora-green.jpg') center center no-repeat; */
+  /* background-size: contain; */
+  background-color: darkgreen;
+  color: white;
 }
 
-a,
-.green {
+.green-button {
+  padding: 4px 4px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #fff;
+  background-color: #28a745; /* Green color for success */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
 }
