@@ -33,21 +33,6 @@ export default {
       editing: false,
       inputValue: this.value
     }
-  },
-  methods: {
-    toggleEditMode() {
-      if (this.editing) {
-        // Save logic (e.g., update backend, if needed)
-        // Here, we are just toggling back to read-only mode
-        this.editing = false
-      } else {
-        // Switch to edit mode
-        this.editing = true
-      }
-    },
-    handleInput() {
-      // Handle input changes, if needed
-    }
   }
 }
 </script>
@@ -57,5 +42,4 @@ export default {
   font-size: 12px;
   font-weight: bold;
 }
-
 </style>
