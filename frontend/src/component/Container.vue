@@ -1,7 +1,7 @@
 <!-- Container.vue -->
 
 <template>
-  <div class="container">
+  <div class="container position-relative">
     <slot></slot>
   </div>
 </template>
@@ -14,12 +14,6 @@ export default {
 
 <style scoped>
 .container {
-  position: relative;
-  background-color: rgba(0, 0, 0, 0.2); /* Translucent white background */
-  border-radius: 10px; /* Rounded edges */
-  padding: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
-  margin-bottom: 10px;
+  background-color: white;
 }
 </style>

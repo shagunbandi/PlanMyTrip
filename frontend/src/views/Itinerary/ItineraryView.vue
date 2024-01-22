@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-if="itinerary">
+  <Container>
+    <span v-if="itinerary">
       <Container>
         <h1 class="title">
           <InPlaceEditableInput
@@ -69,19 +69,19 @@
           <button class="green-btn" @click="addDay">Add Day</button>
         </Container>
       </Container>
-    </div>
+    </span>
 
-    <div v-else>
+    <span v-else>
       <p>Loading itinerary...</p>
-    </div>
-  </div>
+    </span>
+  </Container>
 </template>
 
 <script>
 import api from '../../api'
 import Container from '../../component/Container.vue'
-import TitledTextInput from '../../component/TitledTextInput.vue'
 import InPlaceEditableInput from '../../component/InPlaceEditableInput.vue'
+import TitledTextInput from '../../component/TitledTextInput.vue'
 
 export default {
   components: {
@@ -152,17 +152,6 @@ export default {
 </script>
 
 <style scoped>
-.title {
-  text-align: center;
-}
-.transparent-btn {
-  background-color: transparent;
-  border: 0;
-}
-.transparent-btn:hover {
-  cursor: pointer;
-}
-
 .cross {
   color: red;
   position: absolute;
