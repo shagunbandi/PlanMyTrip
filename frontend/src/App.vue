@@ -1,18 +1,30 @@
+<!-- YourComponent.vue -->
+<template>
+  <div>
+    <nav class="navbar navbar-light bg-light">
+      <div class="container">
+        <ul class="nav justify-content-center">
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/login">Login</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/">Home</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/about">About</RouterLink>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <RouterView />
+  </div>
+</template>
+
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
 </script>
 
-<template>
-  <nav>
-    <h1><RouterLink to="/login">Login</RouterLink></h1>
-    <h1><RouterLink to="/">Home</RouterLink></h1>
-    <h1><RouterLink to="/about">About</RouterLink></h1>
-    <hr />
-  </nav>
-
-  <RouterView />
-</template>
-
 <style>
-@import 'bootstrap/dist/css/bootstrap.css';
+/* You can add additional styles if needed */
 </style>

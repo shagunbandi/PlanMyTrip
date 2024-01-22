@@ -5,16 +5,3 @@ body {
   background-color: lightgrey;
   color: white;
 }
-
-.green-btn {
-  padding: 10px;
-  padding-left: 12px;
-  padding-right: 12px;
-  color: #fff;
-  background-color: #28a745; /* Green color for success */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-}
