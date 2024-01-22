@@ -10,10 +10,9 @@
             itemKey="name"
           />
         </h1>
-
         <Notes :value="itinerary.notes" :itineraryId="itineraryId" />
+        <br />
         <Scratchpad :value="itinerary.scratchpad" :itineraryId="itineraryId" />
-
         <br />
         <DayWisePlan
           :itineraryId="itineraryId"

@@ -41,7 +41,7 @@
       </button>
     </div>
   </div>
-  <button class="green-btn" @click="addDay">Add Day</button>
+  <button class="btn btn-success" @click="addDay">Add Day</button>
 </template>
 
 <script>
@@ -71,6 +71,8 @@ export default {
           `/day/api/?itinerary_id=${this.itineraryId}`,
           newDayData,
         )
+        const newDay = response.data
+        newDay.name = ''
         this.$emit('updateDays', [...this.days, response.data])
       } catch (error) {
         // Handle errors
