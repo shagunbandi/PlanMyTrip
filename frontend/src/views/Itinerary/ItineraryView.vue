@@ -13,6 +13,8 @@
 
         <Notes :value="itinerary.notes" :itineraryId="itineraryId" />
         <Scratchpad :value="itinerary.scratchpad" :itineraryId="itineraryId" />
+
+        <br />
         <DayWisePlan
           :itineraryId="itineraryId"
           :days="itinerary.days"

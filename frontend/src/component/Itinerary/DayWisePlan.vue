@@ -1,10 +1,11 @@
 <template>
-  <h4>Day-wise plan</h4>
-
-  <span v-for="day in days" :key="day.id">
-    <Container>
-      <h3>
-        Day {{ day.order + 1 }}:
+  <h4 class="day-wise-plan">Day-wise plan</h4>
+  <div class="d-flex" v-for="day in days" :key="day.id">
+    <div class="flex-grow-1">
+      <h5 class="day d-flex">
+        <span class="day-text flex-shrink-0"
+          >Day {{ day.order + 1 }}:&nbsp;</span
+        >
         <InPlaceEditableInput
           inputType="input"
           placeholder="Write a title for you day"
@@ -12,15 +13,20 @@
           :value="day.name"
           :editEndPoint="`/day/api/${day.id}/?itinerary_id=${itineraryId}`"
         />
-      </h3>
+      </h5>
       <p>
+        <label for="notes">Notes</label>
         <InPlaceEditableInput
           :value="day.notes"
           inputType="textarea"
+          placeholder="Write something about the day"
           :editEndPoint="`/day/api/${day.id}/?itinerary_id=${itineraryId}`"
           itemKey="notes"
         />
       </p>
+      <br />
+    </div>
+    <div class="button-container flex-shrink-0">
       <button class="transparent-btn cross" @click="removeDay(day.id)">
         X
       </button>
@@ -33,20 +39,17 @@
       >
         ↓
       </button>
-    </Container>
-    <!-- Display other details such as dishes, accommodations, restaurants, etc. as needed -->
-  </span>
+    </div>
+  </div>
   <button class="green-btn" @click="addDay">Add Day</button>
 </template>
 
 <script>
 import api from '@/api'
-import Container from '@/component/Container.vue'
 import InPlaceEditableInput from '@/component/InPlaceEditableInput.vue'
 
 export default {
   components: {
-    Container,
     InPlaceEditableInput,
   },
   props: {
@@ -99,27 +102,30 @@ export default {
 </script>
 
 <style scoped>
+/* Day Wise Plan */
+.day-wise-plan {
+  font-weight: bold;
+}
+
+.day {
+  font-style: italic;
+  display: flex;
+  width: 100%;
+}
+
+/* Button Group */
+
+.button-container {
+  display: flex;
+  flex-flow: column;
+  padding-left: 4px;
+}
+
+.button-container button {
+  background-color: white;
+  border: none;
+}
 .cross {
   color: red;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 1;
-}
-
-.move-up {
-  color: white;
-  position: absolute;
-  top: 30px;
-  right: 10px;
-  z-index: 1;
-}
-
-.move-down {
-  color: white;
-  position: absolute;
-  top: 50px;
-  right: 10px;
-  z-index: 1;
 }
 </style>

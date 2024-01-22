@@ -55,4 +55,12 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.form-control-plaintext {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+}
+</style>
