@@ -10,35 +10,24 @@
             itemKey="name"
           />
         </h1>
-        <TitledTextInput
-          v-if="itinerary.notes"
-          title="Notes"
-          :value="itinerary.notes"
-          :editEndPoint="`/itinerary/api/${itineraryId}/`"
-          itemKey="notes"
-        />
-        <TitledTextInput
-          v-if="itinerary.scratchpad"
-          title="Scratchpad"
-          :value="itinerary.scratchpad"
-          :editEndPoint="`/itinerary/api/${itineraryId}/`"
-          itemKey="scratchpad"
-        />
+
+        <Notes :value="itinerary.notes" :itineraryId="itineraryId" />
+        <Scratchpad :value="itinerary.scratchpad" :itineraryId="itineraryId" />
+
         <Container>
           <h4>Day-wise plan</h4>
 
           <span v-for="day in itinerary.days" :key="day.id">
             <Container>
               <h3>
-                Day {{ day.order + 1
-                }}<span v-if="day.name"
-                  >:
-                  <InPlaceEditableInput
-                    :value="day.name"
-                    inputType="input"
-                    :editEndPoint="`/day/api/${day.id}/?itinerary_id=${itineraryId}`"
-                    itemKey="name"
-                /></span>
+                Day {{ day.order + 1 }}:
+                <InPlaceEditableInput
+                  inputType="input"
+                  placeholder="Write a title for you day"
+                  itemKey="name"
+                  :value="day.name"
+                  :editEndPoint="`/day/api/${day.id}/?itinerary_id=${itineraryId}`"
+                />
               </h3>
               <p>
                 <InPlaceEditableInput
@@ -81,13 +70,15 @@
 import api from '../../api'
 import Container from '../../component/Container.vue'
 import InPlaceEditableInput from '../../component/InPlaceEditableInput.vue'
-import TitledTextInput from '../../component/TitledTextInput.vue'
+import Notes from '../../component/Itinerary/Notes.vue'
+import Scratchpad from '../../component/Itinerary/Scratchpad.vue'
 
 export default {
   components: {
     Container,
-    TitledTextInput,
     InPlaceEditableInput,
+    Notes,
+    Scratchpad,
   },
   data() {
     return {

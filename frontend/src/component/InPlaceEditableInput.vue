@@ -1,21 +1,21 @@
 <template>
-  <span v-if="inputType === 'input'">
-    <input
-      id="editableInput"
-      class="form-control-plaintext"
-      v-model="editedTitle"
-      @blur="saveChanges"
-    />
-  </span>
-  <span v-else-if="inputType === 'textarea'">
-    <textarea
-      id="editableInput"
-      class="form-control-plaintext"
-      v-model="editedTitle"
-      @blur="saveChanges"
-      :rows="calculateRows()"
-    ></textarea>
-  </span>
+  <input
+    v-if="inputType === 'input'"
+    :id="itemKey"
+    class="form-control-plaintext"
+    :placeholder="placeholder"
+    v-model="editedTitle"
+    @blur="saveChanges"
+  />
+  <textarea
+    v-else-if="inputType === 'textarea'"
+    :id="itemKey"
+    class="form-control-plaintext"
+    v-model="editedTitle"
+    :placeholder="placeholder"
+    @blur="saveChanges"
+    :rows="calculateRows()"
+  ></textarea>
 </template>
 
 <script>
@@ -27,6 +27,7 @@ export default {
     editEndPoint: String,
     itemKey: String,
     inputType: String,
+    placeholder: String,
   },
   data() {
     return {
@@ -47,14 +48,8 @@ export default {
       }
     },
     calculateRows() {
-      // Calculate the number of lines in the content
       const numberOfLines = this.editedTitle?.split('\n').length || 0
-
-      // Set a minimum number of rows to prevent the text area from being too small
-      const minRows = 1
-
-      // Adjust the number of rows based on the content
-      return Math.max(minRows, numberOfLines)
+      return Math.max(1, numberOfLines)
     },
   },
 }
