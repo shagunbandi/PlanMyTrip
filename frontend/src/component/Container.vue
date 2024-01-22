@@ -6,12 +6,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  // Component options...
-}
-</script>
-
 <style scoped>
 .container {
   background-color: white;
