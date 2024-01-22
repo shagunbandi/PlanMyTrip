@@ -6,8 +6,8 @@ import axios from 'axios'
 const api = axios.create({
   baseURL: 'http://localhost:8000', // Replace with your API domain
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 })
 
 // Set up an interceptor to add the authorization token from local storage to every request
@@ -21,7 +21,7 @@ api.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error)
-  }
+  },
 )
 
 export default api

@@ -2,14 +2,14 @@ body {
   font-family: sans-serif;
   /* background: url('../assets/aurora-green.jpg') center center no-repeat; */
   /* background-size: contain; */
-  background-color: darkgreen;
+  background-color: lightgrey;
   color: white;
 }
 
-.green-button {
-  padding: 4px 4px;
-  padding-left: 10px;
-  padding-right: 10px;
+.green-btn {
+  padding: 10px;
+  padding-left: 12px;
+  padding-right: 12px;
   color: #fff;
   background-color: #28a745; /* Green color for success */
   border: none;

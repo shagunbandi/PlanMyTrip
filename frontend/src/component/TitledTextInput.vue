@@ -25,20 +25,20 @@ import InPlaceEditableInputVue from './InPlaceEditableInput.vue'
 export default {
   components: {
     Container,
-    InPlaceEditableInputVue
+    InPlaceEditableInputVue,
   },
   props: {
     title: String,
     value: String,
     editEndPoint: String,
-    itemKey: String
+    itemKey: String,
   },
   data() {
     return {
       editing: false,
-      inputValue: this.value
+      inputValue: this.value,
     }
-  }
+  },
 }
 </script>
 

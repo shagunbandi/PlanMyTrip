@@ -48,13 +48,25 @@
                   itemKey="notes"
                 />
               </p>
-              <button class="transparent-btn cross" @click="removeDay(day.id)">X</button>
-              <button class="transparent-btn move-up" @click="moveDay(day.id, 'up')">↑</button>
-              <button class="transparent-btn move-down" @click="moveDay(day.id, 'down')">↓</button>
+              <button class="transparent-btn cross" @click="removeDay(day.id)">
+                X
+              </button>
+              <button
+                class="transparent-btn move-up"
+                @click="moveDay(day.id, 'up')"
+              >
+                ↑
+              </button>
+              <button
+                class="transparent-btn move-down"
+                @click="moveDay(day.id, 'down')"
+              >
+                ↓
+              </button>
             </Container>
             <!-- Display other details such as dishes, accommodations, restaurants, etc. as needed -->
           </span>
-          <button class="green-button" @click="addDay">Add Day</button>
+          <button class="green-btn" @click="addDay">Add Day</button>
         </Container>
       </Container>
     </div>
@@ -75,12 +87,12 @@ export default {
   components: {
     Container,
     TitledTextInput,
-    InPlaceEditableInput
+    InPlaceEditableInput,
   },
   data() {
     return {
       itinerary: null,
-      itineraryId: 1
+      itineraryId: 1,
     }
   },
   mounted() {
@@ -102,10 +114,13 @@ export default {
     async addDay() {
       const newDayData = {
         name: 'New Day',
-        notes: ''
+        notes: '',
       }
       try {
-        const response = await api.post(`/day/api/?itinerary_id=${this.itineraryId}`, newDayData)
+        const response = await api.post(
+          `/day/api/?itinerary_id=${this.itineraryId}`,
+          newDayData,
+        )
         this.itinerary.days = [...this.itinerary.days, response.data]
       } catch (error) {
         // Handle errors
@@ -123,14 +138,16 @@ export default {
     },
     async moveDay(dayId, moveDirection) {
       try {
-        await api.post(`day/${this.itineraryId}/${dayId}/move/${moveDirection}/`)
+        await api.post(
+          `day/${this.itineraryId}/${dayId}/move/${moveDirection}/`,
+        )
         console.log('Day moved successfully:')
         this.fetchItinerary()
       } catch (error) {
         console.error('Error moving day:', error)
       }
     },
-  }
+  },
 }
 </script>
 

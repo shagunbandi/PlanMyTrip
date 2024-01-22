@@ -15,13 +15,16 @@
     </span>
     <span v-else>
       <span v-if="inputType === 'input'"
-        ><input v-model="editedTitle" @input="handleInput" @keyup.enter="saveChanges"
+        ><input
+          v-model="editedTitle"
+          @input="handleInput"
+          @keyup.enter="saveChanges"
       /></span>
       <span v-else-if="inputType === 'textarea'">
         <textarea v-model="editedTitle" @input="handleInput" />
       </span>
       &nbsp;
-      <button class="green-button" @click="saveChanges">Save</button>
+      <button class="green-btn" @click="saveChanges">Save</button>
     </span>
   </span>
 </template>
@@ -34,12 +37,12 @@ export default {
     value: String,
     editEndPoint: String,
     itemKey: String,
-    inputType: String
+    inputType: String,
   },
   data() {
     return {
       editedTitle: this.value,
-      editing: false
+      editing: false,
     }
   },
   methods: {
@@ -52,7 +55,7 @@ export default {
     async saveChanges() {
       try {
         const patchData = {
-          [this.itemKey]: this.editedTitle
+          [this.itemKey]: this.editedTitle,
         }
         const response = await api.patch(this.editEndPoint, patchData)
 
@@ -78,8 +81,8 @@ export default {
 
       // Adjust the number of rows based on the content
       return Math.max(minRows, numberOfLines)
-    }
-  }
+    },
+  },
 }
 </script>
 

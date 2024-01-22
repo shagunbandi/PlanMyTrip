@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
     }
   },
   methods: {
@@ -28,7 +28,7 @@ export default {
       api
         .post('/api/token/', {
           username: this.username,
-          password: this.password
+          password: this.password,
         })
         .then((response) => {
           const token = response.data
@@ -42,8 +42,8 @@ export default {
           console.error('Authentication failed', error)
           // Handle authentication failure (show error message, etc.)
         })
-    }
-  }
+    },
+  },
 }
 </script>
 
