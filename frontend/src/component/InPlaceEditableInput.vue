@@ -62,5 +62,6 @@ export default {
   font: inherit;
   font-weight: inherit;
   font-style: inherit;
+  color: inherit;
 }
 </style>
