@@ -30,6 +30,7 @@
         :dishes="day.dishes"
         dishName="dish"
         dishTitle="Dish"
+        @fetchItinerary="fetchItinerary"
       />
 
       <!-- All other features go here -->
@@ -68,13 +69,16 @@ export default {
   data() {
     return {}
   },
-  emits: ['moveDay', 'removeDay'],
+  emits: ['moveDay', 'removeDay', 'fetchItinerary'],
   methods: {
     removeDay(dayId) {
       this.$emit('removeDay', dayId)
     },
     moveDay(dayId, moveDirection) {
       this.$emit('moveDay', dayId, moveDirection)
+    },
+    fetchItinerary() {
+      this.$emit('fetchItinerary')
     },
   },
 }
