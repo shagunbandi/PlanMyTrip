@@ -67,7 +67,6 @@ export default {
 </script>
 
 <style scoped>
-/* Day Wise Plan */
 .day-wise-plan {
   font-weight: bold;
 }

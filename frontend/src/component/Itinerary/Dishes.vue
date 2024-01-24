@@ -4,7 +4,6 @@
     <li v-for="dish in dishes" :key="dish.id" class="d-flex align-items-start">
       <CheckboxInput
         :value="dish.checked_status"
-        extraClass="flex-shrink-0 checkbox"
         @input="updateCheckboxStatus($event, dish.id)"
       />
       <div class="flex-grow-1">
