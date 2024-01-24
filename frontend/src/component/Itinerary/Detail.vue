@@ -56,15 +56,27 @@
           :editEndPoint="`/${name}/api/${detail.id}/?day_id=${dayId}`"
         />
 
+        <!-- Reservation Time -->
+        <span v-if="isFeatureEnabled(detailKeys.RESERVATION_TIME)">
+          <label class="label-light">Reservation Time:&nbsp;</label>
+          <TimeInput
+            :value="detail[detailKeys.RESERVATION_TIME]"
+            :itemKey="detailKeys.RESERVATION_TIME"
+            :editEndPoint="`/${name}/api/${detail.id}/?day_id=${dayId}`"
+          />
+          <br />
+        </span>
+
         <!-- Reservation Status -->
         <span v-if="isFeatureEnabled(detailKeys.RESERVATION_STATUS)">
-          <label class="reservation-status">Reservation Status:&nbsp;</label>
+          <label class="label-light">Reservation Status:&nbsp;</label>
           <CheckboxInput
             :value="detail[detailKeys.RESERVATION_STATUS]"
             :itemKey="detailKeys.RESERVATION_STATUS"
             :states="Object.keys(reservationStatus)"
             :editEndPoint="`/${name}/api/${detail.id}/?day_id=${dayId}`"
           />
+          <br />
         </span>
       </div>
     </li>
@@ -75,12 +87,14 @@
 <script>
 import CheckboxInput from '@/component/CheckboxInput.vue'
 import InPlaceEditableInput from '@/component/InPlaceEditableInput.vue'
+import TimeInput from '@/component/TimeInput.vue'
 import { DETAIL_KEYS, RESERVATION_STATUS } from '@/constants'
 
 export default {
   components: {
     InPlaceEditableInput,
     CheckboxInput,
+    TimeInput,
   },
   props: {
     dayId: Number,
@@ -120,7 +134,7 @@ ul {
   font-style: italic;
 }
 
-.reservation-status {
+.label-light {
   font-weight: normal;
   font-style: normal;
 }
