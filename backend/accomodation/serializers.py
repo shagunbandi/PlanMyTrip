@@ -1,14 +1,16 @@
-from rest_framework.serializers import IntegerField
-from .models import Accomodation
-from day.models import Day
 from common.serializers import (
-    TimestampsMixinSerializer,
     AuthBasicInfoMixinSerializer,
+    CheckboxMixinSerializer,
     CreateMixinSerializer,
     OrderMixinSerializer,
-    ValidateParentMixinSerializer,
     ReservationMixinSerializer,
+    TimestampsMixinSerializer,
+    ValidateParentMixinSerializer,
 )
+from day.models import Day
+from rest_framework.serializers import IntegerField
+
+from .models import Accomodation
 
 
 class AccomodationSerializer(
@@ -16,6 +18,7 @@ class AccomodationSerializer(
     OrderMixinSerializer,
     TimestampsMixinSerializer,
     ReservationMixinSerializer,
+    CheckboxMixinSerializer,
 ):
     id = IntegerField(read_only=True)
     order = IntegerField(read_only=True)
@@ -32,6 +35,7 @@ def create_accomodation_serializer(day_id=None, user=None):
         OrderMixinSerializer,
         CreateMixinSerializer,
         ReservationMixinSerializer,
+        CheckboxMixinSerializer,
     ):
         class Meta:
             model = Accomodation

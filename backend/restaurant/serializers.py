@@ -1,14 +1,16 @@
-from rest_framework.serializers import IntegerField
-from .models import Restaurant
-from day.models import Day
 from common.serializers import (
-    TimestampsMixinSerializer,
     AuthBasicInfoMixinSerializer,
+    CheckboxMixinSerializer,
     CreateMixinSerializer,
     OrderMixinSerializer,
-    ValidateParentMixinSerializer,
     ReservationMixinSerializer,
+    TimestampsMixinSerializer,
+    ValidateParentMixinSerializer,
 )
+from day.models import Day
+from rest_framework.serializers import IntegerField
+
+from .models import Restaurant
 
 
 class RestaurantSerializer(
@@ -16,6 +18,7 @@ class RestaurantSerializer(
     OrderMixinSerializer,
     TimestampsMixinSerializer,
     ReservationMixinSerializer,
+    CheckboxMixinSerializer,
 ):
     id = IntegerField(read_only=True)
     order = IntegerField(read_only=True)
@@ -32,6 +35,7 @@ def create_restaurant_serializer(day_id=None, user=None):
         OrderMixinSerializer,
         CreateMixinSerializer,
         ReservationMixinSerializer,
+        CheckboxMixinSerializer,
     ):
         class Meta:
             model = Restaurant

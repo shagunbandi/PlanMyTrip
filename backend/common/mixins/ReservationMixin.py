@@ -1,6 +1,6 @@
-from django.db import models
-from enumchoicefield import ChoiceEnum, EnumChoiceField
 from common.enums import RESERVATION_STATUS
+from django.db import models
+from enumchoicefield import EnumChoiceField
 
 
 class ReservationMixin(models.Model):

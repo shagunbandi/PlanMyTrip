@@ -1,10 +1,10 @@
-from django.db import models
-from common.mixins import TimestampsMixin, AuthBasicInfoMixin
+from common.mixins import AuthBasicInfoMixin, CheckboxMixin, TimestampsMixin
 from day.models import Day
+from django.db import models
 from ordered_model.models import OrderedModel
 
 
-class Dish(TimestampsMixin, AuthBasicInfoMixin, OrderedModel):
+class Dish(TimestampsMixin, AuthBasicInfoMixin, OrderedModel, CheckboxMixin):
     day = models.ForeignKey(
         Day, on_delete=models.CASCADE, related_name="dishes", null=False
     )

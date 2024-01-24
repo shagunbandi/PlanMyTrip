@@ -1,11 +1,12 @@
-from django.db import models
-from enumchoicefield import ChoiceEnum, EnumChoiceField
 from common.mixins import (
-    TimestampsMixin,
     AuthBasicInfoMixin,
+    CheckboxMixin,
     ReservationMixin,
+    TimestampsMixin,
 )
 from day.models import Day
+from django.db import models
+from enumchoicefield import ChoiceEnum, EnumChoiceField
 from ordered_model.models import OrderedModel
 
 
@@ -21,7 +22,9 @@ class Category(ChoiceEnum):
         return self.value
 
 
-class Attraction(TimestampsMixin, AuthBasicInfoMixin, ReservationMixin, OrderedModel):
+class Attraction(
+    TimestampsMixin, AuthBasicInfoMixin, ReservationMixin, OrderedModel, CheckboxMixin
+):
     day = models.ForeignKey(
         Day, on_delete=models.CASCADE, related_name="attractions", null=False
     )

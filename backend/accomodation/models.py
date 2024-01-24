@@ -1,10 +1,17 @@
-from django.db import models
-from common.mixins import TimestampsMixin, AuthBasicInfoMixin, ReservationMixin
+from common.mixins import (
+    AuthBasicInfoMixin,
+    CheckboxMixin,
+    ReservationMixin,
+    TimestampsMixin,
+)
 from day.models import Day
+from django.db import models
 from ordered_model.models import OrderedModel
 
 
-class Accomodation(TimestampsMixin, AuthBasicInfoMixin, ReservationMixin, OrderedModel):
+class Accomodation(
+    TimestampsMixin, AuthBasicInfoMixin, ReservationMixin, OrderedModel, CheckboxMixin
+):
     day = models.ForeignKey(
         Day, on_delete=models.CASCADE, related_name="accomodations", null=False
     )
