@@ -4,14 +4,14 @@
     :id="itemKey"
     class="form-control-plaintext"
     :placeholder="placeholder"
-    v-model="editedTitle"
+    v-model="editedInput"
     @blur="saveChanges"
   />
   <textarea
     v-else-if="inputType === 'textarea'"
     :id="itemKey"
     class="form-control-plaintext"
-    v-model="editedTitle"
+    v-model="editedInput"
     :placeholder="placeholder"
     @blur="saveChanges"
     :rows="calculateRows()"
@@ -31,23 +31,22 @@ export default {
   },
   data() {
     return {
-      editedTitle: this.value,
+      editedInput: this.value,
     }
   },
   methods: {
     async saveChanges() {
       try {
         const patchData = {
-          [this.itemKey]: this.editedTitle,
+          [this.itemKey]: this.editedInput,
         }
         await api.patch(this.editEndPoint, patchData)
       } catch (error) {
         console.error('Error updating data:', error)
-        window.alert('Error updating data:\n' + error)
       }
     },
     calculateRows() {
-      const numberOfLines = this.editedTitle?.split('\n').length || 0
+      const numberOfLines = this.editedInput?.split('\n').length || 0
       return Math.max(1, numberOfLines)
     },
   },
