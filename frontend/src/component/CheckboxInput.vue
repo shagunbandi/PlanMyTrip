@@ -1,113 +1,95 @@
-<!-- components/ThreeStateCheckbox.vue -->
-
 <template>
-  <button
-    :class="{
-      selected: isSelected,
-      unselected: isUnselected,
-      crossed: isCrossed,
+  <div
+    :style="{
+      ...defaultStyle,
+      ...currentStateStyle,
+      cursor: currentState === 'disabled' ? 'not-allowed' : 'pointer',
     }"
-    class="checkbox"
     @click="toggleState"
   >
-    <span v-if="isSelected">✔</span>
-    <span v-else-if="isUnselected"></span>
-    <span v-else-if="isCrossed">✘</span>
-  </button>
+    {{ currentStateLabel }}
+  </div>
 </template>
 
 <script>
-import { CHECK_STATUS_ENUM } from '@/constants'
+import { CHECKED_STATUS } from '@/constants'
 
 export default {
   props: {
     value: {
       type: String,
-      default: CHECK_STATUS_ENUM.UNSELECTED,
-      enum: CHECK_STATUS_ENUM,
+      default: 'default',
     },
-    extraClass: {
-      type: String,
-      default: '',
+    states: {
+      type: Array,
+      default: () => Object.keys(CHECKED_STATUS),
+    },
+    styles: {
+      type: Object,
+      default: () => ({
+        [CHECKED_STATUS.CROSSED]: {
+          backgroundColor: 'red',
+        },
+        [CHECKED_STATUS.SELECTED]: {
+          backgroundColor: 'green',
+        },
+        [CHECKED_STATUS.UNSELECTED]: {
+          backgroundColor: 'white',
+        },
+      }),
     },
   },
   data() {
     return {
-      isSelected: true,
-      isUnselected: false,
-      isCrossed: false,
+      currentStateIndex: 0,
     }
+  },
+  computed: {
+    currentState() {
+      return this.states[this.currentStateIndex]
+    },
+    currentStateStyle() {
+      return this.styles[this.currentState]
+    },
+    currentStateLabel() {
+      return this.currentState
+    },
+    defaultStyle() {
+      return {
+        fontSize: '0',
+        transform: 'translate(0px, 4px)',
+        width: '15px',
+        marginRight: '10px',
+        height: '15px',
+        backgroundColor: '#fff',
+        border: '1px solid #ccc',
+        cursor: 'pointer',
+        outline: 'none',
+      }
+    },
   },
   mounted() {
-    this.isUnselected = false
-    this.isSelected = false
-    this.isCrossed = false
-    if (this.value === CHECK_STATUS_ENUM.UNSELECTED) {
-      this.isUnselected = true
-    } else if (this.value === CHECK_STATUS_ENUM.SELECTED) {
-      this.isSelected = true
-    } else {
-      this.isCrossed = true
+    const initialIndex = this.states.indexOf(this.value)
+    if (initialIndex !== -1) {
+      this.currentStateIndex = initialIndex
     }
   },
-  emits: ['input'],
   methods: {
     toggleState() {
-      if (this.isUnselected) {
-        this.isUnselected = false
-        this.isSelected = true
-        this.isCrossed = false
-        this.$emit('input', CHECK_STATUS_ENUM.SELECTED)
-      } else if (this.isSelected) {
-        this.isUnselected = false
-        this.isSelected = false
-        this.isCrossed = true
-        this.$emit('input', CHECK_STATUS_ENUM.CROSSED)
+      // Update to next state
+      if (this.currentStateIndex < this.states.length - 1) {
+        this.currentStateIndex++
       } else {
-        this.isUnselected = true
-        this.isSelected = false
-        this.isCrossed = false
-        this.$emit('input', CHECK_STATUS_ENUM.UNSELECTED)
+        this.currentStateIndex = 0
       }
+
+      // Emit an event to notify the parent component
+      this.$emit('input', this.currentState)
     },
   },
 }
 </script>
 
 <style scoped>
-.checkbox {
-  width: 15px;
-  height: 15px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  outline: none;
-}
-
-.checkbox.selected {
-  background-color: #66bb6a; /* green color for selected state */
-}
-
-.checkbox.unselected {
-  /* Styles for unselected state (empty) */
-}
-
-.checkbox.crossed {
-  background-color: #ef5350; /* red color for crossed state */
-}
-
-.checkbox span {
-  font-size: 18px;
-  color: #fff;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-}
-
-.checkbox.selected span,
-.checkbox.crossed span {
-  opacity: 1;
-}
+/* Add your default and other styles here */
 </style>
