@@ -5,17 +5,31 @@
       ...currentStateStyle,
       cursor: currentState === 'disabled' ? 'not-allowed' : 'pointer',
     }"
-    @click="toggleState"
+    @click="saveChanges"
   >
     {{ currentStateLabel }}
   </div>
 </template>
 
 <script>
+import api from '@/api'
 import { CHECKED_STATUS } from '@/constants'
+
+const checkBoxStyle = {
+  fontSize: '0',
+  transform: 'translate(0px, 4px)',
+  width: '15px',
+  marginRight: '10px',
+  height: '15px',
+  backgroundColor: '#fff',
+  cursor: 'pointer',
+  outline: 'none',
+}
 
 export default {
   props: {
+    editEndPoint: String,
+    itemKey: String,
     value: {
       type: String,
       default: 'default',
@@ -28,12 +42,15 @@ export default {
       type: Object,
       default: () => ({
         [CHECKED_STATUS.CROSSED]: {
+          ...checkBoxStyle,
           backgroundColor: 'red',
         },
         [CHECKED_STATUS.SELECTED]: {
+          ...checkBoxStyle,
           backgroundColor: 'green',
         },
         [CHECKED_STATUS.UNSELECTED]: {
+          ...checkBoxStyle,
           backgroundColor: 'white',
         },
       }),
@@ -56,15 +73,13 @@ export default {
     },
     defaultStyle() {
       return {
-        fontSize: '0',
-        transform: 'translate(0px, 4px)',
-        width: '15px',
-        marginRight: '10px',
-        height: '15px',
-        backgroundColor: '#fff',
+        padding: '8px',
+        paddingTop: '4px',
+        paddingBottom: '4px',
         border: '1px solid #ccc',
-        cursor: 'pointer',
-        outline: 'none',
+        borderRadius: '4px',
+        display: 'inline-block',
+        fontSize: 'small',
       }
     },
   },
@@ -75,16 +90,21 @@ export default {
     }
   },
   methods: {
-    toggleState() {
-      // Update to next state
+    async saveChanges() {
       if (this.currentStateIndex < this.states.length - 1) {
         this.currentStateIndex++
       } else {
         this.currentStateIndex = 0
       }
 
-      // Emit an event to notify the parent component
-      this.$emit('input', this.currentState)
+      try {
+        const patchData = {
+          [this.itemKey]: this.states[this.currentStateIndex],
+        }
+        await api.patch(this.editEndPoint, patchData)
+      } catch (error) {
+        console.error('Error updating data:', error)
+      }
     },
   },
 }

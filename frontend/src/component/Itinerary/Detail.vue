@@ -10,7 +10,8 @@
       <CheckboxInput
         v-if="isFeatureEnabled(detailKeys.CHECKED_STATUS)"
         :value="detail[detailKeys.CHECKED_STATUS]"
-        @input="updateCheckboxStatus($event, detail.id)"
+        :itemKey="detailKeys.CHECKED_STATUS"
+        :editEndPoint="`/${name}/api/${detail.id}/?day_id=${dayId}`"
       />
 
       <div class="flex-grow-1">
@@ -54,6 +55,17 @@
           :value="detail[detailKeys.RESERVATION_FILE]"
           :editEndPoint="`/${name}/api/${detail.id}/?day_id=${dayId}`"
         />
+
+        <!-- Reservation Status -->
+        <span v-if="isFeatureEnabled(detailKeys.RESERVATION_STATUS)">
+          <label class="reservation-status">Reservation Status:&nbsp;</label>
+          <CheckboxInput
+            :value="detail[detailKeys.RESERVATION_STATUS]"
+            :itemKey="detailKeys.RESERVATION_STATUS"
+            :states="Object.keys(reservationStatus)"
+            :editEndPoint="`/${name}/api/${detail.id}/?day_id=${dayId}`"
+          />
+        </span>
       </div>
     </li>
   </ul>
@@ -61,10 +73,9 @@
 </template>
 
 <script>
-import api from '@/api'
 import CheckboxInput from '@/component/CheckboxInput.vue'
 import InPlaceEditableInput from '@/component/InPlaceEditableInput.vue'
-import { DETAIL_KEYS } from '@/constants'
+import { DETAIL_KEYS, RESERVATION_STATUS } from '@/constants'
 
 export default {
   components: {
@@ -80,6 +91,7 @@ export default {
   data() {
     return {
       detailKeys: DETAIL_KEYS,
+      reservationStatus: RESERVATION_STATUS,
       features: [],
     }
   },
@@ -90,21 +102,6 @@ export default {
   computed: {
     isFeatureEnabled() {
       return (featureKey) => this.features.includes(featureKey)
-    },
-  },
-  methods: {
-    async updateCheckboxStatus(status, detailId) {
-      try {
-        const patchData = {
-          checked_status: status,
-        }
-        await api.patch(
-          `${this.name}/api/${detailId}/?day_id=${this.dayId}`,
-          patchData,
-        )
-      } catch (error) {
-        console.error('Error updating data:', error)
-      }
     },
   },
 }
@@ -121,5 +118,10 @@ ul {
 .notes {
   color: rgb(79, 79, 79);
   font-style: italic;
+}
+
+.reservation-status {
+  font-weight: normal;
+  font-style: normal;
 }
 </style>

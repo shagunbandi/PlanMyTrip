@@ -12,8 +12,8 @@ export const DETAIL_KEYS = {
 }
 
 export const CHECKED_STATUS = {
-  SELECTED: 'SELECTED',
   UNSELECTED: 'UNSELECTED',
+  SELECTED: 'SELECTED',
   CROSSED: 'CROSSED',
 }
 
