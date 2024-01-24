@@ -24,12 +24,18 @@
         />
       </span>
       <br />
-
-      <Dishes
+      <Detail
         :dayId="day.id"
-        :dishes="day.dishes"
-        dishName="dish"
-        dishTitle="Dish"
+        :details="day.dishes"
+        name="dish"
+        title="Dish"
+        @fetchItinerary="fetchItinerary"
+      />
+      <Detail
+        :dayId="day.id"
+        :details="day.accomodations"
+        name="accomodation"
+        title="Accomodation"
         @fetchItinerary="fetchItinerary"
       />
 
@@ -55,12 +61,12 @@
 
 <script>
 import InPlaceEditableInput from '@/component/InPlaceEditableInput.vue'
-import Dishes from '@/component/Itinerary/Dishes.vue'
+import Detail from '@/component/Itinerary/Detail.vue'
 
 export default {
   components: {
     InPlaceEditableInput,
-    Dishes,
+    Detail,
   },
   props: {
     itineraryId: Number,

@@ -17,11 +17,7 @@
 </template>
 
 <script>
-const CHECK_STATUS_ENUM = {
-  SELECTED: 'SELECTED',
-  UNSELECTED: 'UNSELECTED',
-  CROSSED: 'CROSSED',
-}
+import { CHECK_STATUS_ENUM } from '@/constants'
 
 export default {
   props: {
