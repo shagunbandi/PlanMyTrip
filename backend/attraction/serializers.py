@@ -1,15 +1,17 @@
-from rest_framework.serializers import IntegerField
-from .models import Attraction, Category
-from day.models import Day
 from common.serializers import (
-    TimestampsMixinSerializer,
     AuthBasicInfoMixinSerializer,
+    CheckboxMixinSerializer,
     CreateMixinSerializer,
     OrderMixinSerializer,
-    ValidateParentMixinSerializer,
     ReservationMixinSerializer,
+    TimestampsMixinSerializer,
+    ValidateParentMixinSerializer,
 )
+from day.models import Day
 from rest_enumfield import EnumField
+from rest_framework.serializers import IntegerField
+
+from .models import Attraction, Category
 
 
 class AttractionSerializer(
@@ -17,6 +19,7 @@ class AttractionSerializer(
     OrderMixinSerializer,
     TimestampsMixinSerializer,
     ReservationMixinSerializer,
+    CheckboxMixinSerializer,
 ):
     id = IntegerField(read_only=True)
     category = EnumField(choices=Category, to_choice=lambda x: x.value)
@@ -33,6 +36,7 @@ def create_attraction_serializer(day_id=None, user=None):
         ValidateParentMixinSerializer,
         OrderMixinSerializer,
         CreateMixinSerializer,
+        CheckboxMixinSerializer,
     ):
         category = EnumField(choices=Category, to_choice=lambda x: x.value)
 

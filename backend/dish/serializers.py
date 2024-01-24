@@ -1,17 +1,22 @@
-from rest_framework.serializers import IntegerField
-from .models import Dish
-from day.models import Day
 from common.serializers import (
-    TimestampsMixinSerializer,
     AuthBasicInfoMixinSerializer,
+    CheckboxMixinSerializer,
     CreateMixinSerializer,
     OrderMixinSerializer,
+    TimestampsMixinSerializer,
     ValidateParentMixinSerializer,
 )
+from day.models import Day
+from rest_framework.serializers import IntegerField
+
+from .models import Dish
 
 
 class DishSerializer(
-    AuthBasicInfoMixinSerializer, OrderMixinSerializer, TimestampsMixinSerializer
+    AuthBasicInfoMixinSerializer,
+    OrderMixinSerializer,
+    TimestampsMixinSerializer,
+    CheckboxMixinSerializer,
 ):
     id = IntegerField(read_only=True)
     order = IntegerField(read_only=True)
@@ -27,6 +32,7 @@ def create_dish_serializer(day_id=None, user=None):
         ValidateParentMixinSerializer,
         OrderMixinSerializer,
         CreateMixinSerializer,
+        CheckboxMixinSerializer,
     ):
         class Meta:
             model = Dish

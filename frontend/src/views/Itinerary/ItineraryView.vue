@@ -14,10 +14,9 @@
         <br />
         <Scratchpad :value="itinerary.scratchpad" :itineraryId="itineraryId" />
         <br />
-        <DayWisePlan
+        <Days
           :itineraryId="itineraryId"
           :days="itinerary.days"
-          @updateDays="updateDays"
           @fetchItinerary="fetchItinerary"
         />
       </Container>
@@ -33,7 +32,7 @@
 import api from '@/api'
 import Container from '@/component/Container.vue'
 import InPlaceEditableInput from '@/component/InPlaceEditableInput.vue'
-import DayWisePlan from '@/component/Itinerary/DayWisePlan.vue'
+import Days from '@/component/Itinerary/Days.vue'
 import Notes from '@/component/Itinerary/Notes.vue'
 import Scratchpad from '@/component/Itinerary/Scratchpad.vue'
 
@@ -43,7 +42,7 @@ export default {
     InPlaceEditableInput,
     Notes,
     Scratchpad,
-    DayWisePlan,
+    Days,
   },
   data() {
     return {
@@ -60,14 +59,10 @@ export default {
         .get(`/itinerary/api/${this.itineraryId}`)
         .then((response) => {
           this.itinerary = response.data
-          console.log(this.itinerary)
         })
         .catch((error) => {
           console.error('Error fetching itinerary:', error)
         })
-    },
-    updateDays(newValue) {
-      this.itinerary.days = newValue
     },
   },
 }

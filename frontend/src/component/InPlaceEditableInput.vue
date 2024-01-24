@@ -40,8 +40,7 @@ export default {
         const patchData = {
           [this.itemKey]: this.editedTitle,
         }
-        const response = await api.patch(this.editEndPoint, patchData)
-        this.$emit('title-changed', response.data.title)
+        await api.patch(this.editEndPoint, patchData)
       } catch (error) {
         console.error('Error updating data:', error)
         window.alert('Error updating data:\n' + error)
