@@ -1,16 +1,17 @@
-from rest_framework.serializers import IntegerField
-from .models import Day
-from itinerary.models import Itinerary
+from accomodation.serializers import AccomodationSerializer
 from common.serializers import (
-    TimestampsMixinSerializer,
     AuthBasicInfoMixinSerializer,
     CreateMixinSerializer,
+    TimestampsMixinSerializer,
     ValidateParentMixinSerializer,
 )
-from ordered_model.models import OrderedModel
 from dish.serializers import DishSerializer
-from accomodation.serializers import AccomodationSerializer
+from itinerary.models import Itinerary
+from ordered_model.models import OrderedModel
+from rest_framework.serializers import IntegerField
 from restaurant.serializers import RestaurantSerializer
+
+from .models import Day
 
 
 class DaySerializer(

@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Day
-from .serializers import create_day_serializer
+from .serializers import DaySerializer, create_day_serializer
 
 
 class DayViewSet(viewsets.ModelViewSet):
@@ -19,8 +19,13 @@ class DayViewSet(viewsets.ModelViewSet):
         return Day.objects.filter(user=user, itinerary__id=itinerary_id)
 
     def get_serializer_class(self):
-        itinerary_id = self.request.GET.get("itinerary_id", None)
-        return create_day_serializer(itinerary_id=itinerary_id, user=self.request.user)
+        if self.action in ["create", "update", "partial_update"]:
+            return create_day_serializer(
+                itinerary_id=self.request.GET.get("itinerary_id", None),
+                user=self.request.user,
+            )
+        else:
+            return DaySerializer
 
 
 class DayMethodView(APIView):
