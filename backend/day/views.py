@@ -31,9 +31,9 @@ class DayViewSet(viewsets.ModelViewSet):
 class DayMethodView(APIView):
     permission_classes = [IsAuthenticated]
 
-    # TODO Make this method authorisation safe
     def post(self, request, itinerary_id, day_id, method):
-        day = get_object_or_404(Day, id=day_id, itinerary__id=itinerary_id)
+        user = request.user
+        day = get_object_or_404(Day, id=day_id, itinerary__id=itinerary_id, user=user)
 
         if method == "up":
             day.up()

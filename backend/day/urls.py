@@ -1,13 +1,13 @@
-from django.urls import path, include
+from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from .views import DayViewSet, DayMethodView
+
+from .views import DayMethodView, DayViewSet
 
 router = DefaultRouter()
 router.register(r"", DayViewSet)
 
 urlpatterns = [
-    # Your other URL patterns
-    path("api/", include(router.urls)),  # Include the router's URL patterns
+    path("api/", include(router.urls)),
     path(
         "<int:itinerary_id>/<int:day_id>/move/<str:method>/",
         DayMethodView.as_view(),

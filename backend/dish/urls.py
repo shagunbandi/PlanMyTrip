@@ -1,11 +1,16 @@
-from django.urls import path, include
+from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from .views import DishViewSet
+
+from .views import DishViewSet, MoveDishView
 
 router = DefaultRouter()
 router.register(r"", DishViewSet)
 
 urlpatterns = [
-    # Your other URL patterns
-    path("api/", include(router.urls)),  # Include the router's URL patterns
+    path("api/", include(router.urls)),
+    path(
+        "<int:day_id>/<int:dish_id>/move/<str:method>/",
+        MoveDishView.as_view(),
+        name="move-dish",
+    ),
 ]

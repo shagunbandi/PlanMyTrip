@@ -81,8 +81,10 @@
           </span>
           <div class="button-group">
             <button class="cross" @click="removeDetail(detail.id)">X</button>
-            <button class="move-up" @click="moveDay(detail.id, 'up')">↑</button>
-            <button class="move-down" @click="moveDay(detail.id, 'down')">
+            <button class="move-up" @click="moveDetail(detail.id, 'up')">
+              ↑
+            </button>
+            <button class="move-down" @click="moveDetail(detail.id, 'down')">
               ↓
             </button>
           </div>
@@ -180,10 +182,10 @@ export default {
         console.error(`Error removing ${this.name}:`, error)
       }
     },
-    async moveDetail(dayId, moveDirection) {
+    async moveDetail(detailId, moveDirection) {
       try {
         await api.post(
-          `day/${this.itineraryId}/${dayId}/move/${moveDirection}/`,
+          `${this.name}/${this.dayId}/${detailId}/move/${moveDirection}/`,
         )
         this.fetchItinerary()
       } catch (error) {
