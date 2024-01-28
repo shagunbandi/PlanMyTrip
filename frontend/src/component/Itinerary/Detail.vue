@@ -42,6 +42,7 @@
             v-if="isFeatureEnabled(detailKeys.RESERVATION_LINK)"
             inputType="input"
             placeholder="Reservation Link"
+            @click="handleClick"
             :itemKey="detailKeys.RESERVATION_LINK"
             :value="detail[detailKeys.RESERVATION_LINK]"
             :editEndPoint="`/${name}/api/${detail.id}/?day_id=${dayId}`"
@@ -191,6 +192,9 @@ export default {
       } catch (error) {
         console.error('Error moving day:', error)
       }
+    },
+    handleClick() {
+      console.log('as')
     },
   },
 }
