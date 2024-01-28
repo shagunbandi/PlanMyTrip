@@ -18,10 +18,6 @@ export default {
       type: String,
       required: true,
     },
-    onSave: {
-      type: Function,
-      required: true,
-    },
   },
   data() {
     return {

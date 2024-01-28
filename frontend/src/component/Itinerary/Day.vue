@@ -39,22 +39,21 @@
         @fetchItinerary="fetchItinerary"
       />
 
+      <Detail
+        :dayId="day.id"
+        :details="day.restaurants"
+        name="restaurant"
+        title="Restaurant"
+        @fetchItinerary="fetchItinerary"
+      />
+
       <!-- All other features go here -->
     </div>
 
     <div class="button-container flex-shrink-0">
-      <button class="transparent-btn cross" @click="removeDay(day.id)">
-        X
-      </button>
-      <button class="transparent-btn move-up" @click="moveDay(day.id, 'up')">
-        ↑
-      </button>
-      <button
-        class="transparent-btn move-down"
-        @click="moveDay(day.id, 'down')"
-      >
-        ↓
-      </button>
+      <button class="cross" @click="removeDay(day.id)">X</button>
+      <button class="move-up" @click="moveDay(day.id, 'up')">↑</button>
+      <button class="move-down" @click="moveDay(day.id, 'down')">↓</button>
     </div>
   </div>
 </template>
