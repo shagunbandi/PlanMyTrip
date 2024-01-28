@@ -75,6 +75,7 @@ pnpm-debug.log*
 .DS_Store
 node_modules
 /dist
+.vite
 
 #  FROM django APP
 backend/planmytrip_backend/db.sqlite3
