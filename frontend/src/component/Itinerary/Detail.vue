@@ -125,8 +125,16 @@ export default {
     }
   },
   mounted() {
-    if (this.details.length > 0) this.features = Object.keys(this.details[0])
+    this.updateFeatures()
     this.cleanNewData = this.generateNewData()
+  },
+  watch: {
+    details: {
+      handler() {
+        this.updateFeatures()
+      },
+      deep: true,
+    },
   },
   emits: ['fetchItinerary'],
   computed: {
@@ -147,6 +155,9 @@ export default {
     },
   },
   methods: {
+    updateFeatures() {
+      if (this.details.length > 0) this.features = Object.keys(this.details[0])
+    },
     fetchItinerary() {
       this.$emit('fetchItinerary')
     },
