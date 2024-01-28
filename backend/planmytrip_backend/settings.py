@@ -120,10 +120,7 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=60),
 }
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "https://keen-centrally-macaque.ngrok-free.app",
-]
+CORS_ALLOWED_ORIGINS = []
 
 CORS_ALLOW_METHODS = [
     "DELETE",

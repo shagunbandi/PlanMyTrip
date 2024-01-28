@@ -56,7 +56,7 @@ export default {
   methods: {
     fetchItinerary() {
       api
-        .get(`/itinerary/api/${this.itineraryId}`)
+        .get(`/itinerary/api/${this.itineraryId}/`)
         .then((response) => {
           this.itinerary = response.data
         })
