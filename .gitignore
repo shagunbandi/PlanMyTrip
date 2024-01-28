@@ -78,3 +78,6 @@ node_modules
 
 #  FROM django APP
 backend/planmytrip_backend/db.sqlite3
+
+# NGROK
+ngrok
