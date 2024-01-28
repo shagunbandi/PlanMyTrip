@@ -7,3 +7,6 @@ Create an itinerary the easy way
 1. Django Backend
 2. VueJs Frontend
 3. sqlite Database
+
+# TODO
+Dockerfile to seperate directory than the code and use src instead of .
