@@ -35,7 +35,7 @@ export default {
         notes: '',
       }
       try {
-        await api.post(`/day/api/?itinerary_id=${this.itineraryId}`, newDayData)
+        await api.post(`/api/day/api/?itinerary_id=${this.itineraryId}`, newDayData)
         this.fetchItinerary()
       } catch (error) {
         console.error('Error adding day:', error)
@@ -43,7 +43,7 @@ export default {
     },
     async removeDay(dayId) {
       try {
-        await api.delete(`day/api/${dayId}/?itinerary_id=${this.itineraryId}`)
+        await api.delete(`/api/day/api/${dayId}/?itinerary_id=${this.itineraryId}`)
         this.fetchItinerary()
       } catch (error) {
         console.error('Error removing day:', error)
@@ -52,7 +52,7 @@ export default {
     async moveDay(dayId, moveDirection) {
       try {
         await api.post(
-          `day/${this.itineraryId}/${dayId}/move/${moveDirection}/`,
+          `/api/day/${this.itineraryId}/${dayId}/move/${moveDirection}/`,
         )
         this.fetchItinerary()
       } catch (error) {

@@ -1,11 +1,11 @@
 <template>
-  <label for="scratchpad">ScratchPad</label>
+  <label for="notes">Notes</label>
   <InPlaceEditableInput
-    title="ScratchPad"
+    title="Notes"
     :value="value"
-    :editEndPoint="`/itinerary/api/${itineraryId}/`"
-    itemKey="scratchpad"
-    placeholder="Write your thoughts here"
+    :editEndPoint="`/api/itinerary/api/${itineraryId}/`"
+    itemKey="notes"
+    placeholder="Write some notes here"
     inputType="textarea"
   />
 </template>

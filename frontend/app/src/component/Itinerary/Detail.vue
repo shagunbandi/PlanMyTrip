@@ -12,7 +12,7 @@
           v-if="isFeatureEnabled(detailKeys.CHECKED_STATUS)"
           :value="detail[detailKeys.CHECKED_STATUS]"
           :itemKey="detailKeys.CHECKED_STATUS"
-          :editEndPoint="`/${name}/api/${detail.id}/?day_id=${dayId}`"
+          :editEndPoint="`/api/${name}/api/${detail.id}/?day_id=${dayId}`"
         />
 
         <div class="flex-grow-1">
@@ -23,7 +23,7 @@
             placeholder="Name"
             :itemKey="detailKeys.NAME"
             :value="detail[detailKeys.NAME]"
-            :editEndPoint="`/${name}/api/${detail.id}/?day_id=${dayId}`"
+            :editEndPoint="`/api/${name}/api/${detail.id}/?day_id=${dayId}`"
           />
 
           <!-- Notes -->
@@ -33,7 +33,7 @@
               placeholder="Notes"
               :itemKey="detailKeys.NOTES"
               :value="detail[detailKeys.NOTES]"
-              :editEndPoint="`/${name}/api/${detail.id}/?day_id=${dayId}`"
+              :editEndPoint="`/api/${name}/api/${detail.id}/?day_id=${dayId}`"
             />
           </span>
 
@@ -56,7 +56,7 @@
             @click="handleClick"
             :itemKey="detailKeys.RESERVATION_LINK"
             :value="detail[detailKeys.RESERVATION_LINK]"
-            :editEndPoint="`/${name}/api/${detail.id}/?day_id=${dayId}`"
+            :editEndPoint="`/api/${name}/api/${detail.id}/?day_id=${dayId}`"
           />
 
           <!-- Reservation File -->
@@ -66,7 +66,7 @@
             placeholder="Reservation File"
             :itemKey="detailKeys.RESERVATION_FILE"
             :value="detail[detailKeys.RESERVATION_FILE]"
-            :editEndPoint="`/${name}/api/${detail.id}/?day_id=${dayId}`"
+            :editEndPoint="`/api/${name}/api/${detail.id}/?day_id=${dayId}`"
           />
 
           <!-- Reservation Time -->
@@ -75,7 +75,7 @@
             <TimeInput
               :value="detail[detailKeys.RESERVATION_TIME]"
               :itemKey="detailKeys.RESERVATION_TIME"
-              :editEndPoint="`/${name}/api/${detail.id}/?day_id=${dayId}`"
+              :editEndPoint="`/api/${name}/api/${detail.id}/?day_id=${dayId}`"
             />
             <br />
           </span>
@@ -87,7 +87,7 @@
               :value="detail[detailKeys.RESERVATION_STATUS]"
               :itemKey="detailKeys.RESERVATION_STATUS"
               :states="Object.keys(reservationStatus)"
-              :editEndPoint="`/${name}/api/${detail.id}/?day_id=${dayId}`"
+              :editEndPoint="`/api/${name}/api/${detail.id}/?day_id=${dayId}`"
             />
             <br />
           </span>
@@ -198,7 +198,7 @@ export default {
     async handleAddDetail() {
       try {
         await api.post(
-          `/${this.name}/api/?day_id=${this.dayId}`,
+          `/api/${this.name}/api/?day_id=${this.dayId}`,
           this.cleanNewData,
         )
         this.fetchItinerary()
@@ -208,7 +208,7 @@ export default {
     },
     async removeDetail(detailId) {
       try {
-        await api.delete(`${this.name}/api/${detailId}/?day_id=${this.dayId}`)
+        await api.delete(`/api/${this.name}/api/${detailId}/?day_id=${this.dayId}`)
         this.fetchItinerary()
       } catch (error) {
         console.error(`Error removing ${this.name}:`, error)
@@ -217,7 +217,7 @@ export default {
     async moveDetail(detailId, moveDirection) {
       try {
         await api.post(
-          `${this.name}/${this.dayId}/${detailId}/move/${moveDirection}/`,
+          `/api/${this.name}/${this.dayId}/${detailId}/move/${moveDirection}/`,
         )
         this.fetchItinerary()
       } catch (error) {
