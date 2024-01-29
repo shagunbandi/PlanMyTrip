@@ -7,10 +7,10 @@ router = DefaultRouter()
 router.register(r"", DishViewSet)
 
 urlpatterns = [
-    path("/", include(router.urls)),
     path(
         "<int:day_id>/<int:dish_id>/move/<str:method>/",
         MoveDishView.as_view(),
         name="move-dish",
     ),
+    path("<int:day_id>/", include(router.urls)),
 ]
