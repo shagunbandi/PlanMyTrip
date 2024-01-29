@@ -47,6 +47,15 @@
         @fetchItinerary="fetchItinerary"
       />
 
+      <Detail
+        :dayId="day.id"
+        :details="day.attractions"
+        name="attraction"
+        title="Attraction"
+        :newDetailData="newAttraction"
+        @fetchItinerary="fetchItinerary"
+      />
+
       <!-- All other features go here -->
     </div>
 
@@ -61,6 +70,7 @@
 <script>
 import InPlaceEditableInput from '@/component/InPlaceEditableInput.vue'
 import Detail from '@/component/Itinerary/Detail.vue'
+import { ATTRACTION_ENUM } from '@/constants'
 
 export default {
   components: {
@@ -72,7 +82,13 @@ export default {
     day: Object,
   },
   data() {
-    return {}
+    return {
+      newAttraction: {
+        name: 'New Attraction',
+        notes: '',
+        category: ATTRACTION_ENUM.EXPERIENCE,
+      },
+    }
   },
   emits: ['moveDay', 'removeDay', 'fetchItinerary'],
   methods: {

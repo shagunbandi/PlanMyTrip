@@ -1,15 +1,18 @@
 <template>
   <div>
-    <span v-if="inputType === 'input'" class="d-flex">
+    <span v-if="['input', 'link', 'number'].includes(inputType)" class="d-flex">
       <a
-        v-if="isLink"
+        v-if="inputType === 'link' && isLink"
         :href="editedInput"
         target="_blank"
         rel="noopener noreferrer"
+        style="padding-right: 2px"
         >open</a
-      >&nbsp;
+      >
+
       <input
         :id="itemKey"
+        :type="inputType === 'number' ? 'number' : 'text'"
         class="form-control-plaintext"
         :placeholder="placeholder"
         v-model="editedInput"

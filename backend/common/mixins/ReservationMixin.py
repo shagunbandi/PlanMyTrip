@@ -1,4 +1,5 @@
 from common.enums import RESERVATION_STATUS
+from django.core.validators import MinValueValidator
 from django.db import models
 from enumchoicefield import EnumChoiceField
 
@@ -13,6 +14,9 @@ class ReservationMixin(models.Model):
     reservation_time = models.TimeField(null=True, blank=True)
     reservation_status = EnumChoiceField(
         RESERVATION_STATUS, default=RESERVATION_STATUS.NO
+    )
+    reservation_cost = models.FloatField(
+        null=True, blank=True, validators=[MinValueValidator(0)]
     )
 
     class Meta:

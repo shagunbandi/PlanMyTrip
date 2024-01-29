@@ -1,5 +1,5 @@
 from common.enums import RESERVATION_STATUS
-from common.mixins import ReservationMixin
+from django.core.validators import MinValueValidator
 from rest_enumfield import EnumField
 from rest_framework import serializers
 
@@ -19,7 +19,9 @@ class ReservationMixinSerializer(serializers.Serializer):
         default=RESERVATION_STATUS.NO,
         required=False,
     )
-
     reservation_file = serializers.FileField(
         allow_null=True, allow_empty_file=True, use_url=False, required=False
+    )
+    reservation_cost = serializers.FloatField(
+        allow_null=True, required=False, validators=[MinValueValidator(0)]
     )

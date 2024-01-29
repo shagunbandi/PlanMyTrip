@@ -12,3 +12,12 @@ class CHECKED_STATUS(Enum):
     SELECTED = "selected"
     CROSSED = "crossed"
     UNSELECTED = "unselected"
+
+
+class Category(Enum):
+    OTHER = "other"
+    HIKING = "hiking"
+    MONUMENT = "monument"
+    CLASSES = "classes"
+    LOCALITY = "locality"
+    EXPERIENCE = "experience"
