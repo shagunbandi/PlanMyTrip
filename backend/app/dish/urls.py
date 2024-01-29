@@ -8,9 +8,9 @@ router.register(r"", DishViewSet)
 
 urlpatterns = [
     path(
-        "<int:day_id>/<int:dish_id>/move/<str:method>/",
+        "<int:dish_id>/move/<str:method>/",
         MoveDishView.as_view(),
         name="move-dish",
     ),
-    path("<int:day_id>/", include(router.urls)),
+    path("", include(router.urls)),
 ]

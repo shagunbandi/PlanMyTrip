@@ -8,9 +8,9 @@ router.register(r"", RestaurantViewSet)
 
 urlpatterns = [
     path(
-        "<int:day_id>/<int:restaurant_id>/move/<str:method>/",
+        "<int:restaurant_id>/move/<str:method>/",
         MoveRestaurantView.as_view(),
         name="move-restaurant",
     ),
-    path("<int:day_id>/", include(router.urls)),
+    path("", include(router.urls)),
 ]
