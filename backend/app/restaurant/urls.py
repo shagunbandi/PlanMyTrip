@@ -12,5 +12,5 @@ urlpatterns = [
         MoveRestaurantView.as_view(),
         name="move-restaurant",
     ),
-    path("<int:day_id>", include(router.urls)),
+    path("<int:day_id>/", include(router.urls)),
 ]

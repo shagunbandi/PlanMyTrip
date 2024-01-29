@@ -12,5 +12,5 @@ urlpatterns = [
         MoveAttractionView.as_view(),
         name="move-attraction",
     ),
-    path("<int:day_id>", include(router.urls)),
+    path("<int:day_id>/", include(router.urls)),
 ]

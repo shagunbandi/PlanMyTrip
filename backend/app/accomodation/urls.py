@@ -12,5 +12,5 @@ urlpatterns = [
         MoveAccomodationView.as_view(),
         name="move-accomodation",
     ),
-    path("<int:day_id>", include(router.urls)),
+    path("<int:day_id>/", include(router.urls)),
 ]
