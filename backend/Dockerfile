@@ -13,7 +13,7 @@ RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
 # Copy the Django app code to the container
-COPY . .
+COPY app/ .
 
 # Expose port 8000
 EXPOSE 8000

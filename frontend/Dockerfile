@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm install
 
 # Copy the Vue.js app code to the container
-COPY . .
+COPY app/ .
 
 # Expose port 5173
 EXPOSE 5173
