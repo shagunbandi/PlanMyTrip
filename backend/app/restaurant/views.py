@@ -15,11 +15,11 @@ class RestaurantViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         # Customize the queryset based on the authenticated user
         user = self.request.user
-        day_id = self.request.GET.get("day_id", None)
+        day_id = self.kwargs.get("day_id", None)
         return Restaurant.objects.filter(user=user, day__id=day_id)
 
     def get_serializer_class(self):
-        day_id = self.request.GET.get("day_id", None)
+        day_id = self.kwargs.get("day_id", None)
         return create_restaurant_serializer(day_id=day_id, user=self.request.user)
 
 
