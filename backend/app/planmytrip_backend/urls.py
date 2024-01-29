@@ -35,10 +35,10 @@ urlpatterns = [
     path("api/token/refresh/", TokenRefreshView.as_view()),
     path("api/token/verify/", TokenVerifyView.as_view()),
     # App
-    path("itinerary/", include(itinerary_urls)),
-    path("day/", include(day_urls)),
-    path("dish/", include(dish_urls)),
-    path("accomodation/", include(accomodation_urls)),
-    path("restaurant/", include(restaurant_urls)),
-    path("attraction/", include(attraction_urls)),
+    path("api/itinerary/", include(itinerary_urls)),
+    path("api/day/", include(day_urls)),
+    path("api/dish/", include(dish_urls)),
+    path("api/accomodation/", include(accomodation_urls)),
+    path("api/restaurant/", include(restaurant_urls)),
+    path("api/attraction/", include(attraction_urls)),
 ]

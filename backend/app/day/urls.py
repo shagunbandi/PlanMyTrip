@@ -7,7 +7,7 @@ router = DefaultRouter()
 router.register(r"", DayViewSet)
 
 urlpatterns = [
-    path("api/", include(router.urls)),
+    path("/", include(router.urls)),
     path(
         "<int:itinerary_id>/<int:day_id>/move/<str:method>/",
         DayMethodView.as_view(),

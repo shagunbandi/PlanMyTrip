@@ -3,7 +3,7 @@
   <InPlaceEditableInput
     title="Notes"
     :value="value"
-    :editEndPoint="`/api/itinerary/api/${itineraryId}/`"
+    :editEndPoint="`/api/itinerary/${itineraryId}/`"
     itemKey="notes"
     placeholder="Write some notes here"
     inputType="textarea"

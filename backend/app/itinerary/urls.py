@@ -7,5 +7,5 @@ router.register(r"", ItineraryViewSet)
 
 urlpatterns = [
     # Your other URL patterns
-    path("api/", include(router.urls)),  # Include the router's URL patterns
+    path("/", include(router.urls)),  # Include the router's URL patterns
 ]

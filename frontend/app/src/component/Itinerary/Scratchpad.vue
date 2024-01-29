@@ -3,7 +3,7 @@
   <InPlaceEditableInput
     title="ScratchPad"
     :value="value"
-    :editEndPoint="`/api/itinerary/api/${itineraryId}/`"
+    :editEndPoint="`/api/itinerary/${itineraryId}/`"
     itemKey="scratchpad"
     placeholder="Write your thoughts here"
     inputType="textarea"

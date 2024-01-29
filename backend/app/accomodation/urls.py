@@ -7,7 +7,7 @@ router = DefaultRouter()
 router.register(r"", AccomodationViewSet)
 
 urlpatterns = [
-    path("api/", include(router.urls)),
+    path("/", include(router.urls)),
     path(
         "<int:day_id>/<int:accomodation_id>/move/<str:method>/",
         MoveAccomodationView.as_view(),

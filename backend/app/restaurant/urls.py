@@ -7,7 +7,7 @@ router = DefaultRouter()
 router.register(r"", RestaurantViewSet)
 
 urlpatterns = [
-    path("api/", include(router.urls)),
+    path("/", include(router.urls)),
     path(
         "<int:day_id>/<int:restaurant_id>/move/<str:method>/",
         MoveRestaurantView.as_view(),

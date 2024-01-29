@@ -7,7 +7,7 @@ router = DefaultRouter()
 router.register(r"", DishViewSet)
 
 urlpatterns = [
-    path("api/", include(router.urls)),
+    path("/", include(router.urls)),
     path(
         "<int:day_id>/<int:dish_id>/move/<str:method>/",
         MoveDishView.as_view(),

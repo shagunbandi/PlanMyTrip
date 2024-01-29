@@ -7,7 +7,7 @@ router = DefaultRouter()
 router.register(r"", AttractionViewSet)
 
 urlpatterns = [
-    path("api/", include(router.urls)),
+    path("/", include(router.urls)),
     path(
         "<int:day_id>/<int:attraction_id>/move/<str:method>/",
         MoveAttractionView.as_view(),

@@ -6,7 +6,7 @@
           <InPlaceEditableInput
             :value="itinerary.name"
             inputType="input"
-            :editEndPoint="`/api/itinerary/api/${itineraryId}/`"
+            :editEndPoint="`/api/itinerary/${itineraryId}/`"
             itemKey="name"
           />
         </h1>
@@ -56,7 +56,7 @@ export default {
   methods: {
     fetchItinerary() {
       api
-        .get(`/api/itinerary/api/${this.itineraryId}/`)
+        .get(`/api/itinerary/${this.itineraryId}/`)
         .then((response) => {
           this.itinerary = response.data
         })
