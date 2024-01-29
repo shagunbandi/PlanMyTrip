@@ -1,7 +1,14 @@
 <template>
   <h4 class="day-wise-plan">Day-wise plan</h4>
-  <Day v-for="day in days" :key="day.id" :itineraryId="itineraryId" :day="day" @moveDay="moveDay" @removeDay="removeDay"
-    @fetchItinerary="fetchItinerary" />
+  <Day
+    v-for="day in days"
+    :key="day.id"
+    :itineraryId="itineraryId"
+    :day="day"
+    @moveDay="moveDay"
+    @removeDay="removeDay"
+    @fetchItinerary="fetchItinerary"
+  />
   <button class="btn btn-success" @click="addDay">Add Day</button>
 </template>
 
@@ -28,7 +35,7 @@ export default {
         notes: '',
       }
       try {
-        await api.post(`/api/day/?itinerary_id=${this.itineraryId}`, newDayData)
+        await api.post(`/api/itinerary/${this.itineraryId}/day/`, newDayData)
         this.fetchItinerary()
       } catch (error) {
         console.error('Error adding day:', error)
@@ -36,7 +43,7 @@ export default {
     },
     async removeDay(dayId) {
       try {
-        await api.delete(`/api/day/${dayId}/?itinerary_id=${this.itineraryId}`)
+        await api.delete(`/api/itinerary/${this.itineraryId}/day/${dayId}/`)
         this.fetchItinerary()
       } catch (error) {
         console.error('Error removing day:', error)
@@ -45,7 +52,7 @@ export default {
     async moveDay(dayId, moveDirection) {
       try {
         await api.post(
-          `/api/day/${this.itineraryId}/${dayId}/move/${moveDirection}/`,
+          `/api/itinerary/${this.itineraryId}/day/${dayId}/move/${moveDirection}/`,
         )
         this.fetchItinerary()
       } catch (error) {
