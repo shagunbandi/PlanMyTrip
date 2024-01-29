@@ -15,13 +15,13 @@ class DayViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         # Customize the queryset based on the authenticated user
         user = self.request.user
-        itinerary_id = self.request.GET.get("itinerary_id", None)
+        itinerary_id = self.kwargs.get("itinerary_id", None)
         return Day.objects.filter(user=user, itinerary__id=itinerary_id)
 
     def get_serializer_class(self):
         if self.action in ["create", "update", "partial_update"]:
             return create_day_serializer(
-                itinerary_id=self.request.GET.get("itinerary_id", None),
+                itinerary_id=self.kwargs.get("itinerary_id", None),
                 user=self.request.user,
             )
         else:
