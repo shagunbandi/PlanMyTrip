@@ -11,6 +11,6 @@ urlpatterns = [
     path(
         "<int:day_id>/<int:attraction_id>/move/<str:method>/",
         MoveAttractionView.as_view(),
-        name="move-dish",
+        name="move-attraction",
     ),
 ]

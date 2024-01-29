@@ -1,4 +1,5 @@
 from accomodation.serializers import AccomodationSerializer
+from attraction.serializers import AttractionSerializer
 from common.serializers import (
     AuthBasicInfoMixinSerializer,
     CreateMixinSerializer,
@@ -21,6 +22,7 @@ class DaySerializer(
     dishes = DishSerializer(many=True, read_only=True)
     accomodations = AccomodationSerializer(many=True, read_only=True)
     restaurants = RestaurantSerializer(many=True, read_only=True)
+    attractions = AttractionSerializer(many=True, read_only=True)
     id = IntegerField(read_only=True)
     order = IntegerField(read_only=True)
 

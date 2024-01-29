@@ -37,11 +37,23 @@
             />
           </span>
 
+          <!-- Reservation Cost -->
+          <InPlaceEditableInput
+            v-if="isFeatureEnabled(detailKeys.RESERVATION_COST)"
+            inputType="number"
+            placeholder="Reservation Cost"
+            @click="handleClick"
+            :itemKey="detailKeys.RESERVATION_COST"
+            :value="detail[detailKeys.RESERVATION_COST]"
+            :editEndPoint="`/${name}/api/${detail.id}/?day_id=${dayId}`"
+          />
+
           <!-- Reservation Link -->
           <InPlaceEditableInput
             v-if="isFeatureEnabled(detailKeys.RESERVATION_LINK)"
-            inputType="input"
+            inputType="link"
             placeholder="Reservation Link"
+            @click="handleClick"
             :itemKey="detailKeys.RESERVATION_LINK"
             :value="detail[detailKeys.RESERVATION_LINK]"
             :editEndPoint="`/${name}/api/${detail.id}/?day_id=${dayId}`"
@@ -79,6 +91,19 @@
             />
             <br />
           </span>
+
+          <!-- Attration Type -->
+          <span v-if="isFeatureEnabled(attractionKeys.ATTRACTION_TYPE)">
+            <label class="label-light">Attraction Type:&nbsp;</label>
+            <CheckboxInput
+              :value="detail[attractionKeys.ATTRACTION_TYPE]"
+              :itemKey="attractionKeys.ATTRACTION_TYPE"
+              :states="Object.keys(attrationType)"
+              :editEndPoint="`/${name}/api/${detail.id}/?day_id=${dayId}`"
+            />
+            <br />
+          </span>
+
           <div class="button-group">
             <button class="cross" @click="removeDetail(detail.id)">X</button>
             <button class="move-up" @click="moveDetail(detail.id, 'up')">
@@ -102,7 +127,12 @@ import CheckboxInput from '@/component/CheckboxInput.vue'
 import HoverButton from '@/component/HoverButton.vue'
 import InPlaceEditableInput from '@/component/InPlaceEditableInput.vue'
 import TimeInput from '@/component/TimeInput.vue'
-import { DETAIL_KEYS, RESERVATION_STATUS } from '@/constants'
+import {
+  ATTRACTION_ENUM,
+  ATTRACTION_KEYS,
+  DETAIL_KEYS,
+  RESERVATION_STATUS,
+} from '@/constants'
 
 export default {
   components: {
@@ -121,7 +151,9 @@ export default {
   data() {
     return {
       detailKeys: DETAIL_KEYS,
+      attractionKeys: ATTRACTION_KEYS,
       reservationStatus: RESERVATION_STATUS,
+      attrationType: ATTRACTION_ENUM,
       features: [],
       cleanNewData: {},
     }
@@ -191,6 +223,9 @@ export default {
       } catch (error) {
         console.error('Error moving day:', error)
       }
+    },
+    handleClick() {
+      console.log('as')
     },
   },
 }

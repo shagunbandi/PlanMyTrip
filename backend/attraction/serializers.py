@@ -1,3 +1,4 @@
+from common.enums import Category
 from common.serializers import (
     AuthBasicInfoMixinSerializer,
     CheckboxMixinSerializer,
@@ -22,8 +23,13 @@ class AttractionSerializer(
     CheckboxMixinSerializer,
 ):
     id = IntegerField(read_only=True)
-    category = EnumField(choices=Category, to_choice=lambda x: x.value)
     order = IntegerField(read_only=True)
+    category = EnumField(
+        choices=Category,
+        to_choice=lambda x: x.value,
+        default=Category.EXPERIENCE,
+        required=False,
+    )
 
     class Meta:
         model = Attraction
@@ -38,7 +44,12 @@ def create_attraction_serializer(day_id=None, user=None):
         CreateMixinSerializer,
         CheckboxMixinSerializer,
     ):
-        category = EnumField(choices=Category, to_choice=lambda x: x.value)
+        category = EnumField(
+            choices=Category,
+            to_choice=lambda x: x.value,
+            default=Category.EXPERIENCE,
+            required=False,
+        )
 
         class Meta:
             model = Attraction
