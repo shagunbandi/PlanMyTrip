@@ -1,5 +1,6 @@
 <template>
   <div class="flex-grow-1">
+    <!-- Day Title -->
     <h5 id="day-name" class="day d-flex">
       <span class="day-text flex-shrink-0">Day {{ day.order + 1 }}:&nbsp;</span>
       <InPlaceEditableInput
@@ -10,6 +11,8 @@
         :editEndPoint="`/api/day/${day.id}/?itinerary_id=${itinerary.id}`"
       />
     </h5>
+
+    <!-- Notes -->
     <span id="notes">
       <label for="notes">Notes</label>
       <InPlaceEditableInput

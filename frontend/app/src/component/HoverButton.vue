@@ -11,6 +11,11 @@
 <script>
 export default {
   props: {
+    buttonType: {
+      type: String,
+      required: false,
+      default: 'add',
+    },
     buttonText: {
       type: String,
       required: true,

@@ -13,11 +13,29 @@
         </h1>
 
         <!-- Notes -->
-        <Notes :value="itinerary.notes" :itineraryId="itineraryId" />
+        <label for="notes">Notes</label>
+        <InPlaceEditableInput
+          title="Notes"
+          :value="itinerary.notes"
+          :editEndPoint="`/api/itinerary/${itineraryId}/`"
+          itemKey="notes"
+          placeholder="Write some notes here"
+          inputType="textarea"
+        />
+
         <br />
 
         <!-- Scratchpad -->
-        <Scratchpad :value="itinerary.scratchpad" :itineraryId="itineraryId" />
+        <label for="scratchpad">ScratchPad</label>
+        <InPlaceEditableInput
+          title="ScratchPad"
+          :value="itinerary.scratchpad"
+          :editEndPoint="`/api/itinerary/${itineraryId}/`"
+          itemKey="scratchpad"
+          placeholder="Write your thoughts here"
+          inputType="textarea"
+        />
+
         <br />
 
         <!-- Day Wise Plan -->
@@ -38,8 +56,6 @@
 <script>
 import Container from '@/component/Container.vue'
 import InPlaceEditableInput from '@/component/InPlaceEditableInput.vue'
-import Notes from '@/component/Itinerary/Notes.vue'
-import Scratchpad from '@/component/Itinerary/Scratchpad.vue'
 import Day from '@/views/Itinerary/DayView.vue'
 import { mapActions, mapState } from 'vuex'
 
@@ -47,8 +63,6 @@ export default {
   components: {
     Container,
     InPlaceEditableInput,
-    Notes,
-    Scratchpad,
     Day,
   },
   data() {
