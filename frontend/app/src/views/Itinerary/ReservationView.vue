@@ -12,7 +12,7 @@
           v-if="isFeatureEnabled(reservationKeys.CHECKED_STATUS)"
           :value="detail[reservationKeys.CHECKED_STATUS]"
           :itemKey="reservationKeys.CHECKED_STATUS"
-          :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
+          :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
         />
 
         <div class="flex-grow-1">
@@ -23,7 +23,7 @@
             placeholder="Name"
             :itemKey="reservationKeys.NAME"
             :value="detail[reservationKeys.NAME]"
-            :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
+            :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
           />
 
           <!-- Notes -->
@@ -33,7 +33,7 @@
               placeholder="Notes"
               :itemKey="reservationKeys.NOTES"
               :value="detail[reservationKeys.NOTES]"
-              :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
+              :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
             />
           </span>
 
@@ -45,7 +45,7 @@
             @click="handleClick"
             :itemKey="reservationKeys.RESERVATION_COST"
             :value="detail[reservationKeys.RESERVATION_COST]"
-            :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
+            :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
           />
 
           <!-- Reservation Link -->
@@ -56,7 +56,7 @@
             @click="handleClick"
             :itemKey="reservationKeys.RESERVATION_LINK"
             :value="detail[reservationKeys.RESERVATION_LINK]"
-            :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
+            :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
           />
 
           <!-- Reservation File -->
@@ -66,7 +66,7 @@
             placeholder="Reservation File"
             :itemKey="reservationKeys.RESERVATION_FILE"
             :value="detail[reservationKeys.RESERVATION_FILE]"
-            :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
+            :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
           />
 
           <!-- Reservation Time -->
@@ -75,7 +75,7 @@
             <PersistingTimeInput
               :value="detail[reservationKeys.RESERVATION_TIME]"
               :itemKey="reservationKeys.RESERVATION_TIME"
-              :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
+              :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
             />
             <br />
           </span>
@@ -87,7 +87,7 @@
               :value="detail[reservationKeys.RESERVATION_STATUS]"
               :itemKey="reservationKeys.RESERVATION_STATUS"
               :states="Object.keys(reservationStatus)"
-              :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
+              :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
             />
             <br />
           </span>
@@ -99,7 +99,7 @@
               :value="detail[attractionKeys.ATTRACTION_TYPE]"
               :itemKey="attractionKeys.ATTRACTION_TYPE"
               :states="Object.keys(attrationType)"
-              :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
+              :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
             />
             <br />
           </span>
@@ -171,7 +171,7 @@ import {
   RESERVATION_KEYS,
   RESERVATION_STATUS,
 } from '@/constants'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   components: {
@@ -225,6 +225,7 @@ export default {
         }
       }
     },
+    ...mapState('itinerary', ['itinerary']),
   },
   methods: {
     updateFeatures() {

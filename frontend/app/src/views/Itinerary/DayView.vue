@@ -8,7 +8,7 @@
         placeholder="Write a title for you day"
         itemKey="name"
         :value="day.name"
-        :editEndPoint="`/api/day/${day.id}/?itinerary_id=${itinerary.id}`"
+        :editEndPoint="`/api/itinerary/${itinerary.id}/day/${day.id}/`"
       />
     </h5>
 
@@ -19,7 +19,7 @@
         :value="day.notes"
         inputType="textarea"
         placeholder="Write something about the day"
-        :editEndPoint="`/api/day/${day.id}/?itinerary_id=${itinerary.id}`"
+        :editEndPoint="`/api/itinerary/${itinerary.id}/day/${day.id}/`"
         itemKey="notes"
       />
     </span>
