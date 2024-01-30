@@ -14,11 +14,7 @@
         <br />
         <Scratchpad :value="itinerary.scratchpad" :itineraryId="itineraryId" />
         <br />
-        <Days
-          :itineraryId="itineraryId"
-          :days="itinerary.days"
-          @fetchItinerary="fetchItinerary"
-        />
+        <Days :itineraryId="itineraryId" :days="itinerary.days" />
       </Container>
     </span>
 
@@ -29,12 +25,12 @@
 </template>
 
 <script>
-import api from '@/api'
 import Container from '@/component/Container.vue'
 import InPlaceEditableInput from '@/component/InPlaceEditableInput.vue'
 import Days from '@/component/Itinerary/Days.vue'
 import Notes from '@/component/Itinerary/Notes.vue'
 import Scratchpad from '@/component/Itinerary/Scratchpad.vue'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   components: {
@@ -46,24 +42,17 @@ export default {
   },
   data() {
     return {
-      itinerary: null,
       itineraryId: 1,
     }
+  },
+  computed: {
+    ...mapState('itinerary', ['itinerary']),
   },
   mounted() {
     this.fetchItinerary()
   },
   methods: {
-    fetchItinerary() {
-      api
-        .get(`/api/itinerary/${this.itineraryId}/`)
-        .then((response) => {
-          this.itinerary = response.data
-        })
-        .catch((error) => {
-          console.error('Error fetching itinerary:', error)
-        })
-    },
+    ...mapActions('itinerary', ['fetchItinerary']),
   },
 }
 </script>

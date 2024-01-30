@@ -24,19 +24,12 @@
         />
       </span>
       <br />
-      <Detail
-        :dayId="day.id"
-        :details="day.dishes"
-        name="dish"
-        title="Dish"
-        @fetchItinerary="fetchItinerary"
-      />
+      <Detail :dayId="day.id" :details="day.dishes" name="dish" title="Dish" />
       <Detail
         :dayId="day.id"
         :details="day.accomodations"
         name="accomodation"
         title="Accomodation"
-        @fetchItinerary="fetchItinerary"
       />
 
       <Detail
@@ -44,7 +37,6 @@
         :details="day.restaurants"
         name="restaurant"
         title="Restaurant"
-        @fetchItinerary="fetchItinerary"
       />
 
       <Detail
@@ -53,7 +45,6 @@
         name="attraction"
         title="Attraction"
         :newDetailData="newAttraction"
-        @fetchItinerary="fetchItinerary"
       />
 
       <!-- All other features go here -->
@@ -71,6 +62,7 @@
 import InPlaceEditableInput from '@/component/InPlaceEditableInput.vue'
 import Detail from '@/component/Itinerary/Detail.vue'
 import { ATTRACTION_ENUM } from '@/constants'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -90,7 +82,7 @@ export default {
       },
     }
   },
-  emits: ['moveDay', 'removeDay', 'fetchItinerary'],
+  emits: ['moveDay', 'removeDay'],
   methods: {
     removeDay(dayId) {
       this.$emit('removeDay', dayId)
@@ -98,9 +90,7 @@ export default {
     moveDay(dayId, moveDirection) {
       this.$emit('moveDay', dayId, moveDirection)
     },
-    fetchItinerary() {
-      this.$emit('fetchItinerary')
-    },
+    ...mapActions('itinerary', ['fetchItinerary']),
   },
 }
 </script>

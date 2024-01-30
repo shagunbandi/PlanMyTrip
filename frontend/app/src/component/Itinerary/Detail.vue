@@ -133,6 +133,7 @@ import {
   DETAIL_KEYS,
   RESERVATION_STATUS,
 } from '@/constants'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -170,7 +171,6 @@ export default {
       deep: true,
     },
   },
-  emits: ['fetchItinerary'],
   computed: {
     isFeatureEnabled() {
       return (featureKey) => this.features.includes(featureKey)
@@ -191,9 +191,6 @@ export default {
   methods: {
     updateFeatures() {
       if (this.details.length > 0) this.features = Object.keys(this.details[0])
-    },
-    fetchItinerary() {
-      this.$emit('fetchItinerary')
     },
     async handleAddDetail() {
       try {
@@ -228,6 +225,7 @@ export default {
       console.log('as')
     },
   },
+  ...mapActions('itinerary', ['fetchItinerary']),
 }
 </script>
 

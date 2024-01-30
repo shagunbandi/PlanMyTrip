@@ -7,7 +7,6 @@
     :day="day"
     @moveDay="moveDay"
     @removeDay="removeDay"
-    @fetchItinerary="fetchItinerary"
   />
   <button class="btn btn-success" @click="addDay">Add Day</button>
 </template>
@@ -15,6 +14,7 @@
 <script>
 import api from '@/api'
 import Day from '@/component/Itinerary/Day.vue'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -27,7 +27,6 @@ export default {
   data() {
     return {}
   },
-  emits: ['fetchItinerary'],
   methods: {
     async addDay() {
       const newDayData = {
@@ -59,9 +58,7 @@ export default {
         console.error('Error moving day:', error)
       }
     },
-    fetchItinerary() {
-      this.$emit('fetchItinerary')
-    },
+    ...mapActions('itinerary', ['fetchItinerary']),
   },
 }
 </script>
