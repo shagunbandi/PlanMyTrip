@@ -88,7 +88,7 @@ export default {
       this.$emit('removeDay', dayId)
     },
     moveDay(dayId, moveDirection) {
-      this.$emit('moveDay', dayId, moveDirection)
+      this.$emit('moveDay', { dayId, moveDirection })
     },
     ...mapActions('itinerary', ['fetchItinerary']),
   },

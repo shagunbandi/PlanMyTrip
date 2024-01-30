@@ -8,11 +8,10 @@
     @moveDay="moveDay"
     @removeDay="removeDay"
   />
-  <button class="btn btn-success" @click="addDay">Add Day</button>
+  <button class="btn btn-success" @click="addDummyDay">Add Day</button>
 </template>
 
 <script>
-import api from '@/api'
 import Day from '@/component/Itinerary/Day.vue'
 import { mapActions } from 'vuex'
 
@@ -28,37 +27,19 @@ export default {
     return {}
   },
   methods: {
-    async addDay() {
+    addDummyDay() {
       const newDayData = {
         name: 'New Day',
         notes: '',
       }
-      try {
-        await api.post(`/api/itinerary/${this.itineraryId}/day/`, newDayData)
-        this.fetchItinerary()
-      } catch (error) {
-        console.error('Error adding day:', error)
-      }
+      this.addDay(newDayData)
     },
-    async removeDay(dayId) {
-      try {
-        await api.delete(`/api/itinerary/${this.itineraryId}/day/${dayId}/`)
-        this.fetchItinerary()
-      } catch (error) {
-        console.error('Error removing day:', error)
-      }
-    },
-    async moveDay(dayId, moveDirection) {
-      try {
-        await api.post(
-          `/api/itinerary/${this.itineraryId}/day/${dayId}/move/${moveDirection}/`,
-        )
-        this.fetchItinerary()
-      } catch (error) {
-        console.error('Error moving day:', error)
-      }
-    },
-    ...mapActions('itinerary', ['fetchItinerary']),
+    ...mapActions('itinerary', [
+      'fetchItinerary',
+      'addDay',
+      'removeDay',
+      'moveDay',
+    ]),
   },
 }
 </script>
