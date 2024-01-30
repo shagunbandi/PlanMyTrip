@@ -37,7 +37,11 @@
             />
           </span>
 
-          <Container extraClasses="left-border pb-1 pt-1">
+          <Container
+            extraClasses="left-border"
+            v-if="isAnyFeatureEnabled()"
+            :collapsable="isAnyFeatureEnabled()"
+          >
             <!-- Reservation Cost -->
             <LabelContainer
               v-if="isFeatureEnabled(reservationKeys.RESERVATION_COST)"
@@ -234,6 +238,16 @@ export default {
   computed: {
     isFeatureEnabled() {
       return (featureKey) => this.features.includes(featureKey)
+    },
+    // TODO Maybe change it to count. And don't show if only one
+    isAnyFeatureEnabled() {
+      return () =>
+        this.isFeatureEnabled(this.reservationKeys.RESERVATION_COST) ||
+        this.isFeatureEnabled(this.reservationKeys.RESERVATION_LINK) ||
+        this.isFeatureEnabled(this.reservationKeys.RESERVATION_FILE) ||
+        this.isFeatureEnabled(this.reservationKeys.RESERVATION_TIME) ||
+        this.isFeatureEnabled(this.reservationKeys.RESERVATION_STATUS) ||
+        this.isFeatureEnabled(this.attractionKeys.ATTRACTION_TYPE)
     },
     generateNewData() {
       return () => {
