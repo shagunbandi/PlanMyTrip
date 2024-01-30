@@ -26,7 +26,7 @@ class AttractionViewSet(viewsets.ModelViewSet):
 class MoveAttractionView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, day_id, attraction_id, method):
+    def post(self, request, itinerary_id, day_id, attraction_id, method):
         user = request.user
         attraction = get_object_or_404(
             Attraction, id=attraction_id, day__id=day_id, user=user

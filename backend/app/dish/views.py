@@ -26,7 +26,7 @@ class DishViewSet(viewsets.ModelViewSet):
 class MoveDishView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, day_id, dish_id, method):
+    def post(self, request, itinerary_id, day_id, dish_id, method):
         user = request.user
         dish = get_object_or_404(Dish, id=dish_id, day__id=day_id, user=user)
 

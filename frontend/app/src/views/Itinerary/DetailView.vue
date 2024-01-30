@@ -105,24 +105,62 @@
           </span>
 
           <div class="button-group">
-            <button class="cross" @click="removeDetail(detail.id)">X</button>
-            <button class="move-up" @click="moveDetail(detail.id, 'up')">
+            <button
+              class="cross"
+              @click="
+                removeDetail({
+                  dayId: dayId,
+                  detailId: detail.id,
+                  detailName: name,
+                })
+              "
+            >
+              X
+            </button>
+            <button
+              class="move-up"
+              @click="
+                moveDetail({
+                  dayId: dayId,
+                  detailId: detail.id,
+                  detailName: name,
+                  moveDirection: 'up',
+                })
+              "
+            >
               ↑
             </button>
-            <button class="move-down" @click="moveDetail(detail.id, 'down')">
+            <button
+              class="move-down"
+              @click="
+                moveDetail({
+                  dayId: dayId,
+                  detailId: detail.id,
+                  detailName: name,
+                  moveDirection: 'down',
+                })
+              "
+            >
               ↓
             </button>
           </div>
         </div>
       </li>
-      <HoverButton buttonText="Add" @buttonClick="handleAddDetail" />
+      <HoverButton
+        buttonText="Add"
+        @buttonClick="
+          addDetail({
+            dayId: dayId,
+            newDetail: cleanNewData,
+            detailName: name,
+          })
+        "
+      />
     </ul>
   </span>
 </template>
 
 <script>
-import api from '@/api'
-
 import CheckboxInput from '@/component/CheckboxInput.vue'
 import HoverButton from '@/component/HoverButton.vue'
 import InPlaceEditableInput from '@/component/InPlaceEditableInput.vue'
@@ -192,40 +230,16 @@ export default {
     updateFeatures() {
       if (this.details.length > 0) this.features = Object.keys(this.details[0])
     },
-    async handleAddDetail() {
-      try {
-        await api.post(
-          `/api/${this.name}/?day_id=${this.dayId}`,
-          this.cleanNewData,
-        )
-        this.fetchItinerary()
-      } catch (error) {
-        console.error(`Error adding ${this.name}:`, error)
-      }
-    },
-    async removeDetail(detailId) {
-      try {
-        await api.delete(`/api/${this.name}/${detailId}/?day_id=${this.dayId}`)
-        this.fetchItinerary()
-      } catch (error) {
-        console.error(`Error removing ${this.name}:`, error)
-      }
-    },
-    async moveDetail(detailId, moveDirection) {
-      try {
-        await api.post(
-          `/api/${this.name}/${this.dayId}/${detailId}/move/${moveDirection}/`,
-        )
-        this.fetchItinerary()
-      } catch (error) {
-        console.error('Error moving day:', error)
-      }
-    },
     handleClick() {
       console.log('as')
     },
+    ...mapActions('itinerary', [
+      'fetchItinerary',
+      'addDetail',
+      'removeDetail',
+      'moveDetail',
+    ]),
   },
-  ...mapActions('itinerary', ['fetchItinerary']),
 }
 </script>
 
