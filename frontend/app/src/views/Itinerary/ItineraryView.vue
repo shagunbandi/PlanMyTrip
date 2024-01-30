@@ -4,20 +4,20 @@
       <Container>
         <!-- Title -->
         <h1 class="title">
-          <InPlaceEditableInput
+          <PersistingInput
             :value="itinerary.name"
             inputType="input"
-            :editEndPoint="`/api/itinerary/${itineraryId}/`"
+            :editEndPoint="`/api/itinerary/${itinerary.id}/`"
             itemKey="name"
           />
         </h1>
 
         <!-- Notes -->
         <label for="notes">Notes</label>
-        <InPlaceEditableInput
+        <PersistingInput
           title="Notes"
           :value="itinerary.notes"
-          :editEndPoint="`/api/itinerary/${itineraryId}/`"
+          :editEndPoint="`/api/itinerary/${itinerary.id}/`"
           itemKey="notes"
           placeholder="Write some notes here"
           inputType="textarea"
@@ -27,10 +27,10 @@
 
         <!-- Scratchpad -->
         <label for="scratchpad">ScratchPad</label>
-        <InPlaceEditableInput
+        <PersistingInput
           title="ScratchPad"
           :value="itinerary.scratchpad"
-          :editEndPoint="`/api/itinerary/${itineraryId}/`"
+          :editEndPoint="`/api/itinerary/${itinerary.id}/`"
           itemKey="scratchpad"
           placeholder="Write your thoughts here"
           inputType="textarea"
@@ -55,20 +55,18 @@
 
 <script>
 import Container from '@/component/Container.vue'
-import InPlaceEditableInput from '@/component/InPlaceEditableInput.vue'
+import PersistingInput from '@/component/PersistingInput.vue'
 import Day from '@/views/Itinerary/DayView.vue'
 import { mapActions, mapState } from 'vuex'
 
 export default {
   components: {
     Container,
-    InPlaceEditableInput,
+    PersistingInput,
     Day,
   },
   data() {
-    return {
-      itineraryId: 1,
-    }
+    return {}
   },
   computed: {
     ...mapState('itinerary', ['itinerary']),

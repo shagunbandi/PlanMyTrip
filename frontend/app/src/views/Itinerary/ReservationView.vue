@@ -8,7 +8,7 @@
         class="d-flex align-items-start detail"
       >
         <!-- CHECKBOX -->
-        <CheckboxInput
+        <PersistingEnumSelector
           v-if="isFeatureEnabled(reservationKeys.CHECKED_STATUS)"
           :value="detail[reservationKeys.CHECKED_STATUS]"
           :itemKey="reservationKeys.CHECKED_STATUS"
@@ -17,7 +17,7 @@
 
         <div class="flex-grow-1">
           <!-- NAME -->
-          <InPlaceEditableInput
+          <PersistingInput
             v-if="isFeatureEnabled(reservationKeys.NAME)"
             inputType="input"
             placeholder="Name"
@@ -28,7 +28,7 @@
 
           <!-- Notes -->
           <span v-if="isFeatureEnabled(reservationKeys.NOTES)" class="notes">
-            <InPlaceEditableInput
+            <PersistingInput
               inputType="textarea"
               placeholder="Notes"
               :itemKey="reservationKeys.NOTES"
@@ -38,7 +38,7 @@
           </span>
 
           <!-- Reservation Cost -->
-          <InPlaceEditableInput
+          <PersistingInput
             v-if="isFeatureEnabled(reservationKeys.RESERVATION_COST)"
             inputType="number"
             placeholder="Reservation Cost"
@@ -49,7 +49,7 @@
           />
 
           <!-- Reservation Link -->
-          <InPlaceEditableInput
+          <PersistingInput
             v-if="isFeatureEnabled(reservationKeys.RESERVATION_LINK)"
             inputType="link"
             placeholder="Reservation Link"
@@ -60,7 +60,7 @@
           />
 
           <!-- Reservation File -->
-          <InPlaceEditableInput
+          <PersistingInput
             v-if="isFeatureEnabled(reservationKeys.RESERVATION_FILE)"
             inputType="input"
             placeholder="Reservation File"
@@ -72,7 +72,7 @@
           <!-- Reservation Time -->
           <span v-if="isFeatureEnabled(reservationKeys.RESERVATION_TIME)">
             <label class="label-light">Reservation Time:&nbsp;</label>
-            <TimeInput
+            <PersistingTimeInput
               :value="detail[reservationKeys.RESERVATION_TIME]"
               :itemKey="reservationKeys.RESERVATION_TIME"
               :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
@@ -83,7 +83,7 @@
           <!-- Reservation Status -->
           <span v-if="isFeatureEnabled(reservationKeys.RESERVATION_STATUS)">
             <label class="label-light">Reservation Status:&nbsp;</label>
-            <CheckboxInput
+            <PersistingEnumSelector
               :value="detail[reservationKeys.RESERVATION_STATUS]"
               :itemKey="reservationKeys.RESERVATION_STATUS"
               :states="Object.keys(reservationStatus)"
@@ -95,7 +95,7 @@
           <!-- Attration Type -->
           <span v-if="isFeatureEnabled(attractionKeys.ATTRACTION_TYPE)">
             <label class="label-light">Attraction Type:&nbsp;</label>
-            <CheckboxInput
+            <PersistingEnumSelector
               :value="detail[attractionKeys.ATTRACTION_TYPE]"
               :itemKey="attractionKeys.ATTRACTION_TYPE"
               :states="Object.keys(attrationType)"
@@ -161,10 +161,10 @@
 </template>
 
 <script>
-import CheckboxInput from '@/component/CheckboxInput.vue'
 import HoverButton from '@/component/HoverButton.vue'
-import InPlaceEditableInput from '@/component/InPlaceEditableInput.vue'
-import TimeInput from '@/component/TimeInput.vue'
+import PersistingEnumSelector from '@/component/PersistingEnumSelector.vue'
+import PersistingInput from '@/component/PersistingInput.vue'
+import PersistingTimeInput from '@/component/PersistingTimeInput.vue'
 import {
   ATTRACTION_ENUM,
   ATTRACTION_KEYS,
@@ -175,9 +175,9 @@ import { mapActions } from 'vuex'
 
 export default {
   components: {
-    InPlaceEditableInput,
-    CheckboxInput,
-    TimeInput,
+    PersistingInput,
+    PersistingEnumSelector,
+    PersistingTimeInput,
     HoverButton,
   },
   props: {

@@ -3,7 +3,7 @@
     <!-- Day Title -->
     <h5 id="day-name" class="day d-flex">
       <span class="day-text flex-shrink-0">Day {{ day.order + 1 }}:&nbsp;</span>
-      <InPlaceEditableInput
+      <PersistingInput
         inputType="input"
         placeholder="Write a title for you day"
         itemKey="name"
@@ -15,7 +15,7 @@
     <!-- Notes -->
     <span id="notes">
       <label for="notes">Notes</label>
-      <InPlaceEditableInput
+      <PersistingInput
         :value="day.notes"
         inputType="textarea"
         placeholder="Write something about the day"
@@ -73,14 +73,14 @@
 </template>
 
 <script>
-import InPlaceEditableInput from '@/component/InPlaceEditableInput.vue'
+import PersistingInput from '@/component/PersistingInput.vue'
 import { ATTRACTION_ENUM } from '@/constants'
 import { mapActions, mapState } from 'vuex'
 import ReservationView from './ReservationView.vue'
 
 export default {
   components: {
-    InPlaceEditableInput,
+    PersistingInput,
     ReservationView,
   },
   props: {
