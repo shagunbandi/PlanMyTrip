@@ -37,7 +37,7 @@ import api from '@/api'
 
 export default {
   props: {
-    value: String,
+    value: [String, Number],
     editEndPoint: String,
     itemKey: String,
     inputType: String,

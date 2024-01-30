@@ -26,7 +26,7 @@ class RestaurantViewSet(viewsets.ModelViewSet):
 class MoveRestaurantView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, day_id, restaurant_id, method):
+    def post(self, request, itinerary_id, day_id, restaurant_id, method):
         user = request.user
         restaurant = get_object_or_404(
             Restaurant, id=restaurant_id, day__id=day_id, user=user

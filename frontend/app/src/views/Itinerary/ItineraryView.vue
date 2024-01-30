@@ -2,23 +2,48 @@
   <Container>
     <span v-if="itinerary">
       <Container>
+        <!-- Title -->
         <h1 class="title">
-          <InPlaceEditableInput
+          <PersistingInput
             :value="itinerary.name"
             inputType="input"
-            :editEndPoint="`/api/itinerary/${itineraryId}/`"
+            :editEndPoint="`/api/itinerary/${itinerary.id}/`"
             itemKey="name"
           />
         </h1>
-        <Notes :value="itinerary.notes" :itineraryId="itineraryId" />
-        <br />
-        <Scratchpad :value="itinerary.scratchpad" :itineraryId="itineraryId" />
-        <br />
-        <Days
-          :itineraryId="itineraryId"
-          :days="itinerary.days"
-          @fetchItinerary="fetchItinerary"
+
+        <!-- Notes -->
+        <label for="notes">Notes</label>
+        <PersistingInput
+          title="Notes"
+          :value="itinerary.notes"
+          :editEndPoint="`/api/itinerary/${itinerary.id}/`"
+          itemKey="notes"
+          placeholder="Write some notes here"
+          inputType="textarea"
         />
+
+        <br />
+
+        <!-- Scratchpad -->
+        <label for="scratchpad">ScratchPad</label>
+        <PersistingInput
+          title="ScratchPad"
+          :value="itinerary.scratchpad"
+          :editEndPoint="`/api/itinerary/${itinerary.id}/`"
+          itemKey="scratchpad"
+          placeholder="Write your thoughts here"
+          inputType="textarea"
+        />
+
+        <br />
+
+        <!-- Day Wise Plan -->
+        <h4 class="day-wise-plan">Day-wise plan</h4>
+        <div v-for="day in itinerary.days" :key="day.id" class="d-flex">
+          <Day :day="day" />
+        </div>
+        <button class="btn btn-success" @click="addDummyDay">Add Day</button>
       </Container>
     </span>
 
@@ -29,41 +54,41 @@
 </template>
 
 <script>
-import api from '@/api'
 import Container from '@/component/Container.vue'
-import InPlaceEditableInput from '@/component/InPlaceEditableInput.vue'
-import Days from '@/component/Itinerary/Days.vue'
-import Notes from '@/component/Itinerary/Notes.vue'
-import Scratchpad from '@/component/Itinerary/Scratchpad.vue'
+import PersistingInput from '@/component/PersistingInput.vue'
+import Day from '@/views/Itinerary/DayView.vue'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   components: {
     Container,
-    InPlaceEditableInput,
-    Notes,
-    Scratchpad,
-    Days,
+    PersistingInput,
+    Day,
   },
   data() {
-    return {
-      itinerary: null,
-      itineraryId: 1,
-    }
+    return {}
+  },
+  computed: {
+    ...mapState('itinerary', ['itinerary']),
   },
   mounted() {
     this.fetchItinerary()
   },
   methods: {
-    fetchItinerary() {
-      api
-        .get(`/api/itinerary/${this.itineraryId}/`)
-        .then((response) => {
-          this.itinerary = response.data
-        })
-        .catch((error) => {
-          console.error('Error fetching itinerary:', error)
-        })
+    addDummyDay() {
+      this.addDay({
+        name: 'New Day',
+        notes: '',
+      })
     },
+
+    ...mapActions('itinerary', ['fetchItinerary', 'addDay']),
   },
 }
 </script>
+
+<style scoped>
+.day-wise-plan {
+  font-weight: bold;
+}
+</style>

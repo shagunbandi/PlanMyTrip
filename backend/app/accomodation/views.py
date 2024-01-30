@@ -26,7 +26,7 @@ class AccomodationViewSet(viewsets.ModelViewSet):
 class MoveAccomodationView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, day_id, accomodation_id, method):
+    def post(self, request, itinerary_id, day_id, accomodation_id, method):
         user = request.user
         accomodation = get_object_or_404(
             Accomodation, id=accomodation_id, day__id=day_id, user=user

@@ -1,4 +1,4 @@
-export const DETAIL_KEYS = {
+export const RESERVATION_KEYS = {
   CHECKED_STATUS: 'checked_status',
   NAME: 'name',
   NOTES: 'notes',
@@ -14,7 +14,7 @@ export const DETAIL_KEYS = {
 
 export const ATTRACTION_KEYS = {
   ATTRACTION_TYPE: 'category',
-  ...DETAIL_KEYS,
+  ...RESERVATION_KEYS,
 }
 
 export const CHECKED_STATUS = {
