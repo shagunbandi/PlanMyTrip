@@ -37,113 +37,131 @@
             />
           </span>
 
-          <!-- Reservation Cost -->
-          <PersistingInput
-            v-if="isFeatureEnabled(reservationKeys.RESERVATION_COST)"
-            inputType="number"
-            placeholder="Reservation Cost"
-            @click="handleClick"
-            :itemKey="reservationKeys.RESERVATION_COST"
-            :value="detail[reservationKeys.RESERVATION_COST]"
-            :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
-          />
-
-          <!-- Reservation Link -->
-          <PersistingInput
-            v-if="isFeatureEnabled(reservationKeys.RESERVATION_LINK)"
-            inputType="link"
-            placeholder="Reservation Link"
-            @click="handleClick"
-            :itemKey="reservationKeys.RESERVATION_LINK"
-            :value="detail[reservationKeys.RESERVATION_LINK]"
-            :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
-          />
-
-          <!-- Reservation File -->
-          <PersistingInput
-            v-if="isFeatureEnabled(reservationKeys.RESERVATION_FILE)"
-            inputType="input"
-            placeholder="Reservation File"
-            :itemKey="reservationKeys.RESERVATION_FILE"
-            :value="detail[reservationKeys.RESERVATION_FILE]"
-            :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
-          />
-
-          <!-- Reservation Time -->
-          <span v-if="isFeatureEnabled(reservationKeys.RESERVATION_TIME)">
-            <label class="label-light">Reservation Time:&nbsp;</label>
-            <PersistingTimeInput
-              :value="detail[reservationKeys.RESERVATION_TIME]"
-              :itemKey="reservationKeys.RESERVATION_TIME"
-              :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
-            />
-            <br />
-          </span>
-
-          <!-- Reservation Status -->
-          <span v-if="isFeatureEnabled(reservationKeys.RESERVATION_STATUS)">
-            <label class="label-light">Reservation Status:&nbsp;</label>
-            <PersistingEnumSelector
-              :value="detail[reservationKeys.RESERVATION_STATUS]"
-              :itemKey="reservationKeys.RESERVATION_STATUS"
-              :states="Object.keys(reservationStatus)"
-              :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
-            />
-            <br />
-          </span>
-
-          <!-- Attration Type -->
-          <span v-if="isFeatureEnabled(attractionKeys.ATTRACTION_TYPE)">
-            <label class="label-light">Attraction Type:&nbsp;</label>
-            <PersistingEnumSelector
-              :value="detail[attractionKeys.ATTRACTION_TYPE]"
-              :itemKey="attractionKeys.ATTRACTION_TYPE"
-              :states="Object.keys(attrationType)"
-              :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
-            />
-            <br />
-          </span>
-
-          <div class="button-group">
-            <button
-              class="cross"
-              @click="
-                removeReservation({
-                  dayId: dayId,
-                  reservationId: detail.id,
-                  reservationName: name,
-                })
-              "
+          <Container extraClasses="left-border pb-1 pt-1">
+            <!-- Reservation Cost -->
+            <LabelContainer
+              v-if="isFeatureEnabled(reservationKeys.RESERVATION_COST)"
+              label="Reservation Cost"
             >
-              X
-            </button>
-            <button
-              class="move-up"
-              @click="
-                moveReservation({
-                  dayId: dayId,
-                  reservationId: detail.id,
-                  reservationName: name,
-                  moveDirection: 'up',
-                })
-              "
+              <PersistingInput
+                id="reservation-cost"
+                inputType="number"
+                placeholder="How much does it cost?"
+                @click="handleClick"
+                :itemKey="reservationKeys.RESERVATION_COST"
+                :value="detail[reservationKeys.RESERVATION_COST]"
+                :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
+              />
+            </LabelContainer>
+
+            <!-- Reservation Link -->
+            <LabelContainer
+              v-if="isFeatureEnabled(reservationKeys.RESERVATION_LINK)"
+              label="Reservation Link"
             >
-              ↑
-            </button>
-            <button
-              class="move-down"
-              @click="
-                moveReservation({
-                  dayId: dayId,
-                  reservationId: detail.id,
-                  reservationName: name,
-                  moveDirection: 'down',
-                })
-              "
+              <PersistingInput
+                inputType="link"
+                placeholder="Link to your reservation"
+                @click="handleClick"
+                :itemKey="reservationKeys.RESERVATION_LINK"
+                :value="detail[reservationKeys.RESERVATION_LINK]"
+                :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
+              />
+            </LabelContainer>
+
+            <!-- Reservation File -->
+            <LabelContainer
+              v-if="isFeatureEnabled(reservationKeys.RESERVATION_FILE)"
+              label="Reservation File"
             >
-              ↓
-            </button>
-          </div>
+              <PersistingInput
+                inputType="input"
+                placeholder="Upload a file here"
+                :itemKey="reservationKeys.RESERVATION_FILE"
+                :value="detail[reservationKeys.RESERVATION_FILE]"
+                :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
+              />
+            </LabelContainer>
+
+            <!-- Reservation Time -->
+            <LabelContainer
+              v-if="isFeatureEnabled(reservationKeys.RESERVATION_TIME)"
+              label="Reservation Time"
+            >
+              <PersistingTimeInput
+                :value="detail[reservationKeys.RESERVATION_TIME]"
+                :itemKey="reservationKeys.RESERVATION_TIME"
+                :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
+              />
+            </LabelContainer>
+
+            <!-- Reservation Status -->
+            <LabelContainer
+              v-if="isFeatureEnabled(reservationKeys.RESERVATION_STATUS)"
+              label="Reservation Status"
+            >
+              <PersistingEnumSelector
+                :value="detail[reservationKeys.RESERVATION_STATUS]"
+                :itemKey="reservationKeys.RESERVATION_STATUS"
+                :states="Object.keys(reservationStatus)"
+                :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
+              />
+            </LabelContainer>
+
+            <!-- Attration Type -->
+            <LabelContainer
+              v-if="isFeatureEnabled(attractionKeys.ATTRACTION_TYPE)"
+              label="Attraction Type"
+            >
+              <PersistingEnumSelector
+                :value="detail[attractionKeys.ATTRACTION_TYPE]"
+                :itemKey="attractionKeys.ATTRACTION_TYPE"
+                :states="Object.keys(attrationType)"
+                :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
+              />
+            </LabelContainer>
+
+            <div class="button-group">
+              <button
+                class="cross"
+                @click="
+                  removeReservation({
+                    dayId: dayId,
+                    reservationId: detail.id,
+                    reservationName: name,
+                  })
+                "
+              >
+                X
+              </button>
+              <button
+                class="move-up"
+                @click="
+                  moveReservation({
+                    dayId: dayId,
+                    reservationId: detail.id,
+                    reservationName: name,
+                    moveDirection: 'up',
+                  })
+                "
+              >
+                ↑
+              </button>
+              <button
+                class="move-down"
+                @click="
+                  moveReservation({
+                    dayId: dayId,
+                    reservationId: detail.id,
+                    reservationName: name,
+                    moveDirection: 'down',
+                  })
+                "
+              >
+                ↓
+              </button>
+            </div>
+          </Container>
         </div>
       </li>
       <HoverButton
@@ -161,7 +179,9 @@
 </template>
 
 <script>
+import Container from '@/component/Container.vue'
 import HoverButton from '@/component/HoverButton.vue'
+import LabelContainer from '@/component/LabelContainer.vue'
 import PersistingEnumSelector from '@/component/PersistingEnumSelector.vue'
 import PersistingInput from '@/component/PersistingInput.vue'
 import PersistingTimeInput from '@/component/PersistingTimeInput.vue'
@@ -176,9 +196,11 @@ import { mapActions, mapState } from 'vuex'
 export default {
   components: {
     PersistingInput,
+    LabelContainer,
     PersistingEnumSelector,
     PersistingTimeInput,
     HoverButton,
+    Container,
   },
   props: {
     newReservationData: Object,
@@ -256,11 +278,6 @@ ul {
 .notes {
   color: rgb(79, 79, 79);
   font-style: italic;
-}
-
-.label-light {
-  font-weight: normal;
-  font-style: normal;
 }
 
 /* For Button Group */
