@@ -1,6 +1,6 @@
 // store/modules/itinerary.js
 import api from '@/api'
-import * as commonDetailActions from '@/store/actions/commonDetailActions'
+import * as commonReservationActions from '@/store/actions/commonReservationActions'
 import * as dayActions from '@/store/actions/dayActions'
 
 const state = {
@@ -42,7 +42,7 @@ const actions = {
     }
   },
   ...dayActions,
-  ...commonDetailActions,
+  ...commonReservationActions,
 }
 
 const getters = {

@@ -3,89 +3,89 @@
     <label>{{ title }}</label>
     <ul>
       <li
-        v-for="detail in details"
+        v-for="detail in reservationDetails"
         :key="detail.id"
         class="d-flex align-items-start detail"
       >
         <!-- CHECKBOX -->
         <CheckboxInput
-          v-if="isFeatureEnabled(detailKeys.CHECKED_STATUS)"
-          :value="detail[detailKeys.CHECKED_STATUS]"
-          :itemKey="detailKeys.CHECKED_STATUS"
+          v-if="isFeatureEnabled(reservationKeys.CHECKED_STATUS)"
+          :value="detail[reservationKeys.CHECKED_STATUS]"
+          :itemKey="reservationKeys.CHECKED_STATUS"
           :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
         />
 
         <div class="flex-grow-1">
           <!-- NAME -->
           <InPlaceEditableInput
-            v-if="isFeatureEnabled(detailKeys.NAME)"
+            v-if="isFeatureEnabled(reservationKeys.NAME)"
             inputType="input"
             placeholder="Name"
-            :itemKey="detailKeys.NAME"
-            :value="detail[detailKeys.NAME]"
+            :itemKey="reservationKeys.NAME"
+            :value="detail[reservationKeys.NAME]"
             :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
           />
 
           <!-- Notes -->
-          <span v-if="isFeatureEnabled(detailKeys.NOTES)" class="notes">
+          <span v-if="isFeatureEnabled(reservationKeys.NOTES)" class="notes">
             <InPlaceEditableInput
               inputType="textarea"
               placeholder="Notes"
-              :itemKey="detailKeys.NOTES"
-              :value="detail[detailKeys.NOTES]"
+              :itemKey="reservationKeys.NOTES"
+              :value="detail[reservationKeys.NOTES]"
               :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
             />
           </span>
 
           <!-- Reservation Cost -->
           <InPlaceEditableInput
-            v-if="isFeatureEnabled(detailKeys.RESERVATION_COST)"
+            v-if="isFeatureEnabled(reservationKeys.RESERVATION_COST)"
             inputType="number"
             placeholder="Reservation Cost"
             @click="handleClick"
-            :itemKey="detailKeys.RESERVATION_COST"
-            :value="detail[detailKeys.RESERVATION_COST]"
+            :itemKey="reservationKeys.RESERVATION_COST"
+            :value="detail[reservationKeys.RESERVATION_COST]"
             :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
           />
 
           <!-- Reservation Link -->
           <InPlaceEditableInput
-            v-if="isFeatureEnabled(detailKeys.RESERVATION_LINK)"
+            v-if="isFeatureEnabled(reservationKeys.RESERVATION_LINK)"
             inputType="link"
             placeholder="Reservation Link"
             @click="handleClick"
-            :itemKey="detailKeys.RESERVATION_LINK"
-            :value="detail[detailKeys.RESERVATION_LINK]"
+            :itemKey="reservationKeys.RESERVATION_LINK"
+            :value="detail[reservationKeys.RESERVATION_LINK]"
             :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
           />
 
           <!-- Reservation File -->
           <InPlaceEditableInput
-            v-if="isFeatureEnabled(detailKeys.RESERVATION_FILE)"
+            v-if="isFeatureEnabled(reservationKeys.RESERVATION_FILE)"
             inputType="input"
             placeholder="Reservation File"
-            :itemKey="detailKeys.RESERVATION_FILE"
-            :value="detail[detailKeys.RESERVATION_FILE]"
+            :itemKey="reservationKeys.RESERVATION_FILE"
+            :value="detail[reservationKeys.RESERVATION_FILE]"
             :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
           />
 
           <!-- Reservation Time -->
-          <span v-if="isFeatureEnabled(detailKeys.RESERVATION_TIME)">
+          <span v-if="isFeatureEnabled(reservationKeys.RESERVATION_TIME)">
             <label class="label-light">Reservation Time:&nbsp;</label>
             <TimeInput
-              :value="detail[detailKeys.RESERVATION_TIME]"
-              :itemKey="detailKeys.RESERVATION_TIME"
+              :value="detail[reservationKeys.RESERVATION_TIME]"
+              :itemKey="reservationKeys.RESERVATION_TIME"
               :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
             />
             <br />
           </span>
 
           <!-- Reservation Status -->
-          <span v-if="isFeatureEnabled(detailKeys.RESERVATION_STATUS)">
+          <span v-if="isFeatureEnabled(reservationKeys.RESERVATION_STATUS)">
             <label class="label-light">Reservation Status:&nbsp;</label>
             <CheckboxInput
-              :value="detail[detailKeys.RESERVATION_STATUS]"
-              :itemKey="detailKeys.RESERVATION_STATUS"
+              :value="detail[reservationKeys.RESERVATION_STATUS]"
+              :itemKey="reservationKeys.RESERVATION_STATUS"
               :states="Object.keys(reservationStatus)"
               :editEndPoint="`/api/${name}/${detail.id}/?day_id=${dayId}`"
             />
@@ -108,10 +108,10 @@
             <button
               class="cross"
               @click="
-                removeDetail({
+                removeReservation({
                   dayId: dayId,
-                  detailId: detail.id,
-                  detailName: name,
+                  reservationId: detail.id,
+                  reservationName: name,
                 })
               "
             >
@@ -120,10 +120,10 @@
             <button
               class="move-up"
               @click="
-                moveDetail({
+                moveReservation({
                   dayId: dayId,
-                  detailId: detail.id,
-                  detailName: name,
+                  reservationId: detail.id,
+                  reservationName: name,
                   moveDirection: 'up',
                 })
               "
@@ -133,10 +133,10 @@
             <button
               class="move-down"
               @click="
-                moveDetail({
+                moveReservation({
                   dayId: dayId,
-                  detailId: detail.id,
-                  detailName: name,
+                  reservationId: detail.id,
+                  reservationName: name,
                   moveDirection: 'down',
                 })
               "
@@ -149,10 +149,10 @@
       <HoverButton
         buttonText="Add"
         @buttonClick="
-          addDetail({
+          addReservation({
             dayId: dayId,
-            newDetail: cleanNewData,
-            detailName: name,
+            newReservation: cleanNewData,
+            reservationName: name,
           })
         "
       />
@@ -168,7 +168,7 @@ import TimeInput from '@/component/TimeInput.vue'
 import {
   ATTRACTION_ENUM,
   ATTRACTION_KEYS,
-  DETAIL_KEYS,
+  RESERVATION_KEYS,
   RESERVATION_STATUS,
 } from '@/constants'
 import { mapActions } from 'vuex'
@@ -181,15 +181,15 @@ export default {
     HoverButton,
   },
   props: {
-    newDetailData: Object,
+    newReservationData: Object,
     dayId: Number,
-    details: Object,
+    reservationDetails: Object,
     name: String,
     title: String,
   },
   data() {
     return {
-      detailKeys: DETAIL_KEYS,
+      reservationKeys: RESERVATION_KEYS,
       attractionKeys: ATTRACTION_KEYS,
       reservationStatus: RESERVATION_STATUS,
       attrationType: ATTRACTION_ENUM,
@@ -202,7 +202,7 @@ export default {
     this.cleanNewData = this.generateNewData()
   },
   watch: {
-    details: {
+    reservationDetails: {
       handler() {
         this.updateFeatures()
       },
@@ -215,8 +215,8 @@ export default {
     },
     generateNewData() {
       return () => {
-        if (this.newDetailData) {
-          return this.newDetailData
+        if (this.newReservationData) {
+          return this.newReservationData
         } else {
           return {
             name: `New ${this.title}`,
@@ -228,16 +228,17 @@ export default {
   },
   methods: {
     updateFeatures() {
-      if (this.details.length > 0) this.features = Object.keys(this.details[0])
+      if (this.reservationDetails.length > 0)
+        this.features = Object.keys(this.reservationDetails[0])
     },
     handleClick() {
       console.log('as')
     },
     ...mapActions('itinerary', [
       'fetchItinerary',
-      'addDetail',
-      'removeDetail',
-      'moveDetail',
+      'addReservation',
+      'removeReservation',
+      'moveReservation',
     ]),
   },
 }

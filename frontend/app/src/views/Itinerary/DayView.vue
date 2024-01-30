@@ -21,32 +21,32 @@
       />
     </span>
     <br />
-    <DetailView
+    <ReservationView
       :dayId="day.id"
-      :details="day.dishes"
+      :reservationDetails="day.dishes"
       name="dish"
       title="Dish"
     />
-    <DetailView
+    <ReservationView
       :dayId="day.id"
-      :details="day.accomodations"
+      :reservationDetails="day.accomodations"
       name="accomodation"
       title="Accomodation"
     />
 
-    <DetailView
+    <ReservationView
       :dayId="day.id"
-      :details="day.restaurants"
+      :reservationDetails="day.restaurants"
       name="restaurant"
       title="Restaurant"
     />
 
-    <DetailView
+    <ReservationView
       :dayId="day.id"
-      :details="day.attractions"
+      :reservationDetails="day.attractions"
       name="attraction"
       title="Attraction"
-      :newDetailData="newAttraction"
+      :newReservationData="newAttraction"
     />
 
     <!-- All other features go here -->
@@ -73,12 +73,12 @@
 import InPlaceEditableInput from '@/component/InPlaceEditableInput.vue'
 import { ATTRACTION_ENUM } from '@/constants'
 import { mapActions, mapState } from 'vuex'
-import DetailView from './DetailView.vue'
+import ReservationView from './ReservationView.vue'
 
 export default {
   components: {
     InPlaceEditableInput,
-    DetailView,
+    ReservationView,
   },
   props: {
     day: Object,
