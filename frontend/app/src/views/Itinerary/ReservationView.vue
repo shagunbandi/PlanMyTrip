@@ -168,7 +168,7 @@
           </Container>
         </div>
       </li>
-      <HoverButton
+      <ButtonPro
         buttonText="Add"
         @buttonClick="
           addReservation({
@@ -183,8 +183,8 @@
 </template>
 
 <script>
+import ButtonPro from '@/component/ButtonPro.vue'
 import Container from '@/component/Container.vue'
-import HoverButton from '@/component/HoverButton.vue'
 import LabelContainer from '@/component/LabelContainer.vue'
 import PersistingEnumSelector from '@/component/PersistingEnumSelector.vue'
 import PersistingInput from '@/component/PersistingInput.vue'
@@ -203,7 +203,7 @@ export default {
     LabelContainer,
     PersistingEnumSelector,
     PersistingTimeInput,
-    HoverButton,
+    ButtonPro,
     Container,
   },
   props: {
