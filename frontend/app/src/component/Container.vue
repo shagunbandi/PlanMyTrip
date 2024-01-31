@@ -6,7 +6,7 @@
       v-if="collapsable && isCollapsed"
       @click="toggleCollapse"
       class="clickable"
-      >Read More</span
+      >Exapand</span
     >
     <slot v-if="!collapsable || !isCollapsed"></slot>
     <span
