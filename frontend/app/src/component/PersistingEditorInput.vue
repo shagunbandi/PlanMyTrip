@@ -2,7 +2,7 @@
   <div
     class="quill-container"
     @mouseover="isHovered = true"
-    @mouseleave="isHovered = false"
+    @mouseleave="handleQuillChange()"
   >
     <QuillEditor
       v-model:content="quillContent"
@@ -10,7 +10,6 @@
       :options="quillOptions"
       toolbar="essential"
       @blur="handleQuillChange"
-      @change="handleQuillChange"
     />
   </div>
 </template>
