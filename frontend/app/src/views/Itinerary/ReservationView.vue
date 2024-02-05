@@ -74,9 +74,8 @@
                 v-if="isFeatureEnabled(reservationKeys.RESERVATION_FILE)"
                 label="Reservation File"
               >
-                <PersistingInput
+                <FileUpload
                   inputType="input"
-                  placeholder="Upload a file here"
                   :itemKey="reservationKeys.RESERVATION_FILE"
                   :value="detail[reservationKeys.RESERVATION_FILE]"
                   :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
@@ -181,6 +180,7 @@
 <script>
 import ButtonPro from '@/component/ButtonPro.vue'
 import Container from '@/component/Container.vue'
+import FileUpload from '@/component/FileUpload.vue'
 import LabelContainer from '@/component/LabelContainer.vue'
 import PersistingEditorInput from '@/component/PersistingEditorInput.vue'
 import PersistingEnumSelector from '@/component/PersistingEnumSelector.vue'
@@ -203,6 +203,7 @@ export default {
     ButtonPro,
     Container,
     PersistingEditorInput,
+    FileUpload,
   },
   props: {
     newReservationData: Object,

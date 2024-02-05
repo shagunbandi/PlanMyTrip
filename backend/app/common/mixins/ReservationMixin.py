@@ -19,5 +19,12 @@ class ReservationMixin(models.Model):
         null=True, blank=True, validators=[MinValueValidator(0)]
     )
 
+    def save(self, *args, **kwargs):
+        if self.reservation_file.name:
+            filename = f"{self.id}_{self.reservation_file.name}"
+            self.reservation_file.name = f"itinerary/itinerary_{self.day.itinerary.id}/day_{self.day.id}/{self.__class__.__name__}/{filename}"
+
+        super().save(*args, **kwargs)
+
     class Meta:
         abstract = True

@@ -29,6 +29,7 @@ export default {
   },
   data() {
     return {
+      quillContentBefore: '',
       quillContent: '',
       quillOptions: {
         // specify Quill options here
@@ -45,8 +46,8 @@ export default {
       handler(newVal) {
         // Update quillContent when the value prop changes
         if (newVal !== this.quillContent) {
-          console.log('setting')
           this.quillContent = newVal
+          this.quillContentBefore = newVal
         }
       },
       immediate: true, // Run the handler immediately to set the initial content
@@ -54,7 +55,9 @@ export default {
   },
   methods: {
     handleQuillChange(value) {
-      this.saveChanges()
+      if (this.quillContent !== this.quillContentBefore) {
+        this.saveChanges()
+      }
     },
     async saveChanges() {
       try {
@@ -62,6 +65,7 @@ export default {
           [this.itemKey]: this.quillContent,
         }
         await api.patch(this.editEndPoint, patchData)
+        this.quillContentBefore = this.quillContent
       } catch (error) {
         console.error('Error updating data:', error)
       }
