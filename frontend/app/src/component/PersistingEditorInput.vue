@@ -88,6 +88,15 @@ export default {
   display: none;
 }
 
+.quill-container:hover .ql-editor {
+  padding-left: 20px;
+}
+
+.quill-container .ql-editor {
+  padding: 20px;
+  padding-left: 0px;
+}
+
 .quill-container .ql-container {
   border: 1px solid transparent;
 }

@@ -15,7 +15,7 @@
     <!-- Notes -->
     <span id="notes">
       <label for="notes">Notes</label>
-      <PersistingInput
+      <PersistingEditorInput
         :value="day.notes"
         inputType="textarea"
         placeholder="Write something about the day"
@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import PersistingEditorInput from '@/component/PersistingEditorInput.vue'
 import PersistingInput from '@/component/PersistingInput.vue'
 import { ATTRACTION_ENUM } from '@/constants'
 import { mapActions, mapState } from 'vuex'
@@ -82,6 +83,7 @@ export default {
   components: {
     PersistingInput,
     ReservationView,
+    PersistingEditorInput,
   },
   props: {
     day: Object,
