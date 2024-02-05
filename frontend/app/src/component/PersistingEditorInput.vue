@@ -5,6 +5,7 @@
       contentType="html"
       :options="quillOptions"
       toolbar="essential"
+      :placeholder="placeholder"
       @blur="handleQuillChange"
     />
   </div>
@@ -90,7 +91,8 @@ export default {
 .quill-container:hover .ql-toolbar {
   pointer-events: auto;
   height: inherit;
-  overflow: none;
+  overflow: visible;
+  z-index: 1;
   padding: 10px;
   border: 1px solid #ccc;
 }
@@ -98,6 +100,7 @@ export default {
 /* Editor */
 .quill-container .ql-editor {
   padding: 0px;
+  font-size: 16px;
 }
 
 /* Container */
@@ -105,6 +108,7 @@ export default {
   border: 0px solid #ccc;
   padding: 0;
   transition: all 0.4s ease;
+  margin-bottom: 10px;
 }
 
 .quill-container:hover .ql-container {
