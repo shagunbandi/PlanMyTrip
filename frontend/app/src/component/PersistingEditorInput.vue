@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="quill-container"
-    @mouseover="isHovered = true"
-    @mouseleave="handleQuillChange()"
-  >
+  <div class="quill-container" @mouseleave="handleQuillChange()">
     <QuillEditor
       v-model:content="quillContent"
       contentType="html"
@@ -76,32 +72,43 @@ export default {
 <style>
 .quill-container {
   position: relative;
+  margin-top: 5px;
+}
+
+/* Toolbar */
+.quill-container .ql-toolbar {
+  height: 0;
+  overflow: hidden;
+  padding: 0;
+  border: 0px solid #ccc;
+  border-bottom: 0px;
+  transition:
+    all 0.4s ease,
+    border-bottom 0s ease;
 }
 
 .quill-container:hover .ql-toolbar {
-  opacity: 1;
   pointer-events: auto;
-  display: block;
+  height: inherit;
+  overflow: none;
+  padding: 10px;
+  border: 1px solid #ccc;
 }
 
-.quill-container .ql-toolbar {
-  display: none;
-}
-
-.quill-container:hover .ql-editor {
-  padding-left: 20px;
-}
-
+/* Editor */
 .quill-container .ql-editor {
-  padding: 20px;
-  padding-left: 0px;
+  padding: 0px;
 }
 
+/* Container */
 .quill-container .ql-container {
-  border: 1px solid transparent;
+  border: 0px solid #ccc;
+  padding: 0;
+  transition: all 0.4s ease;
 }
 
 .quill-container:hover .ql-container {
+  padding: 20px;
   border: 1px solid #ccc;
 }
 </style>
