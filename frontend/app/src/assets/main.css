@@ -7,6 +7,10 @@ label {
   font-weight: bold;
 }
 
+.clickable {
+  cursor: pointer;
+  font-weight: bold;
+}
 
 /* Background Colours */
 /* .alice-blue-bg {

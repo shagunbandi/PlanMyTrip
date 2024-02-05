@@ -17,6 +17,7 @@
     </nav>
     <br />
     <RouterView />
+    <br />
   </div>
 </template>
 
