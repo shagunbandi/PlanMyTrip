@@ -17,7 +17,6 @@
       <label for="notes">Notes</label>
       <PersistingEditorInput
         :value="day.notes"
-        inputType="textarea"
         placeholder="Write something about the day"
         :editEndPoint="`/api/itinerary/${itinerary.id}/day/${day.id}/`"
         itemKey="notes"

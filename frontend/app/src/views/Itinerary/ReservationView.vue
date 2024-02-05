@@ -25,8 +25,7 @@
 
             <!-- Notes -->
             <span v-if="isFeatureEnabled(reservationKeys.NOTES)" class="notes">
-              <PersistingInput
-                inputType="textarea"
+              <PersistingEditorInput
                 placeholder="Notes"
                 :itemKey="reservationKeys.NOTES"
                 :value="detail[reservationKeys.NOTES]"
@@ -183,6 +182,7 @@
 import ButtonPro from '@/component/ButtonPro.vue'
 import Container from '@/component/Container.vue'
 import LabelContainer from '@/component/LabelContainer.vue'
+import PersistingEditorInput from '@/component/PersistingEditorInput.vue'
 import PersistingEnumSelector from '@/component/PersistingEnumSelector.vue'
 import PersistingInput from '@/component/PersistingInput.vue'
 import PersistingTimeInput from '@/component/PersistingTimeInput.vue'
@@ -202,6 +202,7 @@ export default {
     PersistingTimeInput,
     ButtonPro,
     Container,
+    PersistingEditorInput,
   },
   props: {
     newReservationData: Object,

@@ -27,13 +27,12 @@
 
         <!-- Scratchpad -->
         <label for="scratchpad">ScratchPad</label>
-        <PersistingInput
+        <PersistingEditorInput
           title="ScratchPad"
           :value="itinerary.scratchpad"
           :editEndPoint="`/api/itinerary/${itinerary.id}/`"
           itemKey="scratchpad"
           placeholder="Write your thoughts here"
-          inputType="textarea"
         />
 
         <br />
