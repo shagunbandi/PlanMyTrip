@@ -14,13 +14,13 @@
 
         <!-- Notes -->
         <label for="notes">Notes</label>
-        <PersistingInput
+
+        <PersistingEditorInput
           title="Notes"
+          itemKey="notes"
           :value="itinerary.notes"
           :editEndPoint="`/api/itinerary/${itinerary.id}/`"
-          itemKey="notes"
-          placeholder="Write some notes here"
-          inputType="textarea"
+          placeholder="Notes here"
         />
 
         <br />
@@ -55,6 +55,7 @@
 
 <script>
 import Container from '@/component/Container.vue'
+import PersistingEditorInput from '@/component/PersistingEditorInput.vue'
 import PersistingInput from '@/component/PersistingInput.vue'
 import Day from '@/views/Itinerary/DayView.vue'
 import { mapActions, mapState } from 'vuex'
@@ -64,6 +65,7 @@ export default {
     Container,
     PersistingInput,
     Day,
+    PersistingEditorInput,
   },
   data() {
     return {}
