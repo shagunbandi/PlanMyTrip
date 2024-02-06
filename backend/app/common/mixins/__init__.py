@@ -1,5 +1,3 @@
-from .BasicInfoMixin import AuthBasicInfoMixin, BasicInfoMixin
-from .CheckboxMixin import CheckboxMixin
+from .BasicInfoMixin import AuthBasicInfoMixin
 from .OrderMixin import OrderMixin
-from .ReservationMixin import ReservationMixin
 from .TimestampsMixin import TimestampsMixin
