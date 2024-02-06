@@ -23,12 +23,16 @@
       />
     </span>
     <br />
+
+    <!-- Dishes -->
     <ReservationView
       :dayId="day.id"
       :reservationDetails="day.dishes"
       name="dish"
       title="Dish"
     />
+
+    <!-- Accomodation -->
     <ReservationView
       :dayId="day.id"
       :reservationDetails="day.accomodations"
@@ -36,6 +40,7 @@
       title="Accomodation"
     />
 
+    <!-- Restaurant -->
     <ReservationView
       :dayId="day.id"
       :reservationDetails="day.restaurants"

@@ -19,8 +19,6 @@ api.interceptors.request.use(
     }
 
     // Check if the request is for 'multipart/form-data'
-
-    console.log(config.data)
     if (config.headers['Content-Type'] === 'multipart/form-data') {
       // Use FormData for file uploads
       config.data = convertObjectToFormData(config.data)

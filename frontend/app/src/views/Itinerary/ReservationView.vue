@@ -14,17 +14,60 @@
 
           <div class="flex-grow-1">
             <!-- NAME -->
-            <PersistingInput
-              v-if="isFeatureEnabled(reservationKeys.NAME)"
-              inputType="input"
-              placeholder="Name"
-              :itemKey="reservationKeys.NAME"
-              :value="detail[reservationKeys.NAME]"
-              :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
-            />
+            <div class="d-flex">
+              <PersistingInput
+                v-if="isFeatureEnabled(reservationKeys.NAME)"
+                inputType="input"
+                class="flex-grow-1"
+                placeholder="Name"
+                :itemKey="reservationKeys.NAME"
+                :value="detail[reservationKeys.NAME]"
+                :editEndPoint="`/api/itinerary/${itinerary.id}/day/${dayId}/${name}/${detail.id}/`"
+              />
+              <div class="button-group pt-1 pb-1">
+                <button
+                  class="cross"
+                  @click="
+                    removeReservation({
+                      dayId: dayId,
+                      reservationId: detail.id,
+                      reservationName: name,
+                    })
+                  "
+                >
+                  X
+                </button>
+                <button
+                  class="move-up"
+                  @click="
+                    moveReservation({
+                      dayId: dayId,
+                      reservationId: detail.id,
+                      reservationName: name,
+                      moveDirection: 'up',
+                    })
+                  "
+                >
+                  ↑
+                </button>
+                <button
+                  class="move-down"
+                  @click="
+                    moveReservation({
+                      dayId: dayId,
+                      reservationId: detail.id,
+                      reservationName: name,
+                      moveDirection: 'down',
+                    })
+                  "
+                >
+                  ↓
+                </button>
+              </div>
+            </div>
 
             <!-- Notes -->
-            <span v-if="isFeatureEnabled(reservationKeys.NOTES)" class="notes">
+            <span v-if="isFeatureEnabled(reservationKeys.NOTES)">
               <PersistingEditorInput
                 placeholder="Notes"
                 :itemKey="reservationKeys.NOTES"
@@ -122,46 +165,6 @@
             </Container>
           </div>
         </li>
-        <div class="button-group pt-1 pb-1">
-          <button
-            class="cross"
-            @click="
-              removeReservation({
-                dayId: dayId,
-                reservationId: detail.id,
-                reservationName: name,
-              })
-            "
-          >
-            X
-          </button>
-          <button
-            class="move-up"
-            @click="
-              moveReservation({
-                dayId: dayId,
-                reservationId: detail.id,
-                reservationName: name,
-                moveDirection: 'up',
-              })
-            "
-          >
-            ↑
-          </button>
-          <button
-            class="move-down"
-            @click="
-              moveReservation({
-                dayId: dayId,
-                reservationId: detail.id,
-                reservationName: name,
-                moveDirection: 'down',
-              })
-            "
-          >
-            ↓
-          </button>
-        </div>
       </div>
       <ButtonPro
         buttonText="Add"
@@ -292,16 +295,13 @@ ul {
   margin-top: 5px;
   margin-right: 8px;
 }
-.notes {
-  color: rgb(79, 79, 79);
-  font-style: italic;
-}
 
 /* For Button Group */
 .button-group {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.4s ease;
+  cursor: pointer;
 }
 
 .detail:hover .button-group {
@@ -312,6 +312,7 @@ ul {
   background-color: transparent;
   border: none;
   margin-right: 3px;
+  cursor: pointer;
 }
 
 .cross {
