@@ -1,6 +1,9 @@
 <template>
   <div>
-    <a v-if="displayValue" :href="displayValue" target="_blank"
+    <a
+      v-if="displayValue"
+      :href="`http://localhost:8000/media/${displayValue}`"
+      target="_blank"
       >File: {{ getLastPart(displayValue) }}</a
     >
     <input type="file" ref="fileInput" @change="handleFileChange" />
@@ -37,7 +40,7 @@ export default {
       api
         .patch(
           this.editEndPoint,
-          { reservation_file: this.file },
+          { [this.itemKey]: this.file },
           {
             headers: {
               'Content-Type': 'multipart/form-data',
@@ -45,7 +48,7 @@ export default {
           },
         )
         .then((response) => {
-          this.displayValue = response.data.reservation_file // Update displayValue with reservation_file from response
+          this.displayValue = response.data[this.itemKey]
           this.file = null
           // Assuming you want to clear the file value upon successful upload
           this.$refs.fileInput.value = null
