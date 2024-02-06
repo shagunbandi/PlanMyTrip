@@ -43,9 +43,6 @@ INSTALLED_APPS = [
     "corsheaders",
     "itinerary",
     "day",
-    "dish",
-    "accomodation",
-    "restaurant",
     "attraction",
     "storages",
 ]
