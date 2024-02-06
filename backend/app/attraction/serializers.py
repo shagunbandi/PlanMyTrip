@@ -1,36 +1,48 @@
-from common.enums import Category
+from common.enums import RESERVATION_STATUS
 from common.serializers import (
     AuthBasicInfoMixinSerializer,
-    CheckboxMixinSerializer,
     CreateMixinSerializer,
     OrderMixinSerializer,
-    ReservationMixinSerializer,
     TimestampsMixinSerializer,
     ValidateParentMixinSerializer,
 )
 from day.models import Day
+from django.core.validators import MinValueValidator
 from rest_enumfield import EnumField
-from rest_framework.serializers import IntegerField
+from rest_framework import serializers
 
-from .models import Attraction, Category
+from .models import Attraction
 
 
-class AttractionSerializer(
-    AuthBasicInfoMixinSerializer,
-    OrderMixinSerializer,
-    TimestampsMixinSerializer,
-    ReservationMixinSerializer,
-    CheckboxMixinSerializer,
+class BaseAttractionSerializer(
+    AuthBasicInfoMixinSerializer, TimestampsMixinSerializer, OrderMixinSerializer
 ):
-    id = IntegerField(read_only=True)
-    order = IntegerField(read_only=True)
-    category = EnumField(
-        choices=Category,
+    place_id = serializers.CharField(
+        max_length=120, allow_null=True, allow_blank=True, required=False
+    )
+    reservation_link = serializers.CharField(
+        max_length=120, allow_null=True, allow_blank=True, required=False
+    )
+    reservation_date = serializers.DateField(allow_null=True, required=False)
+    reservation_time = serializers.TimeField(allow_null=True, required=False)
+    reservation_status = EnumField(
+        choices=RESERVATION_STATUS,
         to_choice=lambda x: x.value,
-        default=Category.EXPERIENCE,
+        default=RESERVATION_STATUS.NO,
         required=False,
     )
+    reservation_file = serializers.FileField(
+        allow_null=True, allow_empty_file=True, use_url=False, required=False
+    )
+    reservation_cost = serializers.FloatField(
+        allow_null=True, required=False, validators=[MinValueValidator(0)]
+    )
+    currency = serializers.CharField(
+        max_length=3, allow_blank=True, allow_null=True, default="EUR"
+    )
 
+
+class AttractionSerializer(BaseAttractionSerializer):
     class Meta:
         model = Attraction
         fields = "__all__"
@@ -38,19 +50,8 @@ class AttractionSerializer(
 
 def create_attraction_serializer(day_id=None, user=None):
     class CreateAttractionSerializer(
-        AuthBasicInfoMixinSerializer,
-        ValidateParentMixinSerializer,
-        OrderMixinSerializer,
-        CreateMixinSerializer,
-        CheckboxMixinSerializer,
+        BaseAttractionSerializer, ValidateParentMixinSerializer, CreateMixinSerializer
     ):
-        category = EnumField(
-            choices=Category,
-            to_choice=lambda x: x.value,
-            default=Category.EXPERIENCE,
-            required=False,
-        )
-
         class Meta:
             model = Attraction
             exclude = ["day"]
