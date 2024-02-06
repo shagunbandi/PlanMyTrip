@@ -1,13 +1,19 @@
-from rest_framework import serializers
-from .models import Itinerary
-from common.serializers import AuthBasicInfoMixinSerializer, CreateMixinSerializer
-from rest_framework import serializers
+from common.serializers import (
+    AuthBasicInfoMixinSerializer,
+    CreateMixinSerializer,
+    TimestampsMixinSerializer,
+)
 from day.serializers import DaySerializer
+from rest_framework import serializers
+
+from .models import Itinerary
 
 
-class ItinerarySerializer(AuthBasicInfoMixinSerializer, CreateMixinSerializer):
-    scratchpad = serializers.CharField(allow_blank=True, allow_null=True)
+class ItinerarySerializer(
+    AuthBasicInfoMixinSerializer, CreateMixinSerializer, TimestampsMixinSerializer
+):
     days = DaySerializer(many=True, read_only=True)
+    start_date = serializers.DateField()
 
     def create(self, validated_data):
         return super().create(validated_data)

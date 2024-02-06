@@ -1,9 +1,9 @@
+from common.mixins import AuthBasicInfoMixin, TimestampsMixin
 from django.db import models
-from common.mixins import TimestampsMixin, AuthBasicInfoMixin
 
 
 class Itinerary(TimestampsMixin, AuthBasicInfoMixin):
-    scratchpad = models.TextField(blank=True, null=True)
+    start_date = models.DateField(auto_now_add=True, auto_now=False, blank=True)
 
     def __str__(self):
         return self.name
