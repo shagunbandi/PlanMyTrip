@@ -13,6 +13,9 @@ class OrderMixin(OrderedModel):
 
     Note:
         By default, the order is set to -1, indicating that it hasn't been explicitly ordered.
+
+    Dev Note:
+        `order_with_respect_to` add this to the class with value as parent
     """
 
     order = models.IntegerField(blank=True, default=-1)

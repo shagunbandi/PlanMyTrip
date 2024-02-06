@@ -1,30 +1,22 @@
-from accomodation.serializers import AccomodationSerializer
 from attraction.serializers import AttractionSerializer
 from common.serializers import (
     AuthBasicInfoMixinSerializer,
     CreateMixinSerializer,
+    OrderMixinSerializer,
     TimestampsMixinSerializer,
     ValidateParentMixinSerializer,
 )
-from dish.serializers import DishSerializer
 from itinerary.models import Itinerary
 from ordered_model.models import OrderedModel
 from rest_framework.serializers import IntegerField
-from restaurant.serializers import RestaurantSerializer
 
 from .models import Day
 
 
 class DaySerializer(
-    AuthBasicInfoMixinSerializer,
-    TimestampsMixinSerializer,
+    AuthBasicInfoMixinSerializer, TimestampsMixinSerializer, OrderMixinSerializer
 ):
-    dishes = DishSerializer(many=True, read_only=True)
-    accomodations = AccomodationSerializer(many=True, read_only=True)
-    restaurants = RestaurantSerializer(many=True, read_only=True)
     attractions = AttractionSerializer(many=True, read_only=True)
-    id = IntegerField(read_only=True)
-    order = IntegerField(read_only=True)
 
     class Meta(OrderedModel.Meta):
         model = Day

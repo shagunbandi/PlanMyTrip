@@ -1,10 +1,9 @@
+from common.mixins import AuthBasicInfoMixin, OrderMixin, TimestampsMixin
 from django.db import models
-from common.mixins import TimestampsMixin, AuthBasicInfoMixin
-from ordered_model.models import OrderedModel
 from itinerary.models import Itinerary
 
 
-class Day(TimestampsMixin, AuthBasicInfoMixin, OrderedModel):
+class Day(TimestampsMixin, AuthBasicInfoMixin, OrderMixin):
     itinerary = models.ForeignKey(
         Itinerary, on_delete=models.CASCADE, related_name="days", null=False
     )
