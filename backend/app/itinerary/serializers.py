@@ -12,10 +12,22 @@ from .models import Itinerary
 class ItinerarySerializer(
     TimestampsMixinSerializer, AuthBasicInfoMixinSerializer, CreateMixinSerializer
 ):
+    """
+    Serializer for the Itinerary model.
+    """
+
     days = DaySerializer(many=True, read_only=True)
-    # start_date = serializers.DateField()
 
     def create(self, validated_data):
+        """
+        Create a new itinerary instance.
+
+        Args:
+            validated_data (dict): The validated data to create the itinerary.
+
+        Returns:
+            obj: The newly created itinerary object.
+        """
         return super().create(validated_data)
 
     class Meta:
