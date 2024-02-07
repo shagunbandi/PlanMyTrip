@@ -4,38 +4,36 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Attraction
-from .serializers import create_attraction_serializer
+from .models import Place
+from .serializers import create_place_serializer
 
 
-class AttractionViewSet(viewsets.ModelViewSet):
-    queryset = Attraction.objects.all()
+class PlaceViewSet(viewsets.ModelViewSet):
+    queryset = Place.objects.all()
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         # Customize the queryset based on the authenticated user
         user = self.request.user
         day_id = self.kwargs.get("day_id", None)
-        return Attraction.objects.filter(user=user, day__id=day_id)
+        return Place.objects.filter(user=user, day__id=day_id)
 
     def get_serializer_class(self):
         day_id = self.kwargs.get("day_id", None)
-        return create_attraction_serializer(day_id=day_id, user=self.request.user)
+        return create_place_serializer(day_id=day_id, user=self.request.user)
 
 
-class MoveAttractionView(APIView):
+class MovePlaceView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, itinerary_id, day_id, attraction_id, method):
+    def post(self, request, itinerary_id, day_id, place_id, method):
         user = request.user
-        attraction = get_object_or_404(
-            Attraction, id=attraction_id, day__id=day_id, user=user
-        )
+        place = get_object_or_404(Place, id=place_id, day__id=day_id, user=user)
 
         if method == "up":
-            attraction.up()
+            place.up()
         elif method == "down":
-            attraction.down()
+            place.down()
         else:
             return Response(
                 {"detail": "Invalid method parameter"},

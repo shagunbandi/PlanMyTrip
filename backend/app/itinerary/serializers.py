@@ -10,10 +10,10 @@ from .models import Itinerary
 
 
 class ItinerarySerializer(
-    AuthBasicInfoMixinSerializer, CreateMixinSerializer, TimestampsMixinSerializer
+    TimestampsMixinSerializer, AuthBasicInfoMixinSerializer, CreateMixinSerializer
 ):
     days = DaySerializer(many=True, read_only=True)
-    start_date = serializers.DateField()
+    # start_date = serializers.DateField()
 
     def create(self, validated_data):
         return super().create(validated_data)

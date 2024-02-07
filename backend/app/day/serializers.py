@@ -1,4 +1,3 @@
-from attraction.serializers import AttractionSerializer
 from common.serializers import (
     AuthBasicInfoMixinSerializer,
     CreateMixinSerializer,
@@ -8,6 +7,7 @@ from common.serializers import (
 )
 from itinerary.models import Itinerary
 from ordered_model.models import OrderedModel
+from place.serializers import PlaceSerializer
 from rest_framework.serializers import IntegerField
 
 from .models import Day
@@ -16,7 +16,7 @@ from .models import Day
 class DaySerializer(
     AuthBasicInfoMixinSerializer, TimestampsMixinSerializer, OrderMixinSerializer
 ):
-    attractions = AttractionSerializer(many=True, read_only=True)
+    places = PlaceSerializer(many=True, read_only=True)
 
     class Meta(OrderedModel.Meta):
         model = Day

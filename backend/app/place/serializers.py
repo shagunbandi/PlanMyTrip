@@ -11,10 +11,10 @@ from django.core.validators import MinValueValidator
 from rest_enumfield import EnumField
 from rest_framework import serializers
 
-from .models import Attraction
+from .models import Place
 
 
-class BaseAttractionSerializer(
+class BasePlaceSerializer(
     AuthBasicInfoMixinSerializer, TimestampsMixinSerializer, OrderMixinSerializer
 ):
     place_id = serializers.CharField(
@@ -42,18 +42,18 @@ class BaseAttractionSerializer(
     )
 
 
-class AttractionSerializer(BaseAttractionSerializer):
+class PlaceSerializer(BasePlaceSerializer):
     class Meta:
-        model = Attraction
+        model = Place
         fields = "__all__"
 
 
-def create_attraction_serializer(day_id=None, user=None):
-    class CreateAttractionSerializer(
-        BaseAttractionSerializer, ValidateParentMixinSerializer, CreateMixinSerializer
+def create_place_serializer(day_id=None, user=None):
+    class CreatePlaceSerializer(
+        BasePlaceSerializer, ValidateParentMixinSerializer, CreateMixinSerializer
     ):
         class Meta:
-            model = Attraction
+            model = Place
             exclude = ["day"]
 
         def validate(self, data):
@@ -62,4 +62,4 @@ def create_attraction_serializer(day_id=None, user=None):
         def create(self, validated_data):
             return super().create(validated_data)
 
-    return CreateAttractionSerializer
+    return CreatePlaceSerializer

@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "itinerary",
     "day",
-    "attraction",
+    "place",
     "storages",
 ]
 

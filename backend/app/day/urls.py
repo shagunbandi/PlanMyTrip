@@ -1,5 +1,5 @@
-from attraction import urls as attraction_urls
 from django.urls import include, path
+from place import urls as place_urls
 from rest_framework.routers import DefaultRouter
 
 from .views import DayMethodView, DayViewSet
@@ -14,5 +14,5 @@ urlpatterns = [
         name="day-method",
     ),
     path("", include(router.urls)),
-    path("<int:day_id>/attraction/", include(attraction_urls)),
+    path("<int:day_id>/place/", include(place_urls)),
 ]

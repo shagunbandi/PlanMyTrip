@@ -6,7 +6,7 @@ from django.db import models
 from enumchoicefield import EnumChoiceField
 
 
-class Attraction(TimestampsMixin, AuthBasicInfoMixin, OrderMixin):
+class Place(TimestampsMixin, AuthBasicInfoMixin, OrderMixin):
     place_id = models.CharField(max_length=120, null=True, blank=True)
     reservation_link = models.CharField(max_length=120, null=True, blank=True)
     reservation_file = models.FileField(
@@ -23,14 +23,14 @@ class Attraction(TimestampsMixin, AuthBasicInfoMixin, OrderMixin):
     currency = models.CharField(max_length=3, null=True, blank=True)
 
     day = models.ForeignKey(
-        Day, on_delete=models.CASCADE, related_name="attractions", null=False
+        Day, on_delete=models.CASCADE, related_name="places", null=False
     )
     order_with_respect_to = "day"
 
     def save(self, *args, **kwargs):
         if self.reservation_file.name:
             filename = f"{self.id}_{self.reservation_file.name}"
-            self.reservation_file.name = f"itinerary/itinerary_{self.day.itinerary.id}/day_{self.day.id}/{self.__class__.__name__}/{filename}"
+            self.reservation_file.name = f"{self.user.id}/itinerary/place/{filename}"
 
         super().save(*args, **kwargs)
 
