@@ -9,13 +9,12 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("itinerary", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name="Day",
+            name="Itinerary",
             fields=[
                 (
                     "id",
@@ -27,17 +26,9 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("name", models.CharField(max_length=120)),
-                ("order", models.IntegerField(blank=True, default=-1)),
                 ("timestamp", models.DateTimeField(auto_now_add=True)),
                 ("updated", models.DateTimeField(auto_now=True)),
-                (
-                    "itinerary",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="days",
-                        to="itinerary.itinerary",
-                    ),
-                ),
+                ("start_date", models.DateField(blank=True, null=True)),
                 (
                     "user",
                     models.ForeignKey(
@@ -49,7 +40,7 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={
-                "ordering": ("order",),
+                "abstract": False,
             },
         ),
     ]
