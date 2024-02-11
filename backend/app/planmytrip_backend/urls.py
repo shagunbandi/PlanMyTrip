@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from itinerary import urls as itinerary_urls
+from place import urls as place_urls
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -31,8 +32,10 @@ urlpatterns = [
     path("api/token/", TokenObtainPairView.as_view()),
     path("api/token/refresh/", TokenRefreshView.as_view()),
     path("api/token/verify/", TokenVerifyView.as_view()),
-    # Itinerary
+    # Itinerary and day
     path("api/itinerary/", include(itinerary_urls)),
+    # Places
+    path("<str:parent_type>/<int:parent_id>/", include(place_urls)),
 ]
 
 # Serve media files during development

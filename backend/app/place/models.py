@@ -1,12 +1,16 @@
 from common.enums import RESERVATION_STATUS
-from common.mixins import AuthBasicInfoMixin, OrderMixin, TimestampsMixin
-from day.models import Day
+from common.mixins import (
+    AuthBasicInfoMixin,
+    GenericRelationMixin,
+    OrderMixin,
+    TimestampsMixin,
+)
 from django.core.validators import MinValueValidator
 from django.db import models
 from enumchoicefield import EnumChoiceField
 
 
-class Place(TimestampsMixin, AuthBasicInfoMixin, OrderMixin):
+class Place(GenericRelationMixin, OrderMixin, TimestampsMixin, AuthBasicInfoMixin):
     place_id = models.CharField(max_length=120, null=True, blank=True)
     reservation_link = models.CharField(max_length=120, null=True, blank=True)
     reservation_file = models.FileField(
@@ -21,11 +25,6 @@ class Place(TimestampsMixin, AuthBasicInfoMixin, OrderMixin):
         null=True, blank=True, validators=[MinValueValidator(0)]
     )
     currency = models.CharField(max_length=3, null=True, blank=True)
-
-    day = models.ForeignKey(
-        Day, on_delete=models.CASCADE, related_name="places", null=False
-    )
-    order_with_respect_to = "day"
 
     def save(self, *args, **kwargs):
         if self.reservation_file.name:
