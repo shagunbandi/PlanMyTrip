@@ -1,16 +1,14 @@
 from common.enums import RESERVATION_STATUS
-from common.mixins import (
-    AuthBasicInfoMixin,
-    GenericRelationMixin,
-    OrderMixin,
-    TimestampsMixin,
-)
+from common.mixins import GenericRelationMixin, OrderMixin, TimestampsMixin
+from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from django.db import models
 from enumchoicefield import EnumChoiceField
 
 
-class Place(GenericRelationMixin, OrderMixin, TimestampsMixin, AuthBasicInfoMixin):
+class Place(TimestampsMixin, GenericRelationMixin, OrderMixin):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=True)
+    name = models.CharField(max_length=120)
     place_id = models.CharField(max_length=120, null=True, blank=True)
     reservation_link = models.CharField(max_length=120, null=True, blank=True)
     reservation_file = models.FileField(

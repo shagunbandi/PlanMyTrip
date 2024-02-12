@@ -1,8 +1,6 @@
 from common.serializers import (
-    AuthBasicInfoMixinSerializer,
     CreateMixinSerializer,
     OrderMixinSerializer,
-    TimestampsMixinSerializer,
     ValidateParentMixinSerializer,
 )
 from itinerary.models import Itinerary
@@ -13,9 +11,7 @@ from rest_framework.serializers import IntegerField
 from .models import Day
 
 
-class DaySerializer(
-    AuthBasicInfoMixinSerializer, TimestampsMixinSerializer, OrderMixinSerializer
-):
+class DaySerializer(OrderMixinSerializer):
     places = PlaceSerializer(many=True, read_only=True)
 
     class Meta(OrderedModel.Meta):
@@ -25,7 +21,6 @@ class DaySerializer(
 
 def create_day_serializer(itinerary_id=None, user=None):
     class CreateDaySerializer(
-        AuthBasicInfoMixinSerializer,
         ValidateParentMixinSerializer,
         CreateMixinSerializer,
     ):

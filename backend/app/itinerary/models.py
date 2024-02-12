@@ -1,18 +1,15 @@
-from common.mixins import AuthBasicInfoMixin, TimestampsMixin
-from django.contrib.contenttypes.models import ContentType
+from common.mixins import TimestampsMixin
+from django.contrib.auth.models import User
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
+from place.models import Place
 
 
-class Itinerary(TimestampsMixin, AuthBasicInfoMixin):
+class Itinerary(TimestampsMixin):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=True)
+    name = models.CharField(max_length=120)
     start_date = models.DateField(blank=True, null=True)
-
-    @property
-    def places(self):
-        from place.models import Place  # Import moved inside method
-
-        return Place.objects.filter(
-            parent_type=ContentType.objects.get_for_model(self), parent_id=self.id
-        )
+    places = GenericRelation(Place)
 
     def __str__(self):
         return self.name
