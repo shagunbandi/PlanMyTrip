@@ -1,3 +1,4 @@
+from common.permissions.IsOwner import IsOwner
 from django.shortcuts import get_object_or_404
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
@@ -5,22 +6,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Place
-from .serializers import create_place_serializer
+from .serializers import PlaceSerializer
 
 
 class PlaceViewSet(viewsets.ModelViewSet):
     queryset = Place.objects.all()
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        # Customize the queryset based on the authenticated user
-        user = self.request.user
-        day_id = self.kwargs.get("day_id", None)
-        return Place.objects.filter(user=user, day__id=day_id)
-
-    def get_serializer_class(self):
-        day_id = self.kwargs.get("day_id", None)
-        return create_place_serializer(day_id=day_id, user=self.request.user)
+    permission_classes = [IsAuthenticated, IsOwner]
+    serializer_class = PlaceSerializer
 
 
 class MovePlaceView(APIView):

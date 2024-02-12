@@ -1,3 +1,4 @@
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from rest_framework import serializers
 from rest_framework.serializers import ValidationError
@@ -47,3 +48,25 @@ class ValidateParentMixinSerializer(serializers.Serializer):
         data[parent_key_name] = parent_instance.id
 
         return data
+
+
+class ValidateParentTypeMixinSerializer(serializers.ModelSerializer):
+    def validate(self, attrs):
+        breakpoint()
+        parent_type_name = attrs["parent_type_name"]
+        parent_id = attrs["parent_id"]
+
+        # Get the content type dynamically based on parent_type_name
+        parent_content_type = ContentType.objects.filter(model=parent_type_name).first()
+
+        if not parent_content_type:
+            raise serializers.ValidationError("Invalid parent type")
+
+        # Check if the parent object exists
+        parent_obj = (
+            parent_content_type.model_class().objects.filter(pk=parent_id).exists()
+        )
+        if not parent_obj:
+            raise serializers.ValidationError("Parent object does not exist")
+
+        return attrs

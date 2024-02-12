@@ -35,7 +35,7 @@ urlpatterns = [
     # Itinerary and day
     path("api/itinerary/", include(itinerary_urls)),
     # Places
-    path("<str:parent_type>/<int:parent_id>/", include(place_urls)),
+    path("api/place/", include(place_urls)),
 ]
 
 # Serve media files during development
