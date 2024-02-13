@@ -1,4 +1,3 @@
-from common.permissions.IsOwner import IsOwner
 from django.shortcuts import get_object_or_404
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
@@ -11,7 +10,7 @@ from .serializers import PlaceSerializer
 
 class PlaceViewSet(viewsets.ModelViewSet):
     queryset = Place.objects.all()
-    permission_classes = [IsAuthenticated, IsOwner]
+    permission_classes = [IsAuthenticated]
     serializer_class = PlaceSerializer
 
 

@@ -15,24 +15,3 @@ class ValidateParentMixinSerializer(serializers.Serializer):
             raise ValidationError(f"{model.__name__} is not valid")
         data[parent_key_name] = parent_instance.id
         return data
-
-
-class ValidateParentTypeMixinSerializer(serializers.ModelSerializer):
-    def validate(self, attrs):
-        parent_type_name = attrs["parent_type_name"]
-        parent_id = attrs["parent_id"]
-
-        # Get the content type dynamically based on parent_type_name
-        parent_content_type = ContentType.objects.filter(model=parent_type_name).first()
-
-        if not parent_content_type:
-            raise serializers.ValidationError("Invalid parent type")
-
-        # Check if the parent object exists
-        parent_obj = (
-            parent_content_type.model_class().objects.filter(pk=parent_id).exists()
-        )
-        if not parent_obj:
-            raise serializers.ValidationError("Parent object does not exist")
-
-        return attrs

@@ -6,7 +6,7 @@ from django.db import models
 from enumchoicefield import EnumChoiceField
 
 
-class Place(TimestampsMixin, GenericRelationMixin, OrderMixin):
+class Place(TimestampsMixin, OrderMixin):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=True)
     name = models.CharField(max_length=120)
     place_id = models.CharField(max_length=120, null=True, blank=True)

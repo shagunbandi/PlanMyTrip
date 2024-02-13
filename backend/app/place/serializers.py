@@ -1,16 +1,11 @@
 from common.enums import RESERVATION_STATUS
-from common.serializers import (
-    CreateMixinSerializer,
-    OrderMixinSerializer,
-    ValidateParentTypeMixinSerializer,
-)
+from common.serializers import CreateMixinSerializer, OrderMixinSerializer
 
 from .models import Place
 
 
 class PlaceSerializer(
     OrderMixinSerializer,
-    ValidateParentTypeMixinSerializer,
     CreateMixinSerializer,
 ):
     class Meta:

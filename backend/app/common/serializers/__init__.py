@@ -1,7 +1,5 @@
 from .CreateMixinSerializer import CreateMixinSerializer
-from .GenericRelationMixinSerializer import GenericRelationMixinSerializer
+
+# from .GenericRelationMixinSerializer import GenericRelationMixinSerializer
 from .OrderMixinSerializer import OrderMixinSerializer
-from .ValidateParentMixinSerializer import (
-    ValidateParentMixinSerializer,
-    ValidateParentTypeMixinSerializer,
-)
+from .ValidateParentMixinSerializer import ValidateParentMixinSerializer
