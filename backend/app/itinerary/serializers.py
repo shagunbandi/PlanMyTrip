@@ -6,7 +6,7 @@ from .models import Day, Itinerary, Places
 
 
 class PlaceSerializer(CreateMixin, serializers.ModelSerializer):
-    content_type = serializers.CharField()
+    content_type = serializers.CharField(required=True)
 
     def validate_content_type(self, value):
         content_type = ContentType.objects.filter(model=value.lower()).first()
