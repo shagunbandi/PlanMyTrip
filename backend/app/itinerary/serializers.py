@@ -1,20 +1,24 @@
-from common.serializers import CreateSerializer, GenericRelationSerializer
+from common.serializers import (
+    CreateSerializer,
+    GenericRelationSerializer,
+    OrderSerializer,
+)
 
 from .models import Day, Itinerary, Places
 
 
-class PlaceSerializer(GenericRelationSerializer, CreateSerializer):
+class PlaceSerializer(GenericRelationSerializer, OrderSerializer, CreateSerializer):
     class Meta:
         model = Places
-        fields = ["title", "id", "content_type", "object_id"]
+        fields = ["id", "title", "order", "content_type", "object_id"]
 
 
-class DaySerializer(CreateSerializer):
+class DaySerializer(OrderSerializer, CreateSerializer):
     places = PlaceSerializer(many=True, read_only=True)
 
     class Meta:
         model = Day
-        fields = ["title", "id", "places"]
+        fields = ["id", "title", "order", "places"]
 
 
 class ItinerarySerializer(CreateSerializer):
@@ -23,4 +27,4 @@ class ItinerarySerializer(CreateSerializer):
 
     class Meta:
         model = Itinerary
-        fields = ["title", "id", "days", "places"]
+        fields = ["id", "title", "days", "places"]

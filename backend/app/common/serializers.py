@@ -9,6 +9,10 @@ class CreateSerializer(serializers.ModelSerializer):
         return self.Meta.model.objects.create(**validated_data)
 
 
+class OrderSerializer(serializers.Serializer):
+    order = serializers.IntegerField(read_only=True)
+
+
 class GenericRelationSerializer(serializers.Serializer):
     content_type = serializers.CharField(required=True)
 

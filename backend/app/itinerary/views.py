@@ -1,6 +1,11 @@
+from common.exceptions import ValidationException
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets
+from rest_framework import status, viewsets
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .models import Day, Itinerary, Places
 from .serializers import DaySerializer, ItinerarySerializer, PlaceSerializer
@@ -53,3 +58,23 @@ class PlacesViewSet(viewsets.ModelViewSet):
             Itinerary, pk=itinerary_id, owner=self.request.user
         )
         return itinerary
+
+
+class MovePlaceView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, content_type, object_id, method):
+        if content_type not in ["day", "place"]:
+            raise ValidationException("Invalid content type.")
+        model_class = (
+            ContentType.objects.filter(model=content_type.lower()).first().model_class()
+        )
+        model_object = get_object_or_404(model_class, id=object_id, owner=request.user)
+
+        if method == "up":
+            model_object.up()
+        elif method == "down":
+            model_object.down()
+        else:
+            raise ValidationException("Invalid method parameter")
+        return Response(status=status.HTTP_204_NO_CONTENT)
