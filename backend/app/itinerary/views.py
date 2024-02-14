@@ -46,3 +46,10 @@ class PlacesViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return super().get_queryset().filter(owner=self.request.user)
+
+    def _get_itinerary(self):
+        itinerary_id = self.kwargs.get("itinerary_id")
+        itinerary = get_object_or_404(
+            Itinerary, pk=itinerary_id, owner=self.request.user
+        )
+        return itinerary
