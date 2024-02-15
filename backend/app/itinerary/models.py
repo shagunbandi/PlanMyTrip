@@ -1,11 +1,11 @@
-from common.models import GenericRelationOrderModel, OwnerModel
+from common.models import GenericRelationOrderModel, OwnerModel, TimestampModel
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from ordered_model.models import OrderedModel
 
 
-class Places(OwnerModel, GenericRelationOrderModel):
+class Places(OwnerModel, GenericRelationOrderModel, TimestampModel):
     title = models.CharField(max_length=120)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
@@ -18,7 +18,7 @@ class Places(OwnerModel, GenericRelationOrderModel):
         ordering = ("order",)
 
 
-class Itinerary(OwnerModel):
+class Itinerary(OwnerModel, TimestampModel):
     title = models.CharField(max_length=120)
     places = GenericRelation(Places)
 
@@ -26,7 +26,7 @@ class Itinerary(OwnerModel):
         return self.title
 
 
-class Day(OwnerModel, OrderedModel):
+class Day(OwnerModel, OrderedModel, TimestampModel):
     title = models.CharField(max_length=120)
     itinerary = models.ForeignKey(
         Itinerary,

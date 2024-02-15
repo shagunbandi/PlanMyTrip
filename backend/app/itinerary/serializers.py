@@ -27,4 +27,4 @@ class ItinerarySerializer(CreateSerializer):
 
     class Meta:
         model = Itinerary
-        fields = ["id", "title", "days", "places"]
+        fields = ["id", "title", "days", "places", "created_at", "updated_at"]
