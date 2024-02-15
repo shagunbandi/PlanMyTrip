@@ -14,7 +14,7 @@ class Places(OwnerModel, GenericRelationOrderModel, TimestampModel):
     file = models.FileField(upload_to="reservations/", null=True, blank=True)
     date = models.DateField(null=True, blank=True)
     time = models.TimeField(null=True, blank=True)
-    status = EnumChoiceField(RESERVATION_STATUS, default=RESERVATION_STATUS.NO)
+    status = EnumChoiceField(RESERVATION_STATUS, default=RESERVATION_STATUS.UNSET)
     cost = models.FloatField(null=True, blank=True, validators=[MinValueValidator(0)])
     currency = models.CharField(max_length=3, null=True, blank=True, default="EUR")
 

@@ -21,10 +21,20 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from itinerary.urls import urlpatterns as itinerary_urls
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView,
+)
 
 urlpatterns = [
+    # Admin
     path("admin/", admin.site.urls),
-    path("api-auth/", include("rest_framework.urls")),
+    # Auth
+    path("api-auth/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api-auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
+    # Planner
     path("api/planner/", include(itinerary_urls)),
 ]
 

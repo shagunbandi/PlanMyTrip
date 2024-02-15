@@ -10,7 +10,20 @@ from .models import Day, Itinerary, Places
 class PlaceSerializer(GenericRelationSerializer, OrderSerializer, CreateSerializer):
     class Meta:
         model = Places
-        fields = ["id", "title", "order", "content_type", "object_id"]
+        fields = [
+            "id",
+            "title",
+            "order",
+            "content_type",
+            "object_id",
+            "link",
+            "file",
+            "date",
+            "time",
+            "status",
+            "cost",
+            "currency",
+        ]
 
 
 class DaySerializer(OrderSerializer, CreateSerializer):
