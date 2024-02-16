@@ -22,4 +22,5 @@ export const RESERVATION_STATUS = {
   NO: 'no',
   MAYBE: 'maybe',
   BOOKED: 'booked',
+  UNSET: 'unset',
 }
