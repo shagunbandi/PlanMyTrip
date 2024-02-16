@@ -38,11 +38,12 @@
         <br />
 
         <!-- Day Wise Plan -->
-        <h4 class="day-wise-plan">Day-wise plan</h4>
+        <!-- <h4 class="day-wise-plan">Day-wise plan</h4>
         <div v-for="day in itinerary.days" :key="day.id" class="d-flex">
           <Day :day="day" />
         </div>
         <button class="btn btn-success" @click="addDummyDay">Add Day</button>
+        -->
       </Container>
     </span>
 
@@ -82,7 +83,6 @@ export default {
         notes: '',
       })
     },
-
     ...mapActions('itinerary', ['fetchItinerary', 'addDay']),
   },
 }

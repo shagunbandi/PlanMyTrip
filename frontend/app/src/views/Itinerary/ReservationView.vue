@@ -189,12 +189,7 @@ import PersistingEditorInput from '@/component/PersistingEditorInput.vue'
 import PersistingEnumSelector from '@/component/PersistingEnumSelector.vue'
 import PersistingInput from '@/component/PersistingInput.vue'
 import PersistingTimeInput from '@/component/PersistingTimeInput.vue'
-import {
-  ATTRACTION_ENUM,
-  ATTRACTION_KEYS,
-  RESERVATION_KEYS,
-  RESERVATION_STATUS,
-} from '@/constants'
+import { RESERVATION_KEYS, RESERVATION_STATUS } from '@/constants'
 import { mapActions, mapState } from 'vuex'
 
 export default {
@@ -218,9 +213,7 @@ export default {
   data() {
     return {
       reservationKeys: RESERVATION_KEYS,
-      attractionKeys: ATTRACTION_KEYS,
       reservationStatus: RESERVATION_STATUS,
-      attrationType: ATTRACTION_ENUM,
       features: [],
       cleanNewData: {},
     }
@@ -249,7 +242,6 @@ export default {
           this.isFeatureEnabled(this.reservationKeys.RESERVATION_FILE),
           this.isFeatureEnabled(this.reservationKeys.RESERVATION_TIME),
           this.isFeatureEnabled(this.reservationKeys.RESERVATION_STATUS),
-          this.isFeatureEnabled(this.attractionKeys.ATTRACTION_TYPE),
         ]
 
         return enabledFeatures.filter(Boolean).length

@@ -48,14 +48,6 @@
       title="Restaurant"
     />
 
-    <ReservationView
-      :dayId="day.id"
-      :reservationDetails="day.attractions"
-      name="attraction"
-      title="Attraction"
-      :newReservationData="newAttraction"
-    />
-
     <!-- All other features go here -->
   </div>
 
@@ -79,7 +71,6 @@
 <script>
 import PersistingEditorInput from '@/component/PersistingEditorInput.vue'
 import PersistingInput from '@/component/PersistingInput.vue'
-import { ATTRACTION_ENUM } from '@/constants'
 import { mapActions, mapState } from 'vuex'
 import ReservationView from './ReservationView.vue'
 
@@ -96,13 +87,7 @@ export default {
     ...mapState('itinerary', ['itinerary']),
   },
   data() {
-    return {
-      newAttraction: {
-        name: 'New Attraction',
-        notes: '',
-        category: ATTRACTION_ENUM.EXPERIENCE,
-      },
-    }
+    return {}
   },
   methods: {
     ...mapActions('itinerary', ['fetchItinerary', 'removeDay', 'moveDay']),
