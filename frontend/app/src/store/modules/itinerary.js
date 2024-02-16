@@ -31,10 +31,10 @@ const mutations = {
 }
 
 const actions = {
-  async fetchItinerary({ commit }, itineraryId = 1) {
+  async fetchItinerary({ commit }, itineraryId = 9) {
     try {
       commit('SET_LOADING', true)
-      const response = await api.get(`/api/itinerary/${itineraryId}/`)
+      const response = await api.get(`/api/planner/itinerary/${itineraryId}/`)
       commit('SET_ITINERARY', response.data)
     } catch (error) {
       console.error('Error fetching itinerary:', error)
