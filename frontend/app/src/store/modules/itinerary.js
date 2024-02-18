@@ -1,6 +1,7 @@
 // store/modules/itinerary.js
 import api from '@/api'
-import * as commonReservationActions from '@/store/actions/commonReservationActions'
+import apiMessages from '@/constants/apiMessages'
+import * as commonPlaceActions from '@/store/actions/commonPlaceActions'
 import * as dayActions from '@/store/actions/dayActions'
 
 const state = {
@@ -31,18 +32,23 @@ const mutations = {
 }
 
 const actions = {
-  async fetchItinerary({ commit }, itineraryId = 9) {
+  async fetchItinerary(
+    { commit },
+    { itineraryId, onError = () => {}, onSuccess = () => {} },
+  ) {
     try {
       commit('SET_LOADING', true)
       const response = await api.get(`/api/planner/itinerary/${itineraryId}/`)
       commit('SET_ITINERARY', response.data)
+      onSuccess(apiMessages.ITINERARY_FETCH_SUCCESS)
     } catch (error) {
-      console.error('Error fetching itinerary:', error)
+      onError(apiMessages.ITINERARY_FETCH_FAIL)
+      commit('SET_ITINERARY', null)
       commit('SET_ERROR', error.message || 'Error fetching itinerary')
     }
   },
   ...dayActions,
-  ...commonReservationActions,
+  ...commonPlaceActions,
 }
 
 const getters = {

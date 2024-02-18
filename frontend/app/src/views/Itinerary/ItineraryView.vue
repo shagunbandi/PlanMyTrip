@@ -5,45 +5,18 @@
         <!-- Title -->
         <h1 class="title">
           <PersistingInput
-            :value="itinerary.name"
+            :value="itinerary.title"
             inputType="input"
-            :editEndPoint="`/api/itinerary/${itinerary.id}/`"
-            itemKey="name"
+            :editEndPoint="`/api/planner/itinerary/${itinerary.id}/`"
+            itemKey="title"
           />
         </h1>
-
-        <!-- Notes -->
-        <label for="notes">Notes</label>
-
-        <PersistingEditorInput
-          title="Notes"
-          itemKey="notes"
-          :value="itinerary.notes"
-          :editEndPoint="`/api/itinerary/${itinerary.id}/`"
-          placeholder="Notes here"
-        />
-
-        <br />
-
-        <!-- Scratchpad -->
-        <label for="scratchpad">ScratchPad</label>
-        <PersistingEditorInput
-          title="ScratchPad"
-          :value="itinerary.scratchpad"
-          :editEndPoint="`/api/itinerary/${itinerary.id}/`"
-          itemKey="scratchpad"
-          placeholder="Write your thoughts here"
-        />
-
-        <br />
-
         <!-- Day Wise Plan -->
-        <!-- <h4 class="day-wise-plan">Day-wise plan</h4>
+        <h4 class="day-wise-plan">Day-wise plan</h4>
         <div v-for="day in itinerary.days" :key="day.id" class="d-flex">
           <Day :day="day" />
         </div>
         <button class="btn btn-success" @click="addDummyDay">Add Day</button>
-        -->
       </Container>
     </span>
 
@@ -55,7 +28,6 @@
 
 <script>
 import Container from '@/component/Container.vue'
-import PersistingEditorInput from '@/component/PersistingEditorInput.vue'
 import PersistingInput from '@/component/PersistingInput.vue'
 import Day from '@/views/Itinerary/DayView.vue'
 import { mapActions, mapState } from 'vuex'
@@ -65,7 +37,6 @@ export default {
     Container,
     PersistingInput,
     Day,
-    PersistingEditorInput,
   },
   data() {
     return {}
@@ -74,14 +45,21 @@ export default {
     ...mapState('itinerary', ['itinerary']),
   },
   mounted() {
-    this.fetchItinerary()
+    this.fetchItinerary({
+      itineraryId: 9,
+      onSuccess: this.onSuccess,
+      onError: this.onError,
+    })
   },
   methods: {
+    onSuccess(message) {
+      this.$toast.success(message, { duration: 5000 })
+    },
+    onError(message) {
+      this.$toast.error(message, { duration: 5000 })
+    },
     addDummyDay() {
-      this.addDay({
-        name: 'New Day',
-        notes: '',
-      })
+      this.addDay({ onSuccess: this.onSuccess, onError: this.onError })
     },
     ...mapActions('itinerary', ['fetchItinerary', 'addDay']),
   },
