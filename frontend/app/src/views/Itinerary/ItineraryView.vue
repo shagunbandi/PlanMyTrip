@@ -11,12 +11,11 @@
             itemKey="title"
           />
         </h1>
-        <!-- Day Wise Plan -->
-        <h4 class="day-wise-plan">Day-wise plan</h4>
+        <h4 class="day-wise-plan">Itinerary</h4>
         <div v-for="day in itinerary.days" :key="day.id" class="d-flex">
           <Day :day="day" />
         </div>
-        <button class="btn btn-success" @click="addDummyDay">Add Day</button>
+        <button class="btn btn-success" @click="handleAddDay">Add Day</button>
       </Container>
     </span>
 
@@ -58,7 +57,7 @@ export default {
     onError(message) {
       this.$toast.error(message, { duration: 5000 })
     },
-    addDummyDay() {
+    handleAddDay() {
       this.addDay({ onSuccess: this.onSuccess, onError: this.onError })
     },
     ...mapActions('itinerary', ['fetchItinerary', 'addDay']),
