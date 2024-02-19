@@ -8,4 +8,7 @@ export default {
   DAY_REMOVE_FAIL: 'Day Remove Failed',
   MOVE_DAY_SUCCESS: 'Day Moved Successfully',
   MOVE_DAY_FAIL: 'Day Move Failed',
+
+  PLACE_ADD_SUCCESS: 'Place Added Successfully',
+  PLACE_ADD_FAIL: 'Place Add Failed',
 }

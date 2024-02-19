@@ -93,8 +93,15 @@ export default {
         onError: this.onError,
       })
     },
-    handleAddPlace() {},
-    ...mapActions('itinerary', ['removeDay', 'moveDay']),
+    handleAddPlace() {
+      this.addPlace({
+        contentType: 'day',
+        parentId: this.day.id,
+        onSuccess: this.onSuccess,
+        onError: this.onError,
+      })
+    },
+    ...mapActions('itinerary', ['removeDay', 'moveDay', 'addPlace']),
   },
 }
 </script>

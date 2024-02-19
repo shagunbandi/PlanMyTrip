@@ -1,8 +1,8 @@
 // store/modules/itinerary.js
 import api from '@/api'
 import apiMessages from '@/constants/apiMessages'
-import * as commonPlaceActions from '@/store/actions/commonPlaceActions'
 import * as dayActions from '@/store/actions/dayActions'
+import * as placeActions from '@/store/actions/placeActions'
 
 const state = {
   itinerary: null,
@@ -48,7 +48,7 @@ const actions = {
     }
   },
   ...dayActions,
-  ...commonPlaceActions,
+  ...placeActions,
 }
 
 const getters = {

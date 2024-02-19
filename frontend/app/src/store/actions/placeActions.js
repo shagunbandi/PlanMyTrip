@@ -1,20 +1,30 @@
 // commonPlaceActions.js
 import api from '@/api'
+import apiMessages from '@/constants/apiMessages'
 
 export const addPlace = async (
   { state, dispatch },
-  { dayId, newPlace, placeName },
+  {
+    title = 'Title',
+    contentType,
+    parentId,
+    onSuccess = () => {},
+    onError = () => {},
+  },
 ) => {
   const itineraryId = state.itinerary.id
 
   try {
-    await api.post(
-      `/api/planner/itinerary/${itineraryId}/day/${dayId}/${placeName}/`,
-      newPlace,
-    )
-    dispatch('fetchItinerary', itineraryId)
+    await api.post(`/api/planner/place/`, {
+      title: title,
+      content_type: contentType,
+      object_id: parentId,
+    })
+    dispatch('fetchItinerary', { itineraryId })
+    onSuccess(apiMessages.PLACE_ADD_SUCCESS)
   } catch (error) {
-    console.error(`Error adding ${placeName}:`, error)
+    console.error(`Error adding ${title}:`, error)
+    onError(apiMessages.PLACE_ADD_FAIL)
   }
 }
 
