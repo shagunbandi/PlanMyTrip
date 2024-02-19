@@ -17,28 +17,32 @@ export const addDay = async (
   }
 }
 
-export const removeDay = async ({ state, dispatch }, dayId) => {
+export const removeDay = async (
+  { state, dispatch },
+  { dayId, onSuccess = () => {}, onError = () => {} },
+) => {
   const itineraryId = state.itinerary.id
   try {
     await api.delete(`/api/planner/itinerary/${itineraryId}/day/${dayId}/`)
-    dispatch('fetchItinerary', itineraryId)
+    dispatch('fetchItinerary', { itineraryId })
+    onSuccess(apiMessages.DAY_REMOVE_SUCCESS)
   } catch (error) {
-    console.error('Error removing day:', error)
+    onError(apiMessages.DAY_REMOVE_FAIL)
+    console.error('Error deleting day:', error)
   }
 }
 
 export const moveDay = async (
   { state, dispatch },
-  { dayId, moveDirection },
+  { dayId, direction, onSuccess = () => {}, onError = () => {} },
 ) => {
   const itineraryId = state.itinerary.id
-
   try {
-    await api.post(
-      `/api/planner/itinerary/${itineraryId}/day/${dayId}/move/${moveDirection}/`,
-    )
-    dispatch('fetchItinerary', itineraryId)
+    await api.post(`/api/planner/day/${dayId}/move/${direction}/`)
+    dispatch('fetchItinerary', { itineraryId })
+    onSuccess(apiMessages.MOVE_DAY_SUCCESS)
   } catch (error) {
+    onError(apiMessages.MOVE_DAY_FAIL)
     console.error('Error moving day:', error)
   }
 }

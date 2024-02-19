@@ -55,12 +55,21 @@ export default {
       this.$toast.error(message, { duration: 5000 })
     },
     handleMoveDay(direction) {
-      this.moveDay({ onSuccess: this.onSuccess, onError: this.onError })
+      this.moveDay({
+        dayId: this.day.id,
+        direction: direction,
+        onSuccess: this.onSuccess,
+        onError: this.onError,
+      })
     },
     handleRemoveDay() {
-      this.removeDay({ onSuccess: this.onSuccess, onError: this.onError })
+      this.removeDay({
+        dayId: this.day.id,
+        onSuccess: this.onSuccess,
+        onError: this.onError,
+      })
     },
-    ...mapActions('itinerary', ['fetchItinerary', 'removeDay', 'moveDay']),
+    ...mapActions('itinerary', ['removeDay', 'moveDay']),
   },
 }
 </script>
