@@ -1,12 +1,24 @@
 <template>
   <SideActionPannel
     :buttons="[
-      { text: '↑', clickHandler: () => handleMoveDay('up') },
-      { text: '↓', clickHandler: () => handleMoveDay('down') },
+      {
+        text: '↑',
+        clickHandler: () => handleMoveDay('up'),
+      },
+      {
+        text: '↓',
+        clickHandler: () => handleMoveDay('down'),
+      },
       {
         text: 'X',
         clickHandler: handleRemoveDay,
         style: { color: 'red' },
+      },
+      { type: 'break' },
+      {
+        type: 'icon',
+        src: addDayIcon,
+        clickHandler: handleAddPlace,
       },
     ]"
   >
@@ -24,19 +36,29 @@
           :editEndPoint="`/api/planner/itinerary/${itinerary.id}/day/${day.id}/`"
         />
       </h5>
+      <Container>
+        <span v-for="place in day.places" :key="place.id" class="d-flex">
+          <PlaceView :place="place" />
+        </span>
+      </Container>
     </div>
   </SideActionPannel>
 </template>
 
 <script>
+import AddDayIcon from '@/assets/icons/add-day-icon.png'
+import Container from '@/component/Container.vue'
 import PersistingInput from '@/component/PersistingInput.vue'
 import SideActionPannel from '@/component/SideActionPannel.vue'
 import { mapActions, mapState } from 'vuex'
+import PlaceView from './PlaceView.vue'
 
 export default {
   components: {
     PersistingInput,
     SideActionPannel,
+    Container,
+    PlaceView,
   },
   props: {
     day: Object,
@@ -45,7 +67,9 @@ export default {
     ...mapState('itinerary', ['itinerary']),
   },
   data() {
-    return {}
+    return {
+      addDayIcon: AddDayIcon,
+    }
   },
   methods: {
     onSuccess(message) {
@@ -69,6 +93,7 @@ export default {
         onError: this.onError,
       })
     },
+    handleAddPlace() {},
     ...mapActions('itinerary', ['removeDay', 'moveDay']),
   },
 }

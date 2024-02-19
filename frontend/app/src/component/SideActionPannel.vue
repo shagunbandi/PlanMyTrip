@@ -9,15 +9,25 @@
     <div class="button-group" ref="dropdownButton">
       <button @click="toggleDropdown" class="toggle-button btn">▼</button>
       <div v-if="isOpen" class="action-buttons">
-        <button
-          v-for="(button, index) in buttons"
-          :key="index"
-          class="btn action-button"
-          @click="button.clickHandler"
-          :style="button.style"
-        >
-          {{ button.text }}
-        </button>
+        <span v-for="(button, index) in buttons" :key="index">
+          <button
+            v-if="button.type == 'button' || button.type == null"
+            class="btn action-button"
+            @click="button.clickHandler"
+            :style="button.style"
+          >
+            {{ button.text }}
+          </button>
+          <hr v-if="button.type == 'break'" class="m-0 mx-1" />
+          <button
+            v-if="button.type == 'icon'"
+            class="btn action-button"
+            @click="button.clickHandler"
+            :style="button.style"
+          >
+            <img :src="button.src" :alt="button.alt" class="icon" />
+          </button>
+        </span>
       </div>
     </div>
   </div>
@@ -51,8 +61,8 @@ export default {
     },
     closeDropdownOutside(event) {
       if (
-        !this.$refs.dropdown.contains(event.target) &&
-        !this.$refs.dropdownButton.contains(event.target)
+        !this.$refs.dropdown?.contains(event.target) &&
+        !this.$refs.dropdownButton?.contains(event.target)
       ) {
         this.closeDropdown()
       }
@@ -118,5 +128,11 @@ export default {
 
 .action-button:hover {
   background-color: rgb(224, 224, 224);
+}
+
+/* Icon */
+.icon {
+  width: 17px;
+  height: 17px;
 }
 </style>
