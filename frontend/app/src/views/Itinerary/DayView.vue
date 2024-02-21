@@ -22,9 +22,9 @@
       },
     ]"
   >
-    <div class="flex-grow-1">
+    <div class="">
       <!-- Day Title -->
-      <h5 id="day-title" class="day d-flex">
+      <h5 id="day-title" class="d-flex font-weight-bold">
         <span class="day-text flex-shrink-0"
           >Day {{ day.order + 1 }}:&nbsp;</span
         >
@@ -36,18 +36,15 @@
           :editEndPoint="`/api/planner/itinerary/${itinerary.id}/day/${day.id}/`"
         />
       </h5>
-      <Container>
-        <span v-for="place in day.places" :key="place.id" class="d-flex">
-          <PlaceView :place="place" />
-        </span>
-      </Container>
     </div>
   </SideActionPannel>
+  <span v-for="place in day.places" :key="place.id" class="">
+    <PlaceView :place="place" />
+  </span>
 </template>
 
 <script>
 import AddDayIcon from '@/assets/icons/add-day-icon.png'
-import Container from '@/component/Container.vue'
 import PersistingInput from '@/component/PersistingInput.vue'
 import SideActionPannel from '@/component/SideActionPannel.vue'
 import { mapActions, mapState } from 'vuex'
@@ -57,7 +54,6 @@ export default {
   components: {
     PersistingInput,
     SideActionPannel,
-    Container,
     PlaceView,
   },
   props: {

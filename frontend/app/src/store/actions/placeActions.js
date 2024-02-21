@@ -28,18 +28,45 @@ export const addPlace = async (
   }
 }
 
-export const removePlace = async (
+export const editPlaceTitle = async (
   { state, dispatch },
-  { dayId, placeId, placeName },
+  {
+    contentType,
+    objectId,
+    placeId,
+    placeName,
+    onSuccess = () => {},
+    onError = () => {},
+  },
 ) => {
   const itineraryId = state.itinerary.id
 
   try {
-    await api.delete(
-      `/api/planner/itinerary/${itineraryId}/day/${dayId}/${placeName}/${placeId}/`,
-    )
-    dispatch('fetchItinerary', itineraryId)
+    await api.patch(`/api/planner/place/${placeId}/`, {
+      title: placeName,
+      content_type: contentType,
+      object_id: objectId,
+    })
+    dispatch('fetchItinerary', { itineraryId })
+    onSuccess(apiMessages.PLACE_RENAMED_SUCCESS)
   } catch (error) {
+    console.error(`Error removing ${placeName}:`, error)
+    onError(apiMessages.PLACE_RENAME_FAILED)
+  }
+}
+
+export const removePlace = async (
+  { state, dispatch },
+  { placeId, placeName, onSuccess = () => {}, onError = () => {} },
+) => {
+  const itineraryId = state.itinerary.id
+
+  try {
+    await api.delete(`/api/planner/place/${placeId}/`)
+    dispatch('fetchItinerary', { itineraryId })
+    onSuccess(apiMessages.PLACE_REMOVE_SUCCESS)
+  } catch (error) {
+    onError(apiMessages.PLACE_REMOVE_FAILED)
     console.error(`Error removing ${placeName}:`, error)
   }
 }

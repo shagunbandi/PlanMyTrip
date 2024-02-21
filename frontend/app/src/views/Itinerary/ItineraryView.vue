@@ -12,7 +12,7 @@
           />
         </h1>
         <h4 class="day-wise-plan">Itinerary</h4>
-        <div v-for="day in itinerary.days" :key="day.id" class="d-flex">
+        <div v-for="day in itinerary.days" :key="day.id">
           <Day :day="day" />
         </div>
         <button class="btn btn-success" @click="handleAddDay">Add Day</button>

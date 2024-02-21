@@ -11,4 +11,8 @@ export default {
 
   PLACE_ADD_SUCCESS: 'Place Added Successfully',
   PLACE_ADD_FAIL: 'Place Add Failed',
+  PLACE_RENAMED_SUCCESS: 'Place Renamed Successfully',
+  PLACE_RENAME_FAILED: 'Place Rename Failed',
+  PLACE_REMOVE_SUCCESS: 'Place Removed Successfully',
+  PLACE_REMOVE_FAILED: 'Place Remove Failed',
 }

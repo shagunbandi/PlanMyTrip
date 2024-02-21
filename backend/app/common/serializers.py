@@ -14,6 +14,7 @@ class OrderSerializer(serializers.Serializer):
 
 
 class GenericRelationSerializer(serializers.Serializer):
+
     content_type = serializers.CharField(required=True)
 
     def validate_content_type(self, value):
@@ -31,3 +32,8 @@ class GenericRelationSerializer(serializers.Serializer):
         if not model_object:
             raise serializers.ValidationError("model does not exist.")
         return super().validate(attrs)
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation["content_type"] = representation["content_type"].split(" | ")[-1]
+        return representation
