@@ -4,12 +4,12 @@ from common.serializers import (
     OrderSerializer,
 )
 
-from .models import Day, Itinerary, Places
+from .models import Day, Itinerary, Place
 
 
 class PlaceSerializer(GenericRelationSerializer, OrderSerializer, CreateSerializer):
     class Meta:
-        model = Places
+        model = Place
         fields = [
             "id",
             "title",

@@ -8,7 +8,7 @@ from enumchoicefield import EnumChoiceField
 from ordered_model.models import OrderedModel
 
 
-class Places(OwnerModel, GenericRelationOrderModel, TimestampModel):
+class Place(OwnerModel, GenericRelationOrderModel, TimestampModel):
     title = models.CharField(max_length=120)
     link = models.CharField(max_length=120, null=True, blank=True)
     file = models.FileField(upload_to="reservations/", null=True, blank=True)
@@ -41,7 +41,7 @@ class Places(OwnerModel, GenericRelationOrderModel, TimestampModel):
 
 class Itinerary(OwnerModel, TimestampModel):
     title = models.CharField(max_length=120)
-    places = GenericRelation(Places)
+    places = GenericRelation(Place)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
 
@@ -58,7 +58,7 @@ class Day(OwnerModel, OrderedModel, TimestampModel):
         null=False,
         related_name="days",
     )
-    places = GenericRelation(Places)
+    places = GenericRelation(Place)
 
     order_with_respect_to = "itinerary"
 
