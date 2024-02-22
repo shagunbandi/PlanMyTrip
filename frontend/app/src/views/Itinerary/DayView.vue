@@ -22,21 +22,17 @@
       },
     ]"
   >
-    <div class="">
-      <!-- Day Title -->
-      <h5 id="day-title" class="d-flex font-weight-bold">
-        <span class="day-text flex-shrink-0"
-          >Day {{ day.order + 1 }}:&nbsp;</span
-        >
-        <PersistingInput
-          inputType="input"
-          placeholder="Write a title for you day"
-          itemKey="title"
-          :value="day.title"
-          :editEndPoint="`/api/planner/itinerary/${itinerary.id}/day/${day.id}/`"
-        />
-      </h5>
-    </div>
+    <!-- Day Title -->
+    <h5 id="day-title" class="d-flex day-title">
+      <span class="day-text flex-shrink-0">Day {{ day.order + 1 }}:&nbsp;</span>
+      <PersistingInput
+        inputType="input"
+        placeholder="Write a title for you day"
+        itemKey="title"
+        :value="day.title"
+        :editEndPoint="`/api/planner/itinerary/${itinerary.id}/day/${day.id}/`"
+      />
+    </h5>
   </SideActionPannel>
   <span v-for="place in day.places" :key="place.id" class="">
     <PlaceView :place="place" />
@@ -102,4 +98,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.day-title {
+  margin-top: 20px;
+}
+</style>

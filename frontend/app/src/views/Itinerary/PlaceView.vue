@@ -27,18 +27,27 @@
       },
     ]"
   >
-    <div class="card w-100 mb-2">
-      <div class="card-body">
-        <h5 class="card-title">
-          <input
-            type="text"
-            class="form-control-plaintext"
-            placeholder="Name of the place"
-            v-model="editedTitle"
-            @blur="handleEditPlaceTitle"
-          />
-        </h5>
-      </div>
+    <div class="grey-box">
+      <input
+        type="text"
+        class="form-control-plaintext font-weight-bold"
+        placeholder="Name of the place"
+        v-model="editedTitle"
+        @blur="
+          () => {
+            handleEditPlaceField('title', editedTitle)
+          }
+        "
+      />
+      <PersistingEditorInput
+        placeholder="Put your thoughts here"
+        :value="editedText"
+        :on-change="
+          (value) => {
+            handleEditPlaceField('text', value)
+          }
+        "
+      />
     </div>
   </SideActionPannel>
 </template>
@@ -46,6 +55,7 @@
 <script>
 import CurrencyIcon from '@/assets/icons/currency-icon.jpg'
 import LinkIcon from '@/assets/icons/link-icon.jpg'
+import PersistingEditorInput from '@/component/PersistingEditorInput.vue'
 import SideActionPannel from '@/component/SideActionPannel.vue'
 import { mapActions } from 'vuex'
 
@@ -61,9 +71,10 @@ export default {
       linkIcon: LinkIcon,
       currencyIcon: CurrencyIcon,
       editedTitle: this.place.title,
+      editedText: this.place.text,
     }
   },
-  components: { SideActionPannel },
+  components: { SideActionPannel, PersistingEditorInput },
   methods: {
     onSuccess(message) {
       this.$toast.success(message, { duration: 5000 })
@@ -71,12 +82,13 @@ export default {
     onError(message) {
       this.$toast.error(message, { duration: 5000 })
     },
-    handleEditPlaceTitle() {
-      this.editPlaceTitle({
+    handleEditPlaceField(fieldName, fieldValue) {
+      this.editPlaceField({
         contentType: this.place.content_type,
         objectId: this.place.object_id,
         placeId: this.place.id,
-        placeName: this.editedTitle,
+        fieldName: fieldName,
+        fieldValue: fieldValue,
         onSucces: this.onSuccess,
         onError: this.onError,
       })
@@ -99,7 +111,7 @@ export default {
       })
     },
     handleAddPlace() {},
-    ...mapActions('itinerary', ['editPlaceTitle', 'removePlace', 'movePlace']),
+    ...mapActions('itinerary', ['editPlaceField', 'removePlace', 'movePlace']),
   },
 }
 </script>

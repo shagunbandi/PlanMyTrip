@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import api from '@/api'
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
@@ -34,9 +33,7 @@ export default {
   },
   props: {
     value: [String, Number],
-    editEndPoint: String,
-    itemKey: String,
-    inputType: String,
+    onChange: Function,
     placeholder: String,
     editorType: {
       type: String,
@@ -45,8 +42,8 @@ export default {
   },
   data() {
     return {
-      quillContentBefore: '',
-      quillContent: '',
+      quillContentBefore: this.value,
+      quillContent: this.value,
       quillOptions: {
         modules: {},
         theme: 'snow',
@@ -56,30 +53,19 @@ export default {
   watch: {
     value: {
       handler(newVal) {
-        // Update quillContent when the value prop changes
         if (newVal !== this.quillContent) {
           this.quillContent = newVal
           this.quillContentBefore = newVal
         }
       },
-      immediate: true, // Run the handler immediately to set the initial content
+      immediate: true,
     },
   },
   methods: {
-    handleQuillChange(value) {
+    handleQuillChange() {
       if (this.quillContent !== this.quillContentBefore) {
-        this.saveChanges()
-      }
-    },
-    async saveChanges() {
-      try {
-        const patchData = {
-          [this.itemKey]: this.quillContent,
-        }
-        await api.patch(this.editEndPoint, patchData)
         this.quillContentBefore = this.quillContent
-      } catch (error) {
-        console.error('Error updating data:', error)
+        this.onChange(this.quillContent)
       }
     },
   },
@@ -136,5 +122,8 @@ export default {
 .quill-container-full .ql-container {
   padding: 20px;
   border: 1px solid #ccc;
+}
+.ql-editor.ql-blank::before {
+  left: 0;
 }
 </style>

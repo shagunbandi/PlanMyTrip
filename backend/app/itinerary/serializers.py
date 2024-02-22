@@ -13,6 +13,7 @@ class PlaceSerializer(GenericRelationSerializer, OrderSerializer, CreateSerializ
         fields = [
             "id",
             "title",
+            "text",
             "order",
             "content_type",
             "object_id",

@@ -28,13 +28,14 @@ export const addPlace = async (
   }
 }
 
-export const editPlaceTitle = async (
+export const editPlaceField = async (
   { state, dispatch },
   {
     contentType,
     objectId,
     placeId,
-    placeName,
+    fieldName,
+    fieldValue,
     onSuccess = () => {},
     onError = () => {},
   },
@@ -43,15 +44,15 @@ export const editPlaceTitle = async (
 
   try {
     await api.patch(`/api/planner/place/${placeId}/`, {
-      title: placeName,
+      [fieldName]: fieldValue,
       content_type: contentType,
       object_id: objectId,
     })
     dispatch('fetchItinerary', { itineraryId })
-    onSuccess(apiMessages.PLACE_RENAMED_SUCCESS)
+    onSuccess(apiMessages.PLACE_UPDATE_SUCCESS)
   } catch (error) {
-    console.error(`Error removing ${placeName}:`, error)
-    onError(apiMessages.PLACE_RENAME_FAILED)
+    console.error(`Error updating ${fieldName}:`, error)
+    onError(apiMessages.PLACE_UPDATE_FAILED)
   }
 }
 

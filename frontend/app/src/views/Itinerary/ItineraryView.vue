@@ -66,7 +66,11 @@ export default {
 </script>
 
 <style scoped>
+.title {
+  font-weight: bolder;
+}
 .day-wise-plan {
   font-weight: bold;
+  margin-top: 16px;
 }
 </style>
