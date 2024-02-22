@@ -81,7 +81,16 @@ export default {
         onError: this.onError,
       })
     },
-    handleMovePlace() {},
+    handleMovePlace(direction) {
+      this.movePlace({
+        contentType: this.place.content_type,
+        objectId: this.place.object_id,
+        placeId: this.place.id,
+        moveDirection: direction,
+        onSucces: this.onSuccess,
+        onError: this.onError,
+      })
+    },
     handleRemovePlace() {
       this.removePlace({
         placeId: this.place.id,

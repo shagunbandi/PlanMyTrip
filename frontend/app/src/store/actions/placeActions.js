@@ -73,16 +73,25 @@ export const removePlace = async (
 
 export const movePlace = async (
   { state, dispatch },
-  { dayId, placeId, placeName, moveDirection },
+  {
+    contentType,
+    objectId,
+    placeId,
+    moveDirection,
+    onSuccess = () => {},
+    onError = () => {},
+  },
 ) => {
   const itineraryId = state.itinerary.id
 
   try {
     await api.post(
-      `/api/planner/itinerary/${itineraryId}/day/${dayId}/${placeName}/${placeId}/move/${moveDirection}/`,
+      `/api/planner/place/${placeId}/move/${moveDirection}/?${contentType}=${objectId}`,
     )
-    dispatch('fetchItinerary', itineraryId)
+    dispatch('fetchItinerary', { itineraryId })
+    onSuccess(apiMessages.PLACE_MOVE_SUCCESS)
   } catch (error) {
-    console.error(`Error moving ${placeName}:`, error)
+    onError(apiMessages.PLACE_MOVE_FAILED)
+    console.error(`Error moving ${placeId}:`, error)
   }
 }
