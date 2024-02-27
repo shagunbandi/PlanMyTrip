@@ -5,7 +5,7 @@ import apiMessages from '@/constants/apiMessages'
 export const addPlace = async (
   { state, dispatch },
   {
-    title = 'Title',
+    title = '',
     contentType,
     parentId,
     onSuccess = () => {},
