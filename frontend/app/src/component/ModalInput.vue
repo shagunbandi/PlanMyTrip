@@ -3,7 +3,7 @@
     <div class="modal-content">
       <h2>{{ title }}</h2>
       <input
-        type="text"
+        :type="inputType"
         v-model="inputValue"
         @keyup.enter="submitForm"
         ref="inputField"
@@ -23,6 +23,7 @@ export default {
     value: String,
     onSubmit: Function,
     onClose: Function,
+    inputType: String,
   },
   data() {
     return {
