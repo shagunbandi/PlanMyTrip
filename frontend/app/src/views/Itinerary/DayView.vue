@@ -1,93 +1,56 @@
 <template>
-  <div class="flex-grow-1">
+  <SideActionPannel
+    :buttons="[
+      {
+        text: '↑',
+        clickHandler: () => handleMoveDay('up'),
+      },
+      {
+        text: '↓',
+        clickHandler: () => handleMoveDay('down'),
+      },
+      {
+        text: 'X',
+        clickHandler: handleRemoveDay,
+        style: { color: 'red' },
+      },
+      { type: 'break' },
+      {
+        type: 'icon',
+        src: addDayIcon,
+        clickHandler: handleAddPlace,
+      },
+    ]"
+  >
     <!-- Day Title -->
-    <h5 id="day-name" class="day d-flex">
+    <h5 id="day-title" class="d-flex day-title">
       <span class="day-text flex-shrink-0">Day {{ day.order + 1 }}:&nbsp;</span>
       <PersistingInput
         inputType="input"
         placeholder="Write a title for you day"
-        itemKey="name"
-        :value="day.name"
-        :editEndPoint="`/api/itinerary/${itinerary.id}/day/${day.id}/`"
+        itemKey="title"
+        :value="day.title"
+        :editEndPoint="`/api/planner/itinerary/${itinerary.id}/day/${day.id}/`"
       />
     </h5>
-
-    <!-- Notes -->
-    <span id="notes">
-      <label for="notes">Notes</label>
-      <PersistingEditorInput
-        :value="day.notes"
-        placeholder="Write something about the day"
-        :editEndPoint="`/api/itinerary/${itinerary.id}/day/${day.id}/`"
-        itemKey="notes"
-      />
-    </span>
-    <br />
-
-    <!-- Dishes -->
-    <ReservationView
-      :dayId="day.id"
-      :reservationDetails="day.dishes"
-      name="dish"
-      title="Dish"
-    />
-
-    <!-- Accomodation -->
-    <ReservationView
-      :dayId="day.id"
-      :reservationDetails="day.accomodations"
-      name="accomodation"
-      title="Accomodation"
-    />
-
-    <!-- Restaurant -->
-    <ReservationView
-      :dayId="day.id"
-      :reservationDetails="day.restaurants"
-      name="restaurant"
-      title="Restaurant"
-    />
-
-    <ReservationView
-      :dayId="day.id"
-      :reservationDetails="day.attractions"
-      name="attraction"
-      title="Attraction"
-      :newReservationData="newAttraction"
-    />
-
-    <!-- All other features go here -->
-  </div>
-
-  <div class="button-container flex-shrink-0">
-    <button class="cross" @click="removeDay(day.id)">X</button>
-    <button
-      class="move-up"
-      @click="moveDay({ dayId: day.id, moveDirection: 'up' })"
-    >
-      ↑
-    </button>
-    <button
-      class="move-down"
-      @click="moveDay({ dayId: day.id, moveDirection: 'down' })"
-    >
-      ↓
-    </button>
-  </div>
+  </SideActionPannel>
+  <span v-for="place in day.places" :key="place.id" class="">
+    <PlaceView :place="place" />
+  </span>
 </template>
 
 <script>
-import PersistingEditorInput from '@/component/PersistingEditorInput.vue'
+import AddDayIcon from '@/assets/icons/add-day-icon.png'
 import PersistingInput from '@/component/PersistingInput.vue'
-import { ATTRACTION_ENUM } from '@/constants'
+import SideActionPannel from '@/component/SideActionPannel.vue'
 import { mapActions, mapState } from 'vuex'
-import ReservationView from './ReservationView.vue'
+import PlaceView from './PlaceView.vue'
 
 export default {
   components: {
     PersistingInput,
-    ReservationView,
-    PersistingEditorInput,
+    SideActionPannel,
+    PlaceView,
   },
   props: {
     day: Object,
@@ -97,38 +60,46 @@ export default {
   },
   data() {
     return {
-      newAttraction: {
-        name: 'New Attraction',
-        notes: '',
-        category: ATTRACTION_ENUM.EXPERIENCE,
-      },
+      addDayIcon: AddDayIcon,
     }
   },
   methods: {
-    ...mapActions('itinerary', ['fetchItinerary', 'removeDay', 'moveDay']),
+    onSuccess(message) {
+      this.$toast.success(message, { duration: 5000 })
+    },
+    onError(message) {
+      this.$toast.error(message, { duration: 5000 })
+    },
+    handleMoveDay(direction) {
+      this.moveDay({
+        dayId: this.day.id,
+        direction: direction,
+        onSuccess: this.onSuccess,
+        onError: this.onError,
+      })
+    },
+    handleRemoveDay() {
+      this.removeDay({
+        dayId: this.day.id,
+        onSuccess: this.onSuccess,
+        onError: this.onError,
+      })
+    },
+    handleAddPlace() {
+      this.addPlace({
+        contentType: 'day',
+        parentId: this.day.id,
+        onSuccess: this.onSuccess,
+        onError: this.onError,
+      })
+    },
+    ...mapActions('itinerary', ['removeDay', 'moveDay', 'addPlace']),
   },
 }
 </script>
 
 <style scoped>
-.day {
-  font-style: italic;
-  display: flex;
-  width: 100%;
-}
-
-/* Button Group */
-.button-container {
-  display: flex;
-  flex-flow: column;
-  padding-left: 4px;
-}
-
-.button-container button {
-  background-color: white;
-  border: none;
-}
-.cross {
-  color: red;
+.day-title {
+  margin-top: 20px;
 }
 </style>

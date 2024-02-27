@@ -1,15 +1,15 @@
-export const RESERVATION_KEYS = {
+export const PLACE_KEYS = {
   CHECKED_STATUS: 'checked_status',
   NAME: 'name',
   NOTES: 'notes',
   ORDER: 'order',
-  RESERVATION_PLACE_ID: 'place_id',
-  RESERVATION_COST: 'reservation_cost',
-  RESERVATION_LINK: 'reservation_link',
-  RESERVATION_DATE: 'reservation_date',
-  RESERVATION_TIME: 'reservation_time',
-  RESERVATION_STATUS: 'reservation_status',
-  RESERVATION_FILE: 'reservation_file',
+  PLACE_PLACE_ID: 'place_id',
+  PLACE_COST: 'place_cost',
+  PLACE_LINK: 'place_link',
+  PLACE_DATE: 'place_date',
+  PLACE_TIME: 'place_time',
+  PLACE_STATUS: 'place_status',
+  PLACE_FILE: 'place_file',
 }
 
 export const CHECKED_STATUS = {
@@ -18,8 +18,9 @@ export const CHECKED_STATUS = {
   CROSSED: 'CROSSED',
 }
 
-export const RESERVATION_STATUS = {
+export const PLACE_STATUS = {
   NO: 'no',
   MAYBE: 'maybe',
   BOOKED: 'booked',
+  UNSET: 'unset',
 }

@@ -26,7 +26,7 @@ export default {
   methods: {
     login() {
       api
-        .post('/api/token/', {
+        .post('/api-auth/token/', {
           username: this.username,
           password: this.password,
         })
@@ -36,11 +36,11 @@ export default {
           // Store the token in local storage or Vuex store
           localStorage.setItem('access', token.access)
           localStorage.setItem('refresh', token.refresh)
-          this.$router.push('/')
+          this.$toast.success('Login Success', { duration: 5000 })
         })
         .catch((error) => {
-          console.error('Authentication failed', error)
-          // Handle authentication failure (show error message, etc.)
+          this.$toast.error('Authentication Failed', { duration: 5000 })
+          console.log(error)
         })
     },
   },

@@ -31,11 +31,11 @@ class GenericRelationOrderModel(models.Model):
         except IndexError:
             pass
 
-    def move_up(self, obj):
-        self._move(obj, up=True)
+    def up(self):
+        self._move(self, up=True)
 
-    def move_down(self, obj):
-        self._move(obj, up=False)
+    def down(self):
+        self._move(self, up=False)
 
     def insert(self, obj, before=None, after=None):
         if before:
@@ -64,6 +64,15 @@ class GenericRelationOrderModel(models.Model):
         obj.save()
 
         return obj
+
+    def save(self, *args, **kwargs):
+        if not self.order:
+            # Get the maximum order value and increment it by 1
+            max_order = self.__class__.objects.filter(
+                content_type=self.content_type, object_id=self.object_id
+            ).aggregate(max_order=models.Max("order"))["max_order"]
+            self.order = max_order + 1 if max_order is not None else 1
+        super().save(*args, **kwargs)
 
     class Meta:
         abstract = True
