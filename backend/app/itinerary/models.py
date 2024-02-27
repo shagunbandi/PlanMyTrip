@@ -9,14 +9,14 @@ from ordered_model.models import OrderedModel
 
 
 class Place(OwnerModel, GenericRelationOrderModel, TimestampModel):
-    title = models.CharField(max_length=120)
+    title = models.CharField(max_length=120, blank=True, null=True)
     text = models.TextField(blank=True, null=True, default="")
     link = models.CharField(max_length=120, null=True, blank=True)
     file = models.FileField(upload_to="reservations/", null=True, blank=True)
     date = models.DateField(null=True, blank=True)
     time = models.TimeField(null=True, blank=True)
     status = EnumChoiceField(RESERVATION_STATUS, default=RESERVATION_STATUS.UNSET)
-    cost = models.FloatField(null=True, blank=True, validators=[MinValueValidator(0)])
+    cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     currency = models.CharField(max_length=3, null=True, blank=True, default="EUR")
 
     # Generic Relation with Parent
@@ -51,7 +51,7 @@ class Itinerary(OwnerModel, TimestampModel):
 
 
 class Day(OwnerModel, OrderedModel, TimestampModel):
-    title = models.CharField(max_length=120)
+    title = models.CharField(max_length=120, null=True, blank=True)
     itinerary = models.ForeignKey(
         Itinerary,
         on_delete=models.CASCADE,
