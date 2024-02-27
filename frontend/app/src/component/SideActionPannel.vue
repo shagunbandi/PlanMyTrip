@@ -6,7 +6,7 @@
     @mouseleave="showHoverButton = false"
   >
     <slot></slot>
-    <div class="button-group" ref="dropdownButton">
+    <div :class="['button-group', extraClass]" ref="dropdownButton">
       <button @click="toggleDropdown" class="toggle-button btn">▼</button>
       <div v-if="isOpen" class="action-buttons">
         <span v-for="(button, index) in buttons" :key="index">
@@ -44,6 +44,10 @@ export default {
     buttons: {
       type: Array,
       default: () => [],
+    },
+    extraClass: {
+      type: String,
+      default: '',
     },
   },
   methods: {

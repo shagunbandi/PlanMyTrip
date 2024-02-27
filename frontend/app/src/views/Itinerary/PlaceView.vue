@@ -1,5 +1,6 @@
 <template>
   <SideActionPannel
+    extraClass="mt-3"
     :buttons="[
       {
         text: '↑',
@@ -18,7 +19,8 @@
       {
         type: 'icon',
         src: linkIcon,
-        clickHandler: handleAddPlace,
+        clickHandler: () =>
+          showFieldEditModal('Place Link', 'link', place.link),
       },
       {
         type: 'icon',
@@ -39,12 +41,28 @@
           }
         "
       />
-      <PersistingEditorInput
+      <EditorInput
         placeholder="Put your thoughts here"
         :value="editedText"
         :on-change="
           (value) => {
             handleEditPlaceField('text', value)
+          }
+        "
+      />
+      <ModalInput
+        v-if="showModal"
+        :title="modalTitle"
+        :value="modalValue"
+        :onClose="
+          () => {
+            showModal = false
+          }
+        "
+        :onSubmit="
+          (value) => {
+            console.log(modalKey, this.modalKey)
+            handleEditPlaceField(modalKey, value)
           }
         "
       />
@@ -55,7 +73,8 @@
 <script>
 import CurrencyIcon from '@/assets/icons/currency-icon.jpg'
 import LinkIcon from '@/assets/icons/link-icon.jpg'
-import PersistingEditorInput from '@/component/PersistingEditorInput.vue'
+import EditorInput from '@/component/EditorInput.vue'
+import ModalInput from '@/component/ModalInput.vue'
 import SideActionPannel from '@/component/SideActionPannel.vue'
 import { mapActions } from 'vuex'
 
@@ -72,15 +91,25 @@ export default {
       currencyIcon: CurrencyIcon,
       editedTitle: this.place.title,
       editedText: this.place.text,
+      showModal: false,
+      modalTitle: '',
+      modalValue: '',
+      modalKey: '',
     }
   },
-  components: { SideActionPannel, PersistingEditorInput },
+  components: { SideActionPannel, EditorInput, ModalInput },
   methods: {
     onSuccess(message) {
       this.$toast.success(message, { duration: 5000 })
     },
     onError(message) {
       this.$toast.error(message, { duration: 5000 })
+    },
+    showFieldEditModal(modalTitle, modalKey, modalValue) {
+      this.modalTitle = modalTitle
+      this.modalValue = modalValue
+      this.modalKey = modalKey
+      this.showModal = true
     },
     handleEditPlaceField(fieldName, fieldValue) {
       this.editPlaceField({
@@ -110,7 +139,6 @@ export default {
         onError: this.onError,
       })
     },
-    handleAddPlace() {},
     ...mapActions('itinerary', ['editPlaceField', 'removePlace', 'movePlace']),
   },
 }
