@@ -37,34 +37,6 @@ class GenericRelationOrderModel(models.Model):
     def down(self):
         self._move(self, up=False)
 
-    def insert(self, obj, before=None, after=None):
-        if before:
-            queryset = self.__class__.objects.filter(
-                content_type=obj.content_type,
-                object_id=obj.object_id,
-                order__lt=before.order,
-            )
-            queryset.update(order=F("order") + 1)
-            obj.order = before.order - 1
-        elif after:
-            queryset = self.__class__.objects.filter(
-                content_type=obj.content_type,
-                object_id=obj.object_id,
-                order__gt=after.order,
-            )
-            queryset.update(order=F("order") + 1)
-            obj.order = after.order + 1
-        else:
-            obj.order = (
-                self.__class__.objects.filter(
-                    content_type=obj.content_type, object_id=obj.object_id
-                ).count()
-                + 1
-            )
-        obj.save()
-
-        return obj
-
     def save(self, *args, **kwargs):
         if not self.order:
             # Get the maximum order value and increment it by 1

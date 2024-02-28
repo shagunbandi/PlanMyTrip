@@ -84,18 +84,31 @@ class MoveContentView(APIView):
         content_type = request.data.get("content_type", "")
         method = request.data.get("method", "")
 
+        model_object = self.get_model_object(request, object_id, content_type)
+        if method == "up":
+            model_object.up()
+        elif method == "down":
+            model_object.down()
+
+        # Update parent for place and put it in the last place
+        elif method == "change-parent" and content_type == "place":
+            parent_id = request.data.get("parent_id", 0)
+            parent_content_type = request.data.get("parent_content_type", "")
+            parent_object = self.get_model_object(
+                request, parent_id, parent_content_type
+            )
+            model_object.parent = parent_object
+            model_object.order = None
+            model_object.save()
+        else:
+            raise ValidationException("Invalid method parameter")
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def get_model_object(self, request, object_id, content_type):
         if content_type not in ["day", "place"]:
             raise ValidationException("Invalid content type.")
         model_class = (
             ContentType.objects.filter(model=content_type.lower()).first().model_class()
         )
         model_object = get_object_or_404(model_class, id=object_id, owner=request.user)
-        if method == "up":
-            model_object.up()
-        elif method == "down":
-            model_object.down()
-        elif method == "insert":
-            pass
-        else:
-            raise ValidationException("Invalid method parameter")
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return model_object
