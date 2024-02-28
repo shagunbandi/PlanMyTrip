@@ -18,7 +18,7 @@ urlpatterns = [
     path("itinerary/<int:itinerary_id>/day/", include(day_router.urls)),
     path("place/", include(places_router.urls)),
     path(
-        "<str:content_type>/<int:object_id>/move/<str:method>/",
+        "move/<int:object_id>/",
         MoveContentView.as_view(),
     ),
 ]

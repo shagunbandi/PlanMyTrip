@@ -80,18 +80,22 @@ class PlaceViewSet(viewsets.ModelViewSet):
 class MoveContentView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, content_type, object_id, method):
+    def post(self, request, object_id):
+        content_type = request.data.get("content_type", "")
+        method = request.data.get("method", "")
+
         if content_type not in ["day", "place"]:
             raise ValidationException("Invalid content type.")
         model_class = (
             ContentType.objects.filter(model=content_type.lower()).first().model_class()
         )
         model_object = get_object_or_404(model_class, id=object_id, owner=request.user)
-
         if method == "up":
             model_object.up()
         elif method == "down":
             model_object.down()
+        elif method == "insert":
+            pass
         else:
             raise ValidationException("Invalid method parameter")
         return Response(status=status.HTTP_204_NO_CONTENT)
