@@ -38,7 +38,11 @@ export const moveDay = async (
 ) => {
   const itineraryId = state.itinerary.id
   try {
-    await api.post(`/api/planner/day/${dayId}/move/${direction}/`)
+    const postData = {
+      content_type: 'day',
+      method: direction,
+    }
+    await api.post(`/api/planner/move/${dayId}/`, postData)
     dispatch('fetchItinerary', { itineraryId })
     onSuccess(apiMessages.MOVE_DAY_SUCCESS)
   } catch (error) {

@@ -34,8 +34,12 @@
       />
     </h5>
   </SideActionPannel>
-  <span v-for="place in day.places" :key="place.id" class="">
-    <PlaceView :place="place" />
+  <span v-for="(place, index) in day.places" :key="place.id" class="">
+    <PlaceView
+      :place="place"
+      :previousPlace="day.places[index - 1]"
+      :nextPlace="day.places[index + 1]"
+    />
   </span>
 </template>
 

@@ -140,12 +140,12 @@ export default {
         onError: this.onError,
       })
     },
-    handleMovePlace(direction) {
+    handleMovePlace(method) {
       this.movePlace({
-        contentType: this.place.content_type,
-        objectId: this.place.object_id,
         placeId: this.place.id,
-        moveDirection: direction,
+        method: method,
+        // parentId,
+        // parentContentType,
         onSucces: this.onSuccess,
         onError: this.onError,
       })
