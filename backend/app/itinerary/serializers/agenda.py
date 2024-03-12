@@ -1,9 +1,10 @@
-from common.serializers import CreateSerializer, OrderSerializer
+from common.serializers import CreateSerializer
 from itinerary.models.agenda import Agenda
 from itinerary.serializers.place import PlaceSerializer
+from ordered_model.serializers import OrderedModelSerializer
 
 
-class AgendaSerializer(OrderSerializer, CreateSerializer):
+class AgendaSerializer(OrderedModelSerializer, CreateSerializer):
     places = PlaceSerializer(many=True, read_only=True)
 
     class Meta:

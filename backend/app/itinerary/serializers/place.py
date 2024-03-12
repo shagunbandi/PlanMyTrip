@@ -1,8 +1,9 @@
-from common.serializers import CreateSerializer, OrderSerializer
+from common.serializers import CreateSerializer
 from itinerary.models.place import Place
+from ordered_model.serializers import OrderedModelSerializer
 
 
-class PlaceSerializer(OrderSerializer, CreateSerializer):
+class PlaceSerializer(OrderedModelSerializer, CreateSerializer):
     class Meta:
         model = Place
         fields = [

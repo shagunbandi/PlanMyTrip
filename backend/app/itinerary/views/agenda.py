@@ -29,15 +29,17 @@ class AgendaViewSet(viewsets.ModelViewSet):
         if itinerary.exists():
             serializer.save(itinerary_id=itinerary_id)
         else:
-            raise ValueError("Itinerary does not exist.")
+            raise ValueError("Itinerary does not exist")
 
 
 class MoveAgendaView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, itinerary_id):
+    def post(self, request, itinerary_id, agenda_id):
         method = request.data.get("method", "")
-        agenda = Agenda.objects.filter(owner=request.user, itinerary__id=itinerary_id)
+        agenda = get_object_or_404(
+            Agenda, owner=request.user, id=agenda_id, itinerary__id=itinerary_id
+        )
         if method == "up":
             agenda.up()
         elif method == "down":

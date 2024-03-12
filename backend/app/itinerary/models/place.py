@@ -24,9 +24,7 @@ class Place(OwnerModel, OrderedModel, TimestampModel):
         related_name="agendas",
     )
 
-    @property
-    def itinerary_id(self) -> int:
-        return self.agenda.itinerary.id
+    order_with_respect_to = "agenda__itinerary"
 
     def save(self, *args, **kwargs):
         if self.file.name:
@@ -39,6 +37,3 @@ class Place(OwnerModel, OrderedModel, TimestampModel):
 
     def __str__(self):
         return self.title
-
-    class Meta:
-        ordering = ("itinerary_id",)

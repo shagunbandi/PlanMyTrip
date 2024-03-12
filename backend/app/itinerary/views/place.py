@@ -17,63 +17,58 @@ class PlaceViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        if self.request.GET.get("itinerary_id") is not None:
-            itinerary_id = self.request.GET.get("itinerary_id")
-            itinerary = get_object_or_404(
-                Itinerary, owner=self.request.user, id=itinerary_id
+        itinerary_id = self.kwargs.get("itinerary_id")
+        agenda_id = self.kwargs.get("agenda_id")
+
+        return (
+            super()
+            .get_queryset()
+            .filter(
+                owner=self.request.user,
+                agenda__id=agenda_id,
+                agenda__itinerary__id=itinerary_id,
             )
-            return (
-                super()
-                .get_queryset()
-                .filter(owner=self.request.user, itinerary=itinerary)
-            )
-        elif self.request.GET.get("agenda_id") is not None:
-            agenda_id = self.request.GET.get("agenda_id")
-            try:
-                agenda = Agenda.objects.get(owner=self.request.user, id=agenda_id)
-            except Agenda.DoesNotExist:
-                raise ValidationException("Agenda does not exist.")
-            return (
-                super()
-                .get_queryset()
-                .filter(owner=self.request.user, object_id=agenda.id)
-            )
+        )
+
+    def perform_create(self, serializer):
+        itinerary_id = self.kwargs.get("itinerary_id")
+        agenda_id = self.kwargs.get("agenda_id")
+
+        agenda = Agenda.objects.filter(
+            owner=self.request.user, id=agenda_id, itinerary__id=itinerary_id
+        )
+        if agenda.exists():
+            serializer.save(agenda_id=agenda_id)
         else:
-            return super().get_queryset().filter(owner=self.request.user)
+            raise ValueError("Agenda does not exist")
 
 
-class MoveContentView(APIView):
+class MovePlaceView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, object_id):
-        content_type = request.data.get("content_type", "")
+    def post(self, request, itinerary_id, agenda_id, place_id):
         method = request.data.get("method", "")
+        place = get_object_or_404(
+            Place,
+            owner=request.user,
+            id=place_id,
+            agenda__id=agenda_id,
+            itinerary__id=itinerary_id,
+        )
 
-        model_object = self.get_model_object(request, object_id, content_type)
         if method == "up":
-            model_object.up()
+            previous_place = place.previous()
+            if (
+                previous_place is not None
+                and previous_place.agenda.id is not place.agenda.id
+            ):
+                place.agenda = previous_place.agenda
+            place.up()
         elif method == "down":
-            model_object.down()
-
-        # Update parent for place and put it in the last place
-        elif method == "change-parent" and content_type == "place":
-            parent_id = request.data.get("parent_id", 0)
-            parent_content_type = request.data.get("parent_content_type", "")
-            parent_object = self.get_model_object(
-                request, parent_id, parent_content_type
-            )
-            model_object.parent = parent_object
-            model_object.order = None
-            model_object.save()
+            next_place = place.next()
+            if next_place is not None and next_place.agenda.id is not place.agenda.id:
+                place.agenda = next_place.agenda
+            place.down()
         else:
             raise ValidationException("Invalid method parameter")
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-    def get_model_object(self, request, object_id, content_type):
-        if content_type not in ["agenda", "place"]:
-            raise ValidationException("Invalid content type.")
-        model_class = (
-            ContentType.objects.filter(model=content_type.lower()).first().model_class()
-        )
-        model_object = get_object_or_404(model_class, id=object_id, owner=request.user)
-        return model_object

@@ -1,4 +1,4 @@
-from common.serializers import CreateSerializer, OrderSerializer
+from common.serializers import CreateSerializer
 from itinerary.models.itinerary import Itinerary
 from itinerary.serializers.agenda import AgendaSerializer
 from itinerary.serializers.place import PlaceSerializer

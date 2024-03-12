@@ -7,7 +7,3 @@ class CreateSerializer(serializers.ModelSerializer):
         user = self.context["request"].user
         validated_data["owner"] = user
         return self.Meta.model.objects.create(**validated_data)
-
-
-class OrderSerializer(serializers.Serializer):
-    order = serializers.IntegerField(read_only=True)
