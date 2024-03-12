@@ -4,14 +4,14 @@ from itinerary.models.itinerary import Itinerary
 from ordered_model.models import OrderedModel
 
 
-class Day(OwnerModel, OrderedModel, TimestampModel):
+class Roster(OwnerModel, OrderedModel, TimestampModel):
     title = models.CharField(max_length=120, null=True, blank=True)
     itinerary = models.ForeignKey(
         Itinerary,
         on_delete=models.CASCADE,
         blank=False,
         null=False,
-        related_name="days",
+        related_name="rosters",
     )
 
     order_with_respect_to = "itinerary"
@@ -23,7 +23,7 @@ class Day(OwnerModel, OrderedModel, TimestampModel):
         if self.pk is None:
             if self.itinerary.owner != self.owner:
                 raise ValueError(
-                    "You are not allowed to create a day in this itinerary."
+                    "You are not allowed to create a roster in this itinerary."
                 )
         super().save(*args, **kwargs)
 

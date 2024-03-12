@@ -1,9 +1,9 @@
 from common.exceptions import ValidationException
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
-from itinerary.models.day import Day
 from itinerary.models.itinerary import Itinerary
 from itinerary.models.place import Place
+from itinerary.models.roster import Roster
 from itinerary.serializers.place import PlaceSerializer
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
@@ -27,14 +27,16 @@ class PlaceViewSet(viewsets.ModelViewSet):
                 .get_queryset()
                 .filter(owner=self.request.user, itinerary=itinerary)
             )
-        elif self.request.GET.get("day_id") is not None:
-            day_id = self.request.GET.get("day_id")
+        elif self.request.GET.get("roster_id") is not None:
+            roster_id = self.request.GET.get("roster_id")
             try:
-                day = Day.objects.get(owner=self.request.user, id=day_id)
-            except Day.DoesNotExist:
-                raise ValidationException("Day does not exist.")
+                roster = Roster.objects.get(owner=self.request.user, id=roster_id)
+            except Roster.DoesNotExist:
+                raise ValidationException("Roster does not exist.")
             return (
-                super().get_queryset().filter(owner=self.request.user, object_id=day.id)
+                super()
+                .get_queryset()
+                .filter(owner=self.request.user, object_id=roster.id)
             )
         else:
             return super().get_queryset().filter(owner=self.request.user)
@@ -68,7 +70,7 @@ class MoveContentView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def get_model_object(self, request, object_id, content_type):
-        if content_type not in ["day", "place"]:
+        if content_type not in ["roster", "place"]:
             raise ValidationException("Invalid content type.")
         model_class = (
             ContentType.objects.filter(model=content_type.lower()).first().model_class()
