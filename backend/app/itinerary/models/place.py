@@ -21,7 +21,7 @@ class Place(OwnerModel, OrderedModel, TimestampModel):
         on_delete=models.CASCADE,
         blank=False,
         null=False,
-        related_name="agendas",
+        related_name="places",
     )
 
     order_with_respect_to = "agenda__itinerary"
@@ -37,3 +37,6 @@ class Place(OwnerModel, OrderedModel, TimestampModel):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ("order",)

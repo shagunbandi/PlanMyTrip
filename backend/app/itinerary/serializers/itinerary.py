@@ -6,7 +6,6 @@ from itinerary.serializers.place import PlaceSerializer
 
 class ItinerarySerializer(CreateSerializer):
     agendas = AgendaSerializer(many=True, read_only=True)
-    places = PlaceSerializer(many=True, read_only=True)
 
     class Meta:
         model = Itinerary
