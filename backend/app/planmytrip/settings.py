@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "django_extensions",
     "itinerary",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -59,6 +60,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 
@@ -147,6 +149,10 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -156,6 +162,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Django Storage Path
 # Use the local file system for storage
 DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+
 
 # Define the media URL and root
 MEDIA_URL = "/media/"

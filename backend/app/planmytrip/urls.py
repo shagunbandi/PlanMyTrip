@@ -36,6 +36,7 @@ urlpatterns = [
     path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
     # Planner
     path("api/planner/", include(itinerary_urls)),
+    path("__debug__/", include("debug_toolbar.urls")),
 ]
 
 # Serve media files during development
