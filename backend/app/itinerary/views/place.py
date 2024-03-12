@@ -1,48 +1,14 @@
 from common.exceptions import ValidationException
 from django.contrib.contenttypes.models import ContentType
-from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404
+from itinerary.models.day import Day
+from itinerary.models.itinerary import Itinerary
+from itinerary.models.place import Place
+from itinerary.serializers.place import PlaceSerializer
 from rest_framework import status, viewsets
-from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from .models import Day, Itinerary, Place
-from .serializers import DaySerializer, ItinerarySerializer, PlaceSerializer
-
-
-class ItineraryViewSet(viewsets.ModelViewSet):
-    queryset = Itinerary.objects.all()
-    serializer_class = ItinerarySerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        return super().get_queryset().filter(owner=self.request.user)
-
-
-class DayViewSet(viewsets.ModelViewSet):
-    queryset = Day.objects.all()
-    serializer_class = DaySerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        itinerary = self._get_itinerary()
-        return (
-            super().get_queryset().filter(owner=self.request.user, itinerary=itinerary)
-        )
-
-    def perform_create(self, serializer):
-        itinerary = self._get_itinerary()
-
-        serializer.save(itinerary=itinerary)
-
-    def _get_itinerary(self):
-        itinerary_id = self.kwargs.get("itinerary_id")
-        itinerary = get_object_or_404(
-            Itinerary, pk=itinerary_id, owner=self.request.user
-        )
-        return itinerary
 
 
 class PlaceViewSet(viewsets.ModelViewSet):
@@ -53,12 +19,9 @@ class PlaceViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         if self.request.GET.get("itinerary_id") is not None:
             itinerary_id = self.request.GET.get("itinerary_id")
-            try:
-                itinerary = Itinerary.objects.get(
-                    owner=self.request.user, id=itinerary_id
-                )
-            except Itinerary.DoesNotExist:
-                raise ValidationException("Itinerary does not exist.")
+            itinerary = get_object_or_404(
+                Itinerary, owner=self.request.user, id=itinerary_id
+            )
             return (
                 super()
                 .get_queryset()

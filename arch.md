@@ -12,6 +12,8 @@
 - id
 - type (Day or List)
 
+- itinerary
+
 ### Place
 - title
 - text
@@ -24,10 +26,13 @@
 - currency
 - order
 
+- day
+
 ### Note
 - text
 - order
 
-### Todo
-- jsontext
-- order
+- day
+
+
+
