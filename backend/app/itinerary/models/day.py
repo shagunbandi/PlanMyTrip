@@ -19,5 +19,13 @@ class Day(OwnerModel, OrderedModel, TimestampModel):
     def __str__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            if self.itinerary.owner != self.owner:
+                raise ValueError(
+                    "You are not allowed to create a day in this itinerary."
+                )
+        super().save(*args, **kwargs)
+
     class Meta:
         ordering = ("order",)

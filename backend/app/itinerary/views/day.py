@@ -16,56 +16,28 @@ class DayViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        itinerary = self._get_itinerary()
+        itinerary_id = self.kwargs.get("itinerary_id")
         return (
-            super().get_queryset().filter(owner=self.request.user, itinerary=itinerary)
+            super()
+            .get_queryset()
+            .filter(owner=self.request.user, itinerary__id=itinerary_id)
         )
 
     def perform_create(self, serializer):
-        itinerary = self._get_itinerary()
-
-        serializer.save(itinerary=itinerary)
-
-    def _get_itinerary(self):
         itinerary_id = self.kwargs.get("itinerary_id")
-        itinerary = get_object_or_404(
-            Itinerary, pk=itinerary_id, owner=self.request.user
-        )
-        return itinerary
+        serializer.save(itinerary_id=itinerary_id)
 
 
-class MoveContentView(APIView):
+class MoveDayView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, object_id):
-        content_type = request.data.get("content_type", "")
+    def post(self, request, itinerary_id):
         method = request.data.get("method", "")
-
-        model_object = self.get_model_object(request, object_id, content_type)
+        day = Day.objects.filter(owner=request.user, itinerary__id=itinerary_id)
         if method == "up":
-            model_object.up()
+            day.up()
         elif method == "down":
-            model_object.down()
-
-        # Update parent for place and put it in the last place
-        elif method == "change-parent" and content_type == "place":
-            parent_id = request.data.get("parent_id", 0)
-            parent_content_type = request.data.get("parent_content_type", "")
-            parent_object = self.get_model_object(
-                request, parent_id, parent_content_type
-            )
-            model_object.parent = parent_object
-            model_object.order = None
-            model_object.save()
+            day.down()
         else:
             raise ValidationException("Invalid method parameter")
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-    def get_model_object(self, request, object_id, content_type):
-        if content_type not in ["day", "place"]:
-            raise ValidationException("Invalid content type.")
-        model_class = (
-            ContentType.objects.filter(model=content_type.lower()).first().model_class()
-        )
-        model_object = get_object_or_404(model_class, id=object_id, owner=request.user)
-        return model_object
