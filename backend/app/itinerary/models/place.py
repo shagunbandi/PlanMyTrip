@@ -2,7 +2,7 @@ from common.enums import RESERVATION_STATUS
 from common.models import OwnerModel, TimestampModel
 from django.db import models
 from enumchoicefield import EnumChoiceField
-from itinerary.models.roster import Roster
+from itinerary.models.agenda import Agenda
 from ordered_model.models import OrderedModel
 
 
@@ -16,17 +16,17 @@ class Place(OwnerModel, OrderedModel, TimestampModel):
     status = EnumChoiceField(RESERVATION_STATUS, default=RESERVATION_STATUS.UNSET)
     cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     currency = models.CharField(max_length=3, null=True, blank=True, default="EUR")
-    roster = models.ForeignKey(
-        Roster,
+    agenda = models.ForeignKey(
+        Agenda,
         on_delete=models.CASCADE,
         blank=False,
         null=False,
-        related_name="places",
+        related_name="agendas",
     )
 
     @property
     def itinerary_id(self) -> int:
-        return self.roster.itinerary.id
+        return self.agenda.itinerary.id
 
     def save(self, *args, **kwargs):
         if self.file.name:
