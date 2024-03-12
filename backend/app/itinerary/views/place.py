@@ -48,27 +48,39 @@ class MovePlaceView(APIView):
 
     def post(self, request, itinerary_id, agenda_id, place_id):
         method = request.data.get("method", "")
-        place = get_object_or_404(
+        current_place = get_object_or_404(
             Place,
             owner=request.user,
             id=place_id,
             agenda__id=agenda_id,
-            itinerary__id=itinerary_id,
+            agenda__itinerary__id=itinerary_id,
         )
 
         if method == "up":
-            previous_place = place.previous()
+            previous_place = current_place.previous()
             if (
-                previous_place is not None
-                and previous_place.agenda.id is not place.agenda.id
+                previous_place is None
+                or previous_place.agenda.id is not current_place.agenda.id
             ):
-                place.agenda = previous_place.agenda
-            place.up()
+                previous_agenda = current_place.agenda.previous()
+                if previous_agenda is None:
+                    raise ValidationException("Cannot move up")
+                current_place.agenda = previous_agenda
+                current_place.save()
+            current_place.up()
+
         elif method == "down":
-            next_place = place.next()
-            if next_place is not None and next_place.agenda.id is not place.agenda.id:
-                place.agenda = next_place.agenda
-            place.down()
+            next_place = current_place.next()
+            if (
+                next_place is None
+                or next_place.agenda.id is not current_place.agenda.id
+            ):
+                next_agenda = current_place.agenda.next()
+                if next_agenda is None:
+                    raise ValidationException("Cannot move down")
+                current_place.agenda = next_agenda
+                current_place.save()
+            current_place.down()
         else:
             raise ValidationException("Invalid method parameter")
         return Response(status=status.HTTP_204_NO_CONTENT)

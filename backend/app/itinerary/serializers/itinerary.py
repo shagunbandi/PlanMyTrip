@@ -9,4 +9,12 @@ class ItinerarySerializer(CreateSerializer):
 
     class Meta:
         model = Itinerary
-        fields = ["id", "title", "agendas", "created_at", "updated_at"]
+        fields = [
+            "id",
+            "title",
+            "agendas",
+            "start_date",
+            "end_date",
+            "created_at",
+            "updated_at",
+        ]
