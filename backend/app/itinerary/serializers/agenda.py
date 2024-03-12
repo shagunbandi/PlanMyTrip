@@ -1,11 +1,12 @@
 from common.serializers import CreateSerializer
 from itinerary.models.agenda import Agenda
 from itinerary.serializers.place import PlaceSerializer
-from ordered_model.serializers import OrderedModelSerializer
+from rest_framework import serializers
 
 
-class AgendaSerializer(OrderedModelSerializer, CreateSerializer):
+class AgendaSerializer(CreateSerializer):
     places = PlaceSerializer(many=True, read_only=True)
+    order = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Agenda
