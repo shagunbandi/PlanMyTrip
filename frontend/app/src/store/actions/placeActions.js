@@ -70,25 +70,18 @@ export const removePlace = async (
 
 export const movePlace = async (
   { state, dispatch },
-  {
-    placeId,
-    method,
-    parentId,
-    parentContentType,
-    onSuccess = () => {},
-    onError = () => {},
-  },
+  { placeId, agendaId, method, onSuccess = () => {}, onError = () => {} },
 ) => {
   const itineraryId = state.itinerary.id
 
   try {
     const postData = {
-      content_type: 'place',
       method: method,
-      parent_id: parentId,
-      parent_content_type: parentContentType,
     }
-    await api.post(`/api/planner/move/${placeId}/`, postData)
+    await api.post(
+      `/api/planner/itinerary/${itineraryId}/agenda/${agendaId}/place/${placeId}/move/`,
+      postData,
+    )
     dispatch('fetchItinerary', { itineraryId })
     onSuccess(apiMessages.PLACE_MOVE_SUCCESS)
   } catch (error) {

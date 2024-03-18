@@ -45,10 +45,12 @@ export const moveAgenda = async (
   const itineraryId = state.itinerary.id
   try {
     const postData = {
-      content_type: 'agenda',
       method: direction,
     }
-    await api.post(`/api/planner/move/${agendaId}/`, postData)
+    await api.post(
+      `/api/planner/itinerary/${itineraryId}/agenda/${agendaId}/move/`,
+      postData,
+    )
     dispatch('fetchItinerary', { itineraryId })
     onSuccess(apiMessages.MOVE_AGENDA_SUCCESS)
   } catch (error) {

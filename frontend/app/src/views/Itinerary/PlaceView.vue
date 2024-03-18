@@ -146,9 +146,8 @@ export default {
     handleMovePlace(method) {
       this.movePlace({
         placeId: this.place.id,
+        agendaId: this.agendaId,
         method: method,
-        // parentId,
-        // parentContentType,
         onSucces: this.onSuccess,
         onError: this.onError,
       })
