@@ -10,12 +10,15 @@ class Place(OwnerModel, OrderedModel, TimestampModel):
     title = models.CharField(max_length=120, blank=True, null=True)
     text = models.TextField(blank=True, null=True, default="")
     link = models.CharField(max_length=120, null=True, blank=True)
-    file = models.FileField(upload_to="reservations/", null=True, blank=True)
-    date = models.DateField(null=True, blank=True)
-    time = models.TimeField(null=True, blank=True)
-    status = EnumChoiceField(RESERVATION_STATUS, default=RESERVATION_STATUS.UNSET)
     cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+
+    # Not used right now
+    start_time = models.TimeField(null=True, blank=True)
+    end_time = models.TimeField(null=True, blank=True)
+    file = models.FileField(upload_to="reservations/", null=True, blank=True)
+    status = EnumChoiceField(RESERVATION_STATUS, default=RESERVATION_STATUS.UNSET)
     currency = models.CharField(max_length=3, null=True, blank=True, default="EUR")
+
     agenda = models.ForeignKey(
         Agenda,
         on_delete=models.CASCADE,
