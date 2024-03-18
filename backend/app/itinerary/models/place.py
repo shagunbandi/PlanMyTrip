@@ -24,7 +24,7 @@ class Place(OwnerModel, OrderedModel, TimestampModel):
         related_name="places",
     )
 
-    order_with_respect_to = "agenda__itinerary"
+    order_with_respect_to = "agenda"
 
     def save(self, *args, **kwargs):
         if self.file.name:

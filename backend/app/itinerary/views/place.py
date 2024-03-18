@@ -1,4 +1,5 @@
 from common.exceptions import ValidationException
+from django.db.transaction import atomic
 from django.shortcuts import get_object_or_404
 from itinerary.models.agenda import Agenda
 from itinerary.models.place import Place
@@ -55,30 +56,33 @@ class MovePlaceView(APIView):
         )
 
         if method == "up":
-            previous_place = current_place.previous()
-            if (
-                previous_place is None
-                or previous_place.agenda.id is not current_place.agenda.id
-            ):
-                previous_agenda = current_place.agenda.previous()
-                if previous_agenda is None:
-                    raise ValidationException("Cannot move up")
-                current_place.agenda = previous_agenda
-                current_place.save()
-            current_place.up()
-
+            self._move_up(current_place)
         elif method == "down":
-            next_place = current_place.next()
-            if (
-                next_place is None
-                or next_place.agenda.id is not current_place.agenda.id
-            ):
-                next_agenda = current_place.agenda.next()
-                if next_agenda is None:
-                    raise ValidationException("Cannot move down")
-                current_place.agenda = next_agenda
-                current_place.save()
-            current_place.down()
+            self._move_down(current_place)
         else:
             raise ValidationException("Invalid method parameter")
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def _move_down(self, current_place):
+        next_place = current_place.next()
+        if next_place is not None:
+            current_place.down()
+        else:
+            next_agenda = current_place.agenda.next()
+            if next_agenda is None:
+                raise ValidationException("Cannot move up")
+            current_place.agenda = next_agenda
+            with atomic():
+                current_place.save()
+                current_place.top()
+
+    def _move_up(self, current_place):
+        previous_place = current_place.previous()
+        if previous_place is not None:
+            current_place.up()
+        else:
+            previous_agenda = current_place.agenda.previous()
+            if previous_agenda is None:
+                raise ValidationException("Cannot move up")
+            current_place.agenda = previous_agenda
+            current_place.save()
