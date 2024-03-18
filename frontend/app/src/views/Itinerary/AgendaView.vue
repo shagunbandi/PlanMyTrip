@@ -3,48 +3,46 @@
     :buttons="[
       {
         text: '↑',
-        clickHandler: () => handleMoveDay('up'),
+        clickHandler: () => handleMoveAgenda('up'),
       },
       {
         text: '↓',
-        clickHandler: () => handleMoveDay('down'),
+        clickHandler: () => handleMoveAgenda('down'),
       },
       {
         text: 'X',
-        clickHandler: handleRemoveDay,
+        clickHandler: handleRemoveAgenda,
         style: { color: 'red' },
       },
       { type: 'break' },
       {
         type: 'icon',
-        src: addDayIcon,
+        src: addAgendaIcon,
         clickHandler: handleAddPlace,
       },
     ]"
   >
-    <!-- Day Title -->
-    <h5 id="day-title" class="d-flex day-title">
-      <span class="day-text flex-shrink-0">Day {{ day.order + 1 }}:&nbsp;</span>
+    <!-- Agenda Title -->
+    <h5 id="agenda-title" class="d-flex agenda-title">
+      <span class="agenda-text flex-shrink-0"
+        >Agenda {{ agenda.order + 1 }}:&nbsp;</span
+      >
       <PersistingInput
         inputType="input"
-        placeholder="Write a title for you day"
+        placeholder="Write a title for you agenda"
         itemKey="title"
-        :value="day.title"
-        :editEndPoint="`/api/planner/itinerary/${itinerary.id}/day/${day.id}/`"
+        :value="agenda.title"
+        :editEndPoint="`/api/planner/itinerary/${itinerary.id}/agenda/${agenda.id}/`"
       />
     </h5>
   </SideActionPannel>
-  <span v-for="(place, index) in day.places" :key="place.id" class="">
-    <PlaceView
-      :place="place"
-      :previousPlace="day.places[index - 1]"
-      :nextPlace="day.places[index + 1]"
-    />
+  <span v-for="(place, index) in agenda.places" :key="place.id" class="">
+    <PlaceView :place="place" :agendaId="agenda.id" />
   </span>
 </template>
 
 <script>
-import AddDayIcon from '@/assets/icons/add-day-icon.png'
+import AddAgendaIcon from '@/assets/icons/add-agenda-icon.png'
 import PersistingInput from '@/component/PersistingInput.vue'
 import SideActionPannel from '@/component/SideActionPannel.vue'
 import { mapActions, mapState } from 'vuex'
@@ -57,14 +55,14 @@ export default {
     PlaceView,
   },
   props: {
-    day: Object,
+    agenda: Object,
   },
   computed: {
     ...mapState('itinerary', ['itinerary']),
   },
   data() {
     return {
-      addDayIcon: AddDayIcon,
+      addAgendaIcon: AddAgendaIcon,
     }
   },
   methods: {
@@ -74,36 +72,35 @@ export default {
     onError(message) {
       this.$toast.error(message, { duration: 5000 })
     },
-    handleMoveDay(direction) {
-      this.moveDay({
-        dayId: this.day.id,
+    handleMoveAgenda(direction) {
+      this.moveAgenda({
+        agendaId: this.agenda.id,
         direction: direction,
         onSuccess: this.onSuccess,
         onError: this.onError,
       })
     },
-    handleRemoveDay() {
-      this.removeDay({
-        dayId: this.day.id,
+    handleRemoveAgenda() {
+      this.removeAgenda({
+        agendaId: this.agenda.id,
         onSuccess: this.onSuccess,
         onError: this.onError,
       })
     },
     handleAddPlace() {
       this.addPlace({
-        contentType: 'day',
-        parentId: this.day.id,
+        agendaId: this.agenda.id,
         onSuccess: this.onSuccess,
         onError: this.onError,
       })
     },
-    ...mapActions('itinerary', ['removeDay', 'moveDay', 'addPlace']),
+    ...mapActions('itinerary', ['removeAgenda', 'moveAgenda', 'addPlace']),
   },
 }
 </script>
 
 <style scoped>
-.day-title {
+.agenda-title {
   margin-top: 20px;
 }
 </style>

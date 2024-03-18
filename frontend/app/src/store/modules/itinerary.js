@@ -1,7 +1,7 @@
 // store/modules/itinerary.js
 import api from '@/api'
 import apiMessages from '@/constants/apiMessages'
-import * as dayActions from '@/store/actions/dayActions'
+import * as agendaActions from '@/store/actions/agendaActions'
 import * as placeActions from '@/store/actions/placeActions'
 
 const state = {
@@ -47,7 +47,7 @@ const actions = {
       commit('SET_ERROR', error.message || 'Error fetching itinerary')
     }
   },
-  ...dayActions,
+  ...agendaActions,
   ...placeActions,
 }
 

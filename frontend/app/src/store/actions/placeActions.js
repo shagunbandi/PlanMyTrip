@@ -4,22 +4,17 @@ import apiMessages from '@/constants/apiMessages'
 
 export const addPlace = async (
   { state, dispatch },
-  {
-    title = '',
-    contentType,
-    parentId,
-    onSuccess = () => {},
-    onError = () => {},
-  },
+  { agendaId, title = '', onSuccess = () => {}, onError = () => {} },
 ) => {
   const itineraryId = state.itinerary.id
 
   try {
-    await api.post(`/api/planner/place/`, {
-      title: title,
-      content_type: contentType,
-      object_id: parentId,
-    })
+    await api.post(
+      `/api/planner/itinerary/${itineraryId}/agenda/${agendaId}/place/`,
+      {
+        title: title,
+      },
+    )
     dispatch('fetchItinerary', { itineraryId })
     onSuccess(apiMessages.PLACE_ADD_SUCCESS)
   } catch (error) {
@@ -31,9 +26,8 @@ export const addPlace = async (
 export const editPlaceField = async (
   { state, dispatch },
   {
-    contentType,
-    objectId,
     placeId,
+    agendaId,
     fieldName,
     fieldValue,
     onSuccess = () => {},
@@ -43,32 +37,34 @@ export const editPlaceField = async (
   const itineraryId = state.itinerary.id
 
   try {
-    await api.patch(`/api/planner/place/${placeId}/`, {
-      [fieldName]: fieldValue,
-      content_type: contentType,
-      object_id: objectId,
-    })
+    await api.patch(
+      `/api/planner/itinerary/${itineraryId}/agenda/${agendaId}/place/${placeId}/`,
+      {
+        [fieldName]: fieldValue,
+      },
+    )
     dispatch('fetchItinerary', { itineraryId })
     onSuccess(apiMessages.PLACE_UPDATE_SUCCESS)
   } catch (error) {
-    console.error(`Error updating ${fieldName}:`, error)
+    console.error(`Error updating ${fieldName} for ${placeId}:`, error)
     onError(apiMessages.PLACE_UPDATE_FAILED)
   }
 }
 
 export const removePlace = async (
   { state, dispatch },
-  { placeId, placeName, onSuccess = () => {}, onError = () => {} },
+  { placeId, agendaId, onSuccess = () => {}, onError = () => {} },
 ) => {
   const itineraryId = state.itinerary.id
-
   try {
-    await api.delete(`/api/planner/place/${placeId}/`)
+    await api.delete(
+      `/api/planner/itinerary/${itineraryId}/agenda/${agendaId}/place/${placeId}/`,
+    )
     dispatch('fetchItinerary', { itineraryId })
     onSuccess(apiMessages.PLACE_REMOVE_SUCCESS)
   } catch (error) {
     onError(apiMessages.PLACE_REMOVE_FAILED)
-    console.error(`Error removing ${placeName}:`, error)
+    console.error(`Error deleting ${placeId}`, error)
   }
 }
 

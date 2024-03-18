@@ -1,8 +1,6 @@
 from common.exceptions import ValidationException
-from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 from itinerary.models.agenda import Agenda
-from itinerary.models.itinerary import Itinerary
 from itinerary.models.place import Place
 from itinerary.serializers.place import PlaceSerializer
 from rest_framework import status, viewsets

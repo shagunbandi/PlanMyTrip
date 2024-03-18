@@ -101,6 +101,10 @@ export default {
       type: Object,
       required: true,
     },
+    agendaId: {
+      type: Number,
+      required: true,
+    },
   },
   data() {
     return {
@@ -131,9 +135,8 @@ export default {
     },
     handleEditPlaceField(fieldName, fieldValue) {
       this.editPlaceField({
-        contentType: this.place.content_type,
-        objectId: this.place.object_id,
         placeId: this.place.id,
+        agendaId: this.agendaId,
         fieldName: fieldName,
         fieldValue: fieldValue,
         onSucces: this.onSuccess,
@@ -153,6 +156,7 @@ export default {
     handleRemovePlace() {
       this.removePlace({
         placeId: this.place.id,
+        agendaId: this.agendaId,
         onSucces: this.onSuccess,
         onError: this.onError,
       })

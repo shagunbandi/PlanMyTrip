@@ -3,13 +3,13 @@ export default {
   ITINERARY_FETCH_SUCCESS: 'Itinerary Fetched Successfully',
   ITINERARY_FETCH_FAIL: 'Itinerary Fetched Failed',
 
-  // Day
-  DAY_ADD_SUCCESS: 'Day Added Successfully',
-  DAY_ADD_FAIL: 'Day Add Failed',
-  DAY_REMOVE_SUCCESS: 'Day Removed Successfully',
-  DAY_REMOVE_FAIL: 'Day Remove Failed',
-  MOVE_DAY_SUCCESS: 'Day Moved Successfully',
-  MOVE_DAY_FAIL: 'Day Move Failed',
+  // Agenda
+  AGENDA_ADD_SUCCESS: 'Agenda Added Successfully',
+  AGENDA_ADD_FAIL: 'Agenda Add Failed',
+  AGENDA_REMOVE_SUCCESS: 'Agenda Removed Successfully',
+  AGENDA_REMOVE_FAIL: 'Agenda Remove Failed',
+  MOVE_AGENDA_SUCCESS: 'Agenda Moved Successfully',
+  MOVE_AGENDA_FAIL: 'Agenda Move Failed',
 
   // Place
   PLACE_ADD_SUCCESS: 'Place Added Successfully',
