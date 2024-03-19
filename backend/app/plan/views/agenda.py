@@ -43,43 +43,45 @@ class MoveAgendaView(APIView):
             Agenda, owner=request.user, id=agenda_id, plan__id=plan_id
         )
 
-        # Moving UP
         if method == "up":
-            if agenda.order == 0:
-                if agenda.is_itinerary:
-                    agenda.is_itinerary = False
-                    agenda.save()
-                else:
-                    raise ValidationException("Cannot move agena up")
-            elif agenda.is_itinerary:
-                previous_agenda = agenda.previous()
-                if previous_agenda.is_itinerary:
-                    agenda.up()
-                else:
-                    agenda.is_itinerary = False
-                    agenda.save()
-            else:
-                agenda.up()
-
-        # Moving Down
+            self._move_up(agenda)
         elif method == "down":
-            max_order = Agenda.objects.filter(plan_id=plan_id).count() - 1
-            if agenda.order == max_order:
-                if not agenda.is_itinerary:
-                    agenda.is_itinerary = True
-                    agenda.save()
-                else:
-                    raise ValidationException("Cannot move agenda down")
-            elif not agenda.is_itinerary:
-                next_agenda = agenda.next()
-                if not next_agenda.is_itinerary:
-                    agenda.down()
-                else:
-                    agenda.is_itinerary = True
-                    agenda.save()
-            else:
-                agenda.down()
-
+            self._move_down(plan_id, agenda)
         else:
             raise ValidationException("Invalid method parameter")
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def _move_down(self, plan_id, agenda):
+        max_order = Agenda.objects.filter(plan_id=plan_id).count() - 1
+        if agenda.order == max_order:
+            if not agenda.is_itinerary:
+                agenda.is_itinerary = True
+                agenda.save()
+            else:
+                raise ValidationException("Cannot move agenda down")
+        elif not agenda.is_itinerary:
+            next_agenda = agenda.next()
+            if not next_agenda.is_itinerary:
+                agenda.down()
+            else:
+                agenda.is_itinerary = True
+                agenda.save()
+        else:
+            agenda.down()
+
+    def _move_up(self, agenda):
+        if agenda.order == 0:
+            if agenda.is_itinerary:
+                agenda.is_itinerary = False
+                agenda.save()
+            else:
+                raise ValidationException("Cannot move agena up")
+        elif agenda.is_itinerary:
+            previous_agenda = agenda.previous()
+            if previous_agenda.is_itinerary:
+                agenda.up()
+            else:
+                agenda.is_itinerary = False
+                agenda.save()
+        else:
+            agenda.up()

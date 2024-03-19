@@ -23,7 +23,7 @@
       },
       {
         type: 'icon',
-        ficon: 'fa-solid fa-wallet',
+        ficon: 'fa-solid fa-coins',
         clickHandler: () => editCost(place),
       },
       {
