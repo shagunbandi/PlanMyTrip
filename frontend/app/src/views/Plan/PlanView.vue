@@ -11,16 +11,28 @@
             itemKey="title"
           />
         </h1>
-        <h4 class="agenda-wise-plan">Plan</h4>
+
+        <!-- List -->
+        <Agenda
+          v-for="agenda in filteredList"
+          :key="agenda.id"
+          :agenda="agenda"
+        />
         <button
           class="btn btn-success"
           @click="() => handleAddAgenda({ is_itinerary: false })"
         >
           Add List
         </button>
-        <div v-for="agenda in plan.agendas" :key="agenda.id">
-          <Agenda :agenda="agenda" />
-        </div>
+
+        <!-- Plan -->
+        <h4 class="agenda-wise-plan">Plan</h4>
+        <Agenda
+          v-for="(agenda, index) in filteredDays"
+          :key="agenda.id"
+          :agenda="agenda"
+          :dayNum="index + 1"
+        />
         <button
           class="btn btn-success"
           @click="() => handleAddAgenda({ is_itinerary: true })"
@@ -48,11 +60,14 @@ export default {
     PersistingInput,
     Agenda,
   },
-  data() {
-    return {}
-  },
   computed: {
     ...mapState('plan', ['plan']),
+    filteredList() {
+      return this.plan.agendas.filter((agenda) => !agenda.is_itinerary)
+    },
+    filteredDays() {
+      return this.plan.agendas.filter((agenda) => agenda.is_itinerary)
+    },
   },
   mounted() {
     this.fetchPlan({

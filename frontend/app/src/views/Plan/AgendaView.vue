@@ -24,8 +24,8 @@
   >
     <!-- Agenda Title -->
     <h5 id="agenda-title" class="d-flex agenda-title">
-      <span class="agenda-text flex-shrink-0"
-        >Day {{ agenda.order + 1 }}:&nbsp;</span
+      <span v-if="dayNum" class="agenda-text flex-shrink-0"
+        >Day {{ dayNum }}:&nbsp;</span
       >
       <PersistingInput
         inputType="input"
@@ -55,6 +55,7 @@ export default {
   },
   props: {
     agenda: Object,
+    dayNum: Number,
   },
   computed: {
     ...mapState('plan', ['plan']),
