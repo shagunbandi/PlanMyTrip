@@ -1,35 +1,36 @@
 <template>
-  <div>
-    <span v-if="['input', 'link', 'number'].includes(inputType)" class="d-flex">
-      <a
-        v-if="inputType === 'link' && isLink"
-        :href="editedInput"
-        target="_blank"
-        rel="noopener noreferrer"
-        style="padding-right: 2px"
-        >open</a
-      >
+  <span
+    v-if="['input', 'link', 'number'].includes(inputType)"
+    class="d-flex w-100"
+  >
+    <a
+      v-if="inputType === 'link' && isLink"
+      :href="editedInput"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="padding-right: 2px"
+      >open</a
+    >
 
-      <input
-        :id="itemKey"
-        :type="inputType === 'number' ? 'number' : 'text'"
-        class="form-control-plaintext"
-        :placeholder="placeholder"
-        v-model="editedInput"
-        @blur="saveChanges"
-      />
-    </span>
-
-    <textarea
-      v-if="inputType === 'textarea'"
+    <input
       :id="itemKey"
+      :type="inputType === 'number' ? 'number' : 'text'"
       class="form-control-plaintext"
-      v-model="editedInput"
       :placeholder="placeholder"
+      v-model="editedInput"
       @blur="saveChanges"
-      :rows="calculateRows()"
-    ></textarea>
-  </div>
+    />
+  </span>
+
+  <textarea
+    v-if="inputType === 'textarea'"
+    :id="itemKey"
+    class="form-control-plaintext"
+    v-model="editedInput"
+    :placeholder="placeholder"
+    @blur="saveChanges"
+    :rows="calculateRows()"
+  ></textarea>
 </template>
 
 <script>

@@ -1,28 +1,37 @@
 <template>
   <Container>
-    <span v-if="itinerary">
+    <span v-if="plan">
       <Container>
         <!-- Title -->
         <h1 class="title">
           <PersistingInput
-            :value="itinerary.title"
+            :value="plan.title"
             inputType="input"
-            :editEndPoint="`/api/planner/itinerary/${itinerary.id}/`"
+            :editEndPoint="`/api/planner/plan/${plan.id}/`"
             itemKey="title"
           />
         </h1>
-        <h4 class="agenda-wise-plan">Itinerary</h4>
-        <div v-for="agenda in itinerary.agendas" :key="agenda.id">
+        <h4 class="agenda-wise-plan">Plan</h4>
+        <button
+          class="btn btn-success"
+          @click="() => handleAddAgenda({ is_itinerary: false })"
+        >
+          Add List
+        </button>
+        <div v-for="agenda in plan.agendas" :key="agenda.id">
           <Agenda :agenda="agenda" />
         </div>
-        <button class="btn btn-success" @click="handleAddAgenda">
-          Add Agenda
+        <button
+          class="btn btn-success"
+          @click="() => handleAddAgenda({ is_itinerary: true })"
+        >
+          Add Day
         </button>
       </Container>
     </span>
 
     <span v-else>
-      <p>Loading itinerary...</p>
+      <p>Loading plan...</p>
     </span>
   </Container>
 </template>
@@ -30,7 +39,7 @@
 <script>
 import Container from '@/component/Container.vue'
 import PersistingInput from '@/component/PersistingInput.vue'
-import Agenda from '@/views/Itinerary/AgendaView.vue'
+import Agenda from '@/views/Plan/AgendaView.vue'
 import { mapActions, mapState } from 'vuex'
 
 export default {
@@ -43,11 +52,11 @@ export default {
     return {}
   },
   computed: {
-    ...mapState('itinerary', ['itinerary']),
+    ...mapState('plan', ['plan']),
   },
   mounted() {
-    this.fetchItinerary({
-      itineraryId: 1,
+    this.fetchPlan({
+      planId: 1,
       onSuccess: this.onSuccess,
       onError: this.onError,
     })
@@ -59,10 +68,14 @@ export default {
     onError(message) {
       this.$toast.error(message, { duration: 5000 })
     },
-    handleAddAgenda() {
-      this.addAgenda({ onSuccess: this.onSuccess, onError: this.onError })
+    handleAddAgenda({ is_itinerary }) {
+      this.addAgenda({
+        is_itinerary,
+        onSuccess: this.onSuccess,
+        onError: this.onError,
+      })
     },
-    ...mapActions('itinerary', ['fetchItinerary', 'addAgenda']),
+    ...mapActions('plan', ['fetchPlan', 'addAgenda']),
   },
 }
 </script>

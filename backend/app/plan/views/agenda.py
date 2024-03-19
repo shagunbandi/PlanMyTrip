@@ -1,9 +1,9 @@
 from common.exceptions import ValidationException
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
-from itinerary.models.agenda import Agenda
-from itinerary.models.itinerary import Itinerary
-from itinerary.serializers.agenda import AgendaSerializer
+from plan.models.agenda import Agenda
+from plan.models.plan import Plan
+from plan.serializers.agenda import AgendaSerializer
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -16,29 +16,25 @@ class AgendaViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        itinerary_id = self.kwargs.get("itinerary_id")
-        return (
-            super()
-            .get_queryset()
-            .filter(owner=self.request.user, itinerary__id=itinerary_id)
-        )
+        plan_id = self.kwargs.get("plan_id")
+        return super().get_queryset().filter(owner=self.request.user, plan__id=plan_id)
 
     def perform_create(self, serializer):
-        itinerary_id = self.kwargs.get("itinerary_id")
-        itinerary = Itinerary.objects.filter(owner=self.request.user, id=itinerary_id)
-        if itinerary.exists():
-            serializer.save(itinerary_id=itinerary_id)
+        plan_id = self.kwargs.get("plan_id")
+        plan = Plan.objects.filter(owner=self.request.user, id=plan_id)
+        if plan.exists():
+            serializer.save(plan_id=plan_id)
         else:
-            raise ValueError("Itinerary does not exist")
+            raise ValueError("Plan does not exist")
 
 
 class MoveAgendaView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, itinerary_id, agenda_id):
+    def post(self, request, plan_id, agenda_id):
         method = request.data.get("method", "")
         agenda = get_object_or_404(
-            Agenda, owner=request.user, id=agenda_id, itinerary__id=itinerary_id
+            Agenda, owner=request.user, id=agenda_id, plan__id=plan_id
         )
         if method == "up":
             agenda.up()

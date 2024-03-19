@@ -1,6 +1,6 @@
 # Databases
 
-### Itinerary
+### Plan
 
 - id
 - title
@@ -12,7 +12,7 @@
 - id
 - type (Day or List)
 
-- itinerary
+- plan
 
 ### Place
 - title

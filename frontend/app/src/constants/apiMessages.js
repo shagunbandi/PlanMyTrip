@@ -1,7 +1,7 @@
 export default {
-  // Itinerary
-  ITINERARY_FETCH_SUCCESS: 'Itinerary Fetched Successfully',
-  ITINERARY_FETCH_FAIL: 'Itinerary Fetched Failed',
+  // Plan
+  PLAN_FETCH_SUCCESS: 'Plan Fetched Successfully',
+  PLAN_FETCH_FAIL: 'Plan Fetched Failed',
 
   // Agenda
   AGENDA_ADD_SUCCESS: 'Agenda Added Successfully',

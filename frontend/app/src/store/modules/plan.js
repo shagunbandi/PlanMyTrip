@@ -1,23 +1,23 @@
-// store/modules/itinerary.js
+// store/modules/plan.js
 import api from '@/api'
 import apiMessages from '@/constants/apiMessages'
 import * as agendaActions from '@/store/actions/agendaActions'
 import * as placeActions from '@/store/actions/placeActions'
 
 const state = {
-  itinerary: null,
+  plan: null,
   loading: false,
   error: null,
 }
 
 const mutations = {
-  SET_ITINERARY(state, itinerary) {
-    state.itinerary = itinerary
+  SET_PLAN(state, plan) {
+    state.plan = plan
     state.loading = false
     state.error = null
   },
-  CLEAR_ITINERARY(state) {
-    state.itinerary = null
+  CLEAR_PLAN(state) {
+    state.plan = null
     state.loading = false
     state.error = null
   },
@@ -32,19 +32,19 @@ const mutations = {
 }
 
 const actions = {
-  async fetchItinerary(
+  async fetchPlan(
     { commit },
-    { itineraryId, onError = () => {}, onSuccess = () => {} },
+    { planId, onError = () => {}, onSuccess = () => {} },
   ) {
     try {
       commit('SET_LOADING', true)
-      const response = await api.get(`/api/planner/itinerary/${itineraryId}/`)
-      commit('SET_ITINERARY', response.data)
-      onSuccess(apiMessages.ITINERARY_FETCH_SUCCESS)
+      const response = await api.get(`/api/planner/plan/${planId}/`)
+      commit('SET_PLAN', response.data)
+      onSuccess(apiMessages.PLAN_FETCH_SUCCESS)
     } catch (error) {
-      onError(apiMessages.ITINERARY_FETCH_FAIL)
-      commit('SET_ITINERARY', null)
-      commit('SET_ERROR', error.message || 'Error fetching itinerary')
+      onError(apiMessages.PLAN_FETCH_FAIL)
+      commit('SET_PLAN', null)
+      commit('SET_ERROR', error.message || 'Error fetching plan')
     }
   },
   ...agendaActions,
@@ -52,7 +52,7 @@ const actions = {
 }
 
 const getters = {
-  getCurrentItinerary: (state) => state.itinerary,
+  getCurrentPlan: (state) => state.plan,
   isLoading: (state) => state.loading,
   getError: (state) => state.error,
 }

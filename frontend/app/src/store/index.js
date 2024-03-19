@@ -1,9 +1,9 @@
 import { createStore } from 'vuex'
-import itinerary from './modules/itinerary'
+import plan from './modules/plan'
 
 export default createStore({
   modules: {
-    itinerary,
+    plan,
     // Add more modules as needed
   },
 })

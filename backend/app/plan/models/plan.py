@@ -2,7 +2,7 @@ from common.models import OwnerModel, TimestampModel
 from django.db import models
 
 
-class Itinerary(OwnerModel, TimestampModel):
+class Plan(OwnerModel, TimestampModel):
     title = models.CharField(max_length=120)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)

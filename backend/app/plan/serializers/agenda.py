@@ -1,6 +1,6 @@
 from common.serializers import CreateSerializer
-from itinerary.models.agenda import Agenda
-from itinerary.serializers.place import PlaceSerializer
+from plan.models.agenda import Agenda
+from plan.serializers.place import PlaceSerializer
 from rest_framework import serializers
 
 
@@ -10,4 +10,4 @@ class AgendaSerializer(CreateSerializer):
 
     class Meta:
         model = Agenda
-        fields = ["id", "title", "places", "order"]
+        fields = ["id", "title", "places", "is_itinerary", "order"]

@@ -185,7 +185,7 @@ export default {
         onError: this.onError,
       })
     },
-    ...mapActions('itinerary', ['editPlaceField', 'removePlace', 'movePlace']),
+    ...mapActions('plan', ['editPlaceField', 'removePlace', 'movePlace']),
   },
 }
 </script>
