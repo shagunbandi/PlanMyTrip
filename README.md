@@ -1,6 +1,6 @@
 # PlanMyTrip
 
-Create an itinerary the easy way 
+Create an plan the easy way 
 
 # Teck Stack
 

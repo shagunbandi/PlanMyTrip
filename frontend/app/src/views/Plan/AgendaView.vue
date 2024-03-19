@@ -25,14 +25,14 @@
     <!-- Agenda Title -->
     <h5 id="agenda-title" class="d-flex agenda-title">
       <span class="agenda-text flex-shrink-0"
-        >Agenda {{ agenda.order + 1 }}:&nbsp;</span
+        >Day {{ agenda.order + 1 }}:&nbsp;</span
       >
       <PersistingInput
         inputType="input"
-        placeholder="Write a title for you agenda"
+        placeholder="Title"
         itemKey="title"
         :value="agenda.title"
-        :editEndPoint="`/api/planner/itinerary/${itinerary.id}/agenda/${agenda.id}/`"
+        :editEndPoint="`/api/planner/plan/${plan.id}/agenda/${agenda.id}/`"
       />
     </h5>
   </SideActionPannel>
@@ -57,7 +57,7 @@ export default {
     agenda: Object,
   },
   computed: {
-    ...mapState('itinerary', ['itinerary']),
+    ...mapState('plan', ['plan']),
   },
   methods: {
     onSuccess(message) {
@@ -88,7 +88,7 @@ export default {
         onError: this.onError,
       })
     },
-    ...mapActions('itinerary', ['removeAgenda', 'moveAgenda', 'addPlace']),
+    ...mapActions('plan', ['removeAgenda', 'moveAgenda', 'addPlace']),
   },
 }
 </script>

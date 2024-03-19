@@ -1,7 +1,6 @@
 from common.serializers import CreateSerializer
 from plan.models.plan import Plan
 from plan.serializers.agenda import AgendaSerializer
-from plan.serializers.place import PlaceSerializer
 
 
 class PlanSerializer(CreateSerializer):

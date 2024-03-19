@@ -13,6 +13,7 @@ class Agenda(OwnerModel, OrderedModel, TimestampModel):
         null=False,
         related_name="agendas",
     )
+    is_itinerary = models.BooleanField(default=False)
 
     order_with_respect_to = "plan"
 
@@ -20,4 +21,7 @@ class Agenda(OwnerModel, OrderedModel, TimestampModel):
         return self.title
 
     class Meta:
-        ordering = ("order",)
+        ordering = (
+            "is_itinerary",
+            "order",
+        )
