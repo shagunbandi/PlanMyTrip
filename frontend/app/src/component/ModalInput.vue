@@ -2,14 +2,24 @@
   <div v-if="showModal" class="modal">
     <div class="modal-content">
       <h2>{{ title }}</h2>
-      <input
-        :type="inputType"
-        v-model="inputValue"
-        @keyup.enter="submitForm"
-        ref="inputField"
-      />
+      <div v-if="inputType == 'timeRange'">
+        <label for="startTime">Start Time:</label>
+        <input type="time" v-model="inputValue[0]" @keyup.enter="submitForm" />
+
+        <label for="endTime">End Time:</label>
+        <input type="time" v-model="inputValue[1]" @keyup.enter="submitForm" />
+      </div>
+      <div v-else class="normal-input">
+        <input
+          :type="inputType"
+          v-model="inputValue"
+          @keyup.enter="submitForm"
+          ref="inputField"
+        />
+      </div>
       <div class="d-flex">
-        <button class="btn btn-danger m-2" @click="closeModal">Close</button>
+        <button class="btn btn-secondary m-2" @click="closeModal">Close</button>
+        <button class="btn btn-danger m-2" @click="removeValues">Remove</button>
         <button class="btn btn-success m-2" @click="submitForm">Submit</button>
       </div>
     </div>
@@ -20,7 +30,7 @@
 export default {
   props: {
     title: String,
-    value: String,
+    value: Object,
     onSubmit: Function,
     onClose: Function,
     inputType: String,
@@ -39,8 +49,16 @@ export default {
       this.onSubmit(this.inputValue)
       this.closeModal()
     },
+    removeValues() {
+      if (Array.isArray(this.inputValue)) {
+        this.inputValue = new Array(this.inputValue.length).fill(null)
+      } else {
+        this.inputValue = null
+      }
+      this.submitForm()
+    },
     focusInputField() {
-      this.$refs.inputField.focus()
+      this.$refs.inputField?.focus()
     },
   },
   mounted() {

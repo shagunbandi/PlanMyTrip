@@ -11,11 +11,13 @@
             itemKey="title"
           />
         </h1>
-        <h4 class="day-wise-plan">Itinerary</h4>
-        <div v-for="day in itinerary.days" :key="day.id">
-          <Day :day="day" />
+        <h4 class="agenda-wise-plan">Itinerary</h4>
+        <div v-for="agenda in itinerary.agendas" :key="agenda.id">
+          <Agenda :agenda="agenda" />
         </div>
-        <button class="btn btn-success" @click="handleAddDay">Add Day</button>
+        <button class="btn btn-success" @click="handleAddAgenda">
+          Add Agenda
+        </button>
       </Container>
     </span>
 
@@ -28,14 +30,14 @@
 <script>
 import Container from '@/component/Container.vue'
 import PersistingInput from '@/component/PersistingInput.vue'
-import Day from '@/views/Itinerary/DayView.vue'
+import Agenda from '@/views/Itinerary/AgendaView.vue'
 import { mapActions, mapState } from 'vuex'
 
 export default {
   components: {
     Container,
     PersistingInput,
-    Day,
+    Agenda,
   },
   data() {
     return {}
@@ -45,7 +47,7 @@ export default {
   },
   mounted() {
     this.fetchItinerary({
-      itineraryId: 9,
+      itineraryId: 1,
       onSuccess: this.onSuccess,
       onError: this.onError,
     })
@@ -57,10 +59,10 @@ export default {
     onError(message) {
       this.$toast.error(message, { duration: 5000 })
     },
-    handleAddDay() {
-      this.addDay({ onSuccess: this.onSuccess, onError: this.onError })
+    handleAddAgenda() {
+      this.addAgenda({ onSuccess: this.onSuccess, onError: this.onError })
     },
-    ...mapActions('itinerary', ['fetchItinerary', 'addDay']),
+    ...mapActions('itinerary', ['fetchItinerary', 'addAgenda']),
   },
 }
 </script>
@@ -69,7 +71,7 @@ export default {
 .title {
   font-weight: bolder;
 }
-.day-wise-plan {
+.agenda-wise-plan {
   font-weight: bold;
   margin-top: 16px;
 }

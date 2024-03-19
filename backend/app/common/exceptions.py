@@ -1,4 +1,4 @@
-from rest_framework.exceptions import APIException, ValidationError
+from rest_framework.exceptions import ValidationError
 
 
 class ValidationException(Exception):
@@ -10,4 +10,4 @@ class ValidationException(Exception):
             self.detail = detail
         if status_code is not None:
             self.status_code = status_code
-        raise ValidationError({"detail": detail, "status_code": status_code})
+        raise ValidationError({"detail": self.detail, "status_code": self.status_code})

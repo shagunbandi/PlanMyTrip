@@ -18,15 +18,18 @@
       { type: 'break' },
       {
         type: 'icon',
-        src: linkIcon,
-        clickHandler: () =>
-          showFieldEditModal('Place Link', 'link', place.link, 'text'),
+        ficon: 'fa-solid fa-link',
+        clickHandler: () => editLink(place),
       },
       {
         type: 'icon',
-        src: currencyIcon,
-        clickHandler: () =>
-          showFieldEditModal('Cost', 'cost', place.cost, 'number'),
+        ficon: 'fa-solid fa-wallet',
+        clickHandler: () => editCost(place),
+      },
+      {
+        type: 'icon',
+        ficon: 'fa-solid fa-clock',
+        clickHandler: () => editTime(place),
       },
     ]"
   >
@@ -55,14 +58,15 @@
         <div class="green-box" v-if="place.link">
           <a :href="place.link" target="_blank">{{ place.link }}</a>
         </div>
+        <div class="green-box" v-if="place.cost" @click="() => editCost(place)">
+          {{ place.cost }}
+        </div>
         <div
           class="green-box"
-          v-if="place.cost"
-          @click="
-            () => showFieldEditModal('Cost', 'cost', place.cost, 'number')
-          "
+          v-if="place.start_time || place.end_time"
+          @click="() => editTime(place)"
         >
-          {{ place.cost }}
+          {{ formattedTimeRange }}
         </div>
       </div>
 
@@ -78,7 +82,6 @@
         "
         :onSubmit="
           (value) => {
-            console.log(modalKey, this.modalKey)
             handleEditPlaceField(modalKey, value)
           }
         "
@@ -88,11 +91,10 @@
 </template>
 
 <script>
-import CurrencyIcon from '@/assets/icons/currency-icon.jpg'
-import LinkIcon from '@/assets/icons/link-icon.jpg'
 import EditorInput from '@/component/EditorInput.vue'
 import ModalInput from '@/component/ModalInput.vue'
 import SideActionPannel from '@/component/SideActionPannel.vue'
+import moment from 'moment'
 import { mapActions } from 'vuex'
 
 export default {
@@ -101,11 +103,13 @@ export default {
       type: Object,
       required: true,
     },
+    agendaId: {
+      type: Number,
+      required: true,
+    },
   },
   data() {
     return {
-      linkIcon: LinkIcon,
-      currencyIcon: CurrencyIcon,
       editedTitle: this.place.title,
       editedText: this.place.text,
       showModal: false,
@@ -115,12 +119,37 @@ export default {
     }
   },
   components: { SideActionPannel, EditorInput, ModalInput },
+  computed: {
+    formattedTimeRange() {
+      const inputFormat = 'HH:mm:ss'
+      const outputFormat = 'hh:mm A'
+      const start = moment(this.place.start_time, inputFormat).format(
+        outputFormat,
+      )
+      const end = moment(this.place.end_time, inputFormat).format(outputFormat)
+      return `${start} - ${end}`
+    },
+  },
   methods: {
     onSuccess(message) {
       this.$toast.success(message, { duration: 5000 })
     },
     onError(message) {
       this.$toast.error(message, { duration: 5000 })
+    },
+    editLink(place) {
+      this.showFieldEditModal('Place Link', 'link', place.link, 'text')
+    },
+    editCost(place) {
+      this.showFieldEditModal('Cost', 'cost', place.cost, 'number')
+    },
+    editTime(place) {
+      this.showFieldEditModal(
+        'Time Range',
+        ['start_time', 'end_time'],
+        [place.start_time, place.end_time],
+        'timeRange',
+      )
     },
     showFieldEditModal(modalTitle, modalKey, modalValue, modalType) {
       this.modalTitle = modalTitle
@@ -131,21 +160,19 @@ export default {
     },
     handleEditPlaceField(fieldName, fieldValue) {
       this.editPlaceField({
-        contentType: this.place.content_type,
-        objectId: this.place.object_id,
         placeId: this.place.id,
+        agendaId: this.agendaId,
         fieldName: fieldName,
         fieldValue: fieldValue,
         onSucces: this.onSuccess,
         onError: this.onError,
       })
     },
-    handleMovePlace(direction) {
+    handleMovePlace(method) {
       this.movePlace({
-        contentType: this.place.content_type,
-        objectId: this.place.object_id,
         placeId: this.place.id,
-        moveDirection: direction,
+        agendaId: this.agendaId,
+        method: method,
         onSucces: this.onSuccess,
         onError: this.onError,
       })
@@ -153,6 +180,7 @@ export default {
     handleRemovePlace() {
       this.removePlace({
         placeId: this.place.id,
+        agendaId: this.agendaId,
         onSucces: this.onSuccess,
         onError: this.onError,
       })
