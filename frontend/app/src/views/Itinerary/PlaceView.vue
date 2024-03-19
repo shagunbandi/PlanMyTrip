@@ -19,25 +19,17 @@
       {
         type: 'icon',
         ficon: 'fa-solid fa-link',
-        clickHandler: () =>
-          showFieldEditModal('Place Link', 'link', place.link, 'text'),
+        clickHandler: () => editLink(place),
       },
       {
         type: 'icon',
         ficon: 'fa-solid fa-wallet',
-        clickHandler: () =>
-          showFieldEditModal('Cost', 'cost', place.cost, 'number'),
+        clickHandler: () => editCost(place),
       },
       {
         type: 'icon',
         ficon: 'fa-solid fa-clock',
-        clickHandler: () =>
-          showFieldEditModal(
-            'Time Range',
-            ['start_time', 'end_time'],
-            [place.start_time, place.end_time],
-            'timeRange',
-          ),
+        clickHandler: () => editTime(place),
       },
     ]"
   >
@@ -66,14 +58,15 @@
         <div class="green-box" v-if="place.link">
           <a :href="place.link" target="_blank">{{ place.link }}</a>
         </div>
+        <div class="green-box" v-if="place.cost" @click="() => editCost(place)">
+          {{ place.cost }}
+        </div>
         <div
           class="green-box"
-          v-if="place.cost"
-          @click="
-            () => showFieldEditModal('Cost', 'cost', place.cost, 'number')
-          "
+          v-if="place.start_time || place.end_time"
+          @click="() => editTime(place)"
         >
-          {{ place.cost }}
+          {{ formattedTimeRange }}
         </div>
       </div>
 
@@ -101,6 +94,7 @@
 import EditorInput from '@/component/EditorInput.vue'
 import ModalInput from '@/component/ModalInput.vue'
 import SideActionPannel from '@/component/SideActionPannel.vue'
+import moment from 'moment'
 import { mapActions } from 'vuex'
 
 export default {
@@ -125,12 +119,37 @@ export default {
     }
   },
   components: { SideActionPannel, EditorInput, ModalInput },
+  computed: {
+    formattedTimeRange() {
+      const inputFormat = 'HH:mm:ss'
+      const outputFormat = 'hh:mm A'
+      const start = moment(this.place.start_time, inputFormat).format(
+        outputFormat,
+      )
+      const end = moment(this.place.end_time, inputFormat).format(outputFormat)
+      return `${start} - ${end}`
+    },
+  },
   methods: {
     onSuccess(message) {
       this.$toast.success(message, { duration: 5000 })
     },
     onError(message) {
       this.$toast.error(message, { duration: 5000 })
+    },
+    editLink(place) {
+      this.showFieldEditModal('Place Link', 'link', place.link, 'text')
+    },
+    editCost(place) {
+      this.showFieldEditModal('Cost', 'cost', place.cost, 'number')
+    },
+    editTime(place) {
+      this.showFieldEditModal(
+        'Time Range',
+        ['start_time', 'end_time'],
+        [place.start_time, place.end_time],
+        'timeRange',
+      )
     },
     showFieldEditModal(modalTitle, modalKey, modalValue, modalType) {
       this.modalTitle = modalTitle

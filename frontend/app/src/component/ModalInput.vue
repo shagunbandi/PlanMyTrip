@@ -4,10 +4,10 @@
       <h2>{{ title }}</h2>
       <div v-if="inputType == 'timeRange'">
         <label for="startTime">Start Time:</label>
-        <input type="time" v-model="inputValue[0]" />
+        <input type="time" v-model="inputValue[0]" @keyup.enter="submitForm" />
 
         <label for="endTime">End Time:</label>
-        <input type="time" v-model="inputValue[1]" />
+        <input type="time" v-model="inputValue[1]" @keyup.enter="submitForm" />
       </div>
       <div v-else class="normal-input">
         <input
