@@ -18,7 +18,8 @@
         />
       </div>
       <div class="d-flex">
-        <button class="btn btn-danger m-2" @click="closeModal">Close</button>
+        <button class="btn btn-secondary m-2" @click="closeModal">Close</button>
+        <button class="btn btn-danger m-2" @click="removeValues">Remove</button>
         <button class="btn btn-success m-2" @click="submitForm">Submit</button>
       </div>
     </div>
@@ -47,6 +48,14 @@ export default {
     submitForm() {
       this.onSubmit(this.inputValue)
       this.closeModal()
+    },
+    removeValues() {
+      if (Array.isArray(this.inputValue)) {
+        this.inputValue = new Array(this.inputValue.length).fill(null)
+      } else {
+        this.inputValue = null
+      }
+      this.submitForm()
     },
     focusInputField() {
       this.$refs.inputField?.focus()
