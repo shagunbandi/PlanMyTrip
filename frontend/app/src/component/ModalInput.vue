@@ -2,12 +2,21 @@
   <div v-if="showModal" class="modal">
     <div class="modal-content">
       <h2>{{ title }}</h2>
-      <input
-        :type="inputType"
-        v-model="inputValue"
-        @keyup.enter="submitForm"
-        ref="inputField"
-      />
+      <div v-if="inputType == 'timeRange'">
+        <label for="startTime">Start Time:</label>
+        <input type="time" v-model="inputValue[0]" />
+
+        <label for="endTime">End Time:</label>
+        <input type="time" v-model="inputValue[1]" />
+      </div>
+      <div v-else class="normal-input">
+        <input
+          :type="inputType"
+          v-model="inputValue"
+          @keyup.enter="submitForm"
+          ref="inputField"
+        />
+      </div>
       <div class="d-flex">
         <button class="btn btn-danger m-2" @click="closeModal">Close</button>
         <button class="btn btn-success m-2" @click="submitForm">Submit</button>
@@ -20,7 +29,7 @@
 export default {
   props: {
     title: String,
-    value: String,
+    value: Object,
     onSubmit: Function,
     onClose: Function,
     inputType: String,
@@ -40,7 +49,7 @@ export default {
       this.closeModal()
     },
     focusInputField() {
-      this.$refs.inputField.focus()
+      this.$refs.inputField?.focus()
     },
   },
   mounted() {

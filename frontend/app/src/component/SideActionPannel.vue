@@ -25,7 +25,8 @@
             @click="button.clickHandler"
             :style="button.style"
           >
-            <img :src="button.src" :alt="button.alt" class="icon" />
+            <i v-if="button.ficon" :class="button.ficon" />
+            <img v-else :src="button.src" :alt="button.alt" class="icon" />
           </button>
         </span>
       </div>

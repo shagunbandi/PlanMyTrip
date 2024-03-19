@@ -18,15 +18,26 @@
       { type: 'break' },
       {
         type: 'icon',
-        src: linkIcon,
+        ficon: 'fa-solid fa-link',
         clickHandler: () =>
           showFieldEditModal('Place Link', 'link', place.link, 'text'),
       },
       {
         type: 'icon',
-        src: currencyIcon,
+        ficon: 'fa-solid fa-wallet',
         clickHandler: () =>
           showFieldEditModal('Cost', 'cost', place.cost, 'number'),
+      },
+      {
+        type: 'icon',
+        ficon: 'fa-solid fa-clock',
+        clickHandler: () =>
+          showFieldEditModal(
+            'Time Range',
+            ['start_time', 'end_time'],
+            [place.start_time, place.end_time],
+            'timeRange',
+          ),
       },
     ]"
   >
@@ -78,7 +89,6 @@
         "
         :onSubmit="
           (value) => {
-            console.log(modalKey, this.modalKey)
             handleEditPlaceField(modalKey, value)
           }
         "
@@ -88,8 +98,6 @@
 </template>
 
 <script>
-import CurrencyIcon from '@/assets/icons/currency-icon.jpg'
-import LinkIcon from '@/assets/icons/link-icon.jpg'
 import EditorInput from '@/component/EditorInput.vue'
 import ModalInput from '@/component/ModalInput.vue'
 import SideActionPannel from '@/component/SideActionPannel.vue'
@@ -108,8 +116,6 @@ export default {
   },
   data() {
     return {
-      linkIcon: LinkIcon,
-      currencyIcon: CurrencyIcon,
       editedTitle: this.place.title,
       editedText: this.place.text,
       showModal: false,

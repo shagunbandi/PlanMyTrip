@@ -35,13 +35,17 @@ export const editPlaceField = async (
   },
 ) => {
   const itineraryId = state.itinerary.id
+  const postData = Array.isArray(fieldName)
+    ? fieldName.reduce((acc, key, index) => {
+        acc[key] = fieldValue[index]
+        return acc
+      }, {})
+    : { [fieldName]: fieldValue }
 
   try {
     await api.patch(
       `/api/planner/itinerary/${itineraryId}/agenda/${agendaId}/place/${placeId}/`,
-      {
-        [fieldName]: fieldValue,
-      },
+      postData,
     )
     dispatch('fetchItinerary', { itineraryId })
     onSuccess(apiMessages.PLACE_UPDATE_SUCCESS)

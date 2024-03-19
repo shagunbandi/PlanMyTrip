@@ -17,7 +17,7 @@
       { type: 'break' },
       {
         type: 'icon',
-        src: addAgendaIcon,
+        ficon: 'fa-solid fa-calendar-plus',
         clickHandler: handleAddPlace,
       },
     ]"
@@ -42,7 +42,6 @@
 </template>
 
 <script>
-import AddAgendaIcon from '@/assets/icons/add-agenda-icon.png'
 import PersistingInput from '@/component/PersistingInput.vue'
 import SideActionPannel from '@/component/SideActionPannel.vue'
 import { mapActions, mapState } from 'vuex'
@@ -59,11 +58,6 @@ export default {
   },
   computed: {
     ...mapState('itinerary', ['itinerary']),
-  },
-  data() {
-    return {
-      addAgendaIcon: AddAgendaIcon,
-    }
   },
   methods: {
     onSuccess(message) {
