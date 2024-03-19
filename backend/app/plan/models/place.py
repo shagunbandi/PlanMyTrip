@@ -2,7 +2,7 @@ from common.enums import RESERVATION_STATUS
 from common.models import OwnerModel, TimestampModel
 from django.db import models
 from enumchoicefield import EnumChoiceField
-from itinerary.models.agenda import Agenda
+from plan.models.agenda import Agenda
 from ordered_model.models import OrderedModel
 
 

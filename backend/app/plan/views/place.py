@@ -1,9 +1,9 @@
 from common.exceptions import ValidationException
 from django.db.transaction import atomic
 from django.shortcuts import get_object_or_404
-from itinerary.models.agenda import Agenda
-from itinerary.models.place import Place
-from itinerary.serializers.place import PlaceSerializer
+from plan.models.agenda import Agenda
+from plan.models.place import Place
+from plan.serializers.place import PlaceSerializer
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -16,7 +16,7 @@ class PlaceViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        itinerary_id = self.kwargs.get("itinerary_id")
+        plan_id = self.kwargs.get("plan_id")
         agenda_id = self.kwargs.get("agenda_id")
 
         return (
@@ -25,16 +25,16 @@ class PlaceViewSet(viewsets.ModelViewSet):
             .filter(
                 owner=self.request.user,
                 agenda__id=agenda_id,
-                agenda__itinerary__id=itinerary_id,
+                agenda__plan__id=plan_id,
             )
         )
 
     def perform_create(self, serializer):
-        itinerary_id = self.kwargs.get("itinerary_id")
+        plan_id = self.kwargs.get("plan_id")
         agenda_id = self.kwargs.get("agenda_id")
 
         agenda = Agenda.objects.filter(
-            owner=self.request.user, id=agenda_id, itinerary__id=itinerary_id
+            owner=self.request.user, id=agenda_id, plan__id=plan_id
         )
         if agenda.exists():
             serializer.save(agenda_id=agenda_id)
@@ -45,14 +45,14 @@ class PlaceViewSet(viewsets.ModelViewSet):
 class MovePlaceView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, itinerary_id, agenda_id, place_id):
+    def post(self, request, plan_id, agenda_id, place_id):
         method = request.data.get("method", "")
         current_place = get_object_or_404(
             Place,
             owner=request.user,
             id=place_id,
             agenda__id=agenda_id,
-            agenda__itinerary__id=itinerary_id,
+            agenda__plan__id=plan_id,
         )
 
         if method == "up":

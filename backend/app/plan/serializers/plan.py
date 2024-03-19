@@ -1,14 +1,14 @@
 from common.serializers import CreateSerializer
-from itinerary.models.itinerary import Itinerary
-from itinerary.serializers.agenda import AgendaSerializer
-from itinerary.serializers.place import PlaceSerializer
+from plan.models.plan import Plan
+from plan.serializers.agenda import AgendaSerializer
+from plan.serializers.place import PlaceSerializer
 
 
-class ItinerarySerializer(CreateSerializer):
+class PlanSerializer(CreateSerializer):
     agendas = AgendaSerializer(many=True, read_only=True)
 
     class Meta:
-        model = Itinerary
+        model = Plan
         fields = [
             "id",
             "title",

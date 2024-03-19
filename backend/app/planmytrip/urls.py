@@ -20,7 +20,7 @@ from django.conf.urls import include
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from itinerary.urls import urlpatterns as itinerary_urls
+from plan.urls import urlpatterns as plan_urls
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -35,7 +35,7 @@ urlpatterns = [
     path("api-auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
     # Planner
-    path("api/planner/", include(itinerary_urls)),
+    path("api/planner/", include(plan_urls)),
     path("__debug__/", include("debug_toolbar.urls")),
 ]
 

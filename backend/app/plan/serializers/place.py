@@ -1,5 +1,5 @@
 from common.serializers import CreateSerializer
-from itinerary.models.place import Place
+from plan.models.place import Place
 from rest_framework import serializers
 
 
