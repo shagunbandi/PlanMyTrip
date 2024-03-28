@@ -34,17 +34,13 @@
     ]"
   >
     <div class="grey-box">
-      <input
-        type="text"
-        class="form-control-plaintext font-weight-bold"
-        placeholder="Name of the place"
-        v-model="editedTitle"
-        @blur="
-          () => {
-            handleEditPlaceField('title', editedTitle)
-          }
-        "
+      <MapsInput
+        v-if="place.record_type === 'PL'"
+        :value="editedTitle"
+        :placeholderText="'Name of the place'"
+        @onblur="(value) => handleEditPlaceField('title', value)"
       />
+
       <EditorInput
         placeholder="Put your thoughts here"
         :value="editedText"
@@ -92,6 +88,7 @@
 
 <script>
 import EditorInput from '@/component/EditorInput.vue'
+import MapsInput from '@/component/MapsInput.vue'
 import ModalInput from '@/component/ModalInput.vue'
 import SideActionPannel from '@/component/SideActionPannel.vue'
 import moment from 'moment'
@@ -118,7 +115,7 @@ export default {
       modalKey: '',
     }
   },
-  components: { SideActionPannel, EditorInput, ModalInput },
+  components: { SideActionPannel, EditorInput, ModalInput, MapsInput },
   computed: {
     formattedTimeRange() {
       const inputFormat = 'HH:mm:ss'
@@ -159,6 +156,7 @@ export default {
       this.showModal = true
     },
     handleEditPlaceField(fieldName, fieldValue) {
+      console.log(fieldName, fieldValue)
       this.editPlaceField({
         placeId: this.place.id,
         agendaId: this.agendaId,
