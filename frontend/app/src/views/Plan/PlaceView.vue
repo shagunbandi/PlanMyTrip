@@ -41,7 +41,18 @@
         @onblur="(value) => handleEditPlaceField('title', value)"
       />
 
+      <CheckListInput
+        v-if="place.record_type === 'CH'"
+        :value="editedText"
+        :on-change="
+          (value) => {
+            handleEditPlaceField('text', value)
+          }
+        "
+      />
+
       <EditorInput
+        v-else
         placeholder="Put your thoughts here"
         :value="editedText"
         :on-change="
@@ -50,6 +61,7 @@
           }
         "
       />
+
       <div class="d-flex">
         <div class="green-box" v-if="place.link">
           <a :href="place.link" target="_blank">{{ place.link }}</a>
@@ -87,6 +99,7 @@
 </template>
 
 <script>
+import CheckListInput from '@/component/CheckListInput.vue'
 import EditorInput from '@/component/EditorInput.vue'
 import MapsInput from '@/component/MapsInput.vue'
 import ModalInput from '@/component/ModalInput.vue'
@@ -115,7 +128,13 @@ export default {
       modalKey: '',
     }
   },
-  components: { SideActionPannel, EditorInput, ModalInput, MapsInput },
+  components: {
+    SideActionPannel,
+    EditorInput,
+    ModalInput,
+    MapsInput,
+    CheckListInput,
+  },
   computed: {
     formattedTimeRange() {
       const inputFormat = 'HH:mm:ss'
@@ -156,7 +175,6 @@ export default {
       this.showModal = true
     },
     handleEditPlaceField(fieldName, fieldValue) {
-      console.log(fieldName, fieldValue)
       this.editPlaceField({
         placeId: this.place.id,
         agendaId: this.agendaId,
