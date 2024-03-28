@@ -14,10 +14,10 @@ class PlaceSerializer(CreateSerializer):
             "text",
             "link",
             "cost",
+            "record_type",
             "start_time",
             "end_time",
             "file",
-            "status",
             "currency",
             "order",
         ]

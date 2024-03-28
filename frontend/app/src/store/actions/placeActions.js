@@ -4,13 +4,20 @@ import apiMessages from '@/constants/apiMessages'
 
 export const addPlace = async (
   { state, dispatch },
-  { agendaId, title = '', onSuccess = () => {}, onError = () => {} },
+  {
+    agendaId,
+    recordType = 'PL',
+    title = '',
+    onSuccess = () => {},
+    onError = () => {},
+  },
 ) => {
   const planId = state.plan.id
 
   try {
     await api.post(`/api/planner/plan/${planId}/agenda/${agendaId}/place/`, {
       title: title,
+      record_type: recordType,
     })
     dispatch('fetchPlan', { planId })
     onSuccess(apiMessages.PLACE_ADD_SUCCESS)

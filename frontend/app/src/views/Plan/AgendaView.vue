@@ -17,8 +17,18 @@
       { type: 'break' },
       {
         type: 'icon',
-        ficon: 'fa-solid fa-calendar-plus',
-        clickHandler: handleAddPlace,
+        ficon: 'fa-solid fa-map-pin',
+        clickHandler: () => handleAddPlace('PL'),
+      },
+      {
+        type: 'icon',
+        ficon: 'fa-solid fa-note-sticky',
+        clickHandler: () => handleAddPlace('NO'),
+      },
+      {
+        type: 'icon',
+        ficon: 'fa-solid fa-list-check',
+        clickHandler: () => handleAddPlace('CH'),
       },
     ]"
   >
@@ -82,9 +92,10 @@ export default {
         onError: this.onError,
       })
     },
-    handleAddPlace() {
+    handleAddPlace(recordType) {
       this.addPlace({
         agendaId: this.agenda.id,
+        recordType: recordType,
         onSuccess: this.onSuccess,
         onError: this.onError,
       })
