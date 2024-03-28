@@ -5,14 +5,14 @@
     <span
       v-if="collapsable && isCollapsed"
       @click="toggleCollapse"
-      class="clickable"
+      class="cursor-pointer"
       >Exapand</span
     >
     <slot v-if="!collapsable || !isCollapsed"></slot>
     <span
       v-if="collapsable && !isCollapsed"
       @click="toggleCollapse"
-      class="clickable"
+      class="cursor-pointer"
       >Collapse</span
     >
   </div>

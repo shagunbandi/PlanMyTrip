@@ -1,7 +1,11 @@
 <template>
   <div>
     <ul class="list-unstyled">
-      <li class="d-flex" v-for="(item, key) in checkedItems" :key="key">
+      <li
+        class="d-flex hoverable"
+        v-for="(item, key) in checkedItems"
+        :key="key"
+      >
         <input
           type="checkbox"
           :checked="item.value"
@@ -13,7 +17,20 @@
           :value="item.key"
           @change="(event) => onTextChangeHandler(key, event.target.value)"
         />
-        <!-- <span class="m-l-3">{{ item.key }}</span> -->
+        <i
+          v-if="key > 0"
+          class="fa-solid fa-arrow-up cursor-pointer"
+          @click="handleUpClicked(key)"
+        />
+        <i
+          v-if="key < this.checkedItems.length - 1"
+          class="fa-solid fa-arrow-down cursor-pointer m-l-10"
+          @click="handleDownClicked(key)"
+        />
+        <i
+          class="fa-solid fa-xmark cursor-pointer m-l-10 cross-mark"
+          @click="handleRemovedClicked(key)"
+        />
       </li>
       <li :onclick="() => addCheckbox()">
         <input type="checkbox" :disabled="true" />
@@ -39,7 +56,6 @@ export default {
     } catch (error) {
       console.error('Error parsing JSON:', error)
     }
-
     return {
       checkedItems: parsedData,
     }
@@ -50,6 +66,26 @@ export default {
         key: 'New Item',
         value: false,
       })
+    },
+    handleUpClicked(key) {
+      if (key > 0) {
+        const temp = this.checkedItems[key]
+        this.checkedItems.splice(key, 1)
+        this.checkedItems.splice(key - 1, 0, temp)
+        this.updateJson()
+      }
+    },
+    handleDownClicked(key) {
+      if (key < this.checkedItems.length - 1) {
+        const temp = this.checkedItems[key]
+        this.checkedItems.splice(key, 1)
+        this.checkedItems.splice(key + 1, 0, temp)
+        this.updateJson()
+      }
+    },
+    handleRemovedClicked(key) {
+      this.checkedItems.splice(key, 1)
+      this.updateJson()
     },
     onTextChangeHandler(position, value) {
       this.checkedItems[position].key = value
@@ -75,5 +111,16 @@ export default {
   margin-top: 0;
   margin-bottom: 0;
   padding: 0;
+}
+.cross-mark {
+  color: red;
+  cursor: pointer;
+}
+.hoverable i {
+  display: none; /* Hide the icons by default */
+}
+
+.hoverable:hover i {
+  display: inline-block; /* Show the icons when the li is hovered */
 }
 </style>
